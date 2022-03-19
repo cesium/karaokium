@@ -22,7 +22,8 @@ config :karaokium, KaraokiumWeb.Endpoint,
   secret_key_base: "n2hkKtktj1hBZR8IjgQXtHkG0i3KB12WjO3+ONPoS19zt0P/uOiB+jvfBwtUSJTR",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support
