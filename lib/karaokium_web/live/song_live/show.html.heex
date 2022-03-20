@@ -1,0 +1,71 @@
+<h1>Show Song</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.song_show_path(@socket, :show, @song)}>
+    <.live_component
+      module={KaraokiumWeb.SongLive.FormComponent}
+      id={@song.id}
+      title={@page_title}
+      action={@live_action}
+      song={@song}
+      return_to={Routes.song_show_path(@socket, :show, @song)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Spotify:</strong>
+    <%= @song.spotify_id %>
+  </li>
+
+  <li>
+    <strong>Spotify uri:</strong>
+    <%= @song.spotify_uri %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @song.name %>
+  </li>
+
+  <li>
+    <strong>Duration ms:</strong>
+    <%= @song.duration_ms %>
+  </li>
+
+  <li>
+    <strong>Popularity:</strong>
+    <%= @song.popularity %>
+  </li>
+
+  <li>
+    <strong>Preview url:</strong>
+    <%= @song.preview_url %>
+  </li>
+
+  <li>
+    <strong>Spotify url:</strong>
+    <%= @song.spotify_url %>
+  </li>
+
+  <li>
+    <strong>Href:</strong>
+    <%= @song.href %>
+  </li>
+
+  <li>
+    <strong>Track number:</strong>
+    <%= @song.track_number %>
+  </li>
+
+  <li>
+    <strong>Explicit:</strong>
+    <%= @song.explicit %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.song_show_path(@socket, :edit, @song), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.song_index_path(@socket, :index) %></span>

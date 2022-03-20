@@ -21,4 +21,20 @@ defmodule Karaokium.EventsFixtures do
 
     location
   end
+
+  @doc """
+  Generate a karaoke.
+  """
+  def karaoke_fixture(attrs \\ %{}) do
+    {:ok, karaoke} =
+      attrs
+      |> Enum.into(%{
+        end_date: ~D[2022-03-19],
+        name: "some name",
+        start_date: ~D[2022-03-19]
+      })
+      |> Karaokium.Events.create_karaoke()
+
+    karaoke
+  end
 end

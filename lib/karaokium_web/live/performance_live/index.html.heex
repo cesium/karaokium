@@ -1,0 +1,37 @@
+<h1>Listing Performances</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.performance_index_path(@socket, :index, @karaoke_id)}>
+    <.live_component
+      module={KaraokiumWeb.PerformanceLive.FormComponent}
+      id={@performance.id || :new}
+      title={@page_title}
+      action={@live_action}
+      performance={@performance}
+      return_to={Routes.performance_index_path(@socket, :index, @karaoke_id)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="performances">
+    <%= for performance <- @performances do %>
+      <tr id={"performance-#{performance.id}"}>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.performance_show_path(@socket, :show, performance, @karaoke_id) %></span>
+          <span><%= live_patch "Edit", to: Routes.performance_index_path(@socket, :edit, performance, @karaoke_id) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: performance.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Performance", to: Routes.performance_index_path(@socket, :new, @karaoke_id) %></span>

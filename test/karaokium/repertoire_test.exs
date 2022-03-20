@@ -128,4 +128,76 @@ defmodule Karaokium.RepertoireTest do
       assert %Ecto.Changeset{} = Repertoire.change_album(album)
     end
   end
+
+  describe "songs" do
+    alias Karaokium.Repertoire.Song
+
+    import Karaokium.RepertoireFixtures
+
+    @invalid_attrs %{duration_ms: nil, explicit: nil, href: nil, name: nil, popularity: nil, preview_url: nil, spotify_id: nil, spotify_uri: nil, spotify_url: nil, track_number: nil}
+
+    test "list_songs/0 returns all songs" do
+      song = song_fixture()
+      assert Repertoire.list_songs() == [song]
+    end
+
+    test "get_song!/1 returns the song with given id" do
+      song = song_fixture()
+      assert Repertoire.get_song!(song.id) == song
+    end
+
+    test "create_song/1 with valid data creates a song" do
+      valid_attrs = %{duration_ms: 42, explicit: true, href: "some href", name: "some name", popularity: 42, preview_url: "some preview_url", spotify_id: "some spotify_id", spotify_uri: "some spotify_uri", spotify_url: "some spotify_url", track_number: "some track_number"}
+
+      assert {:ok, %Song{} = song} = Repertoire.create_song(valid_attrs)
+      assert song.duration_ms == 42
+      assert song.explicit == true
+      assert song.href == "some href"
+      assert song.name == "some name"
+      assert song.popularity == 42
+      assert song.preview_url == "some preview_url"
+      assert song.spotify_id == "some spotify_id"
+      assert song.spotify_uri == "some spotify_uri"
+      assert song.spotify_url == "some spotify_url"
+      assert song.track_number == "some track_number"
+    end
+
+    test "create_song/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Repertoire.create_song(@invalid_attrs)
+    end
+
+    test "update_song/2 with valid data updates the song" do
+      song = song_fixture()
+      update_attrs = %{duration_ms: 43, explicit: false, href: "some updated href", name: "some updated name", popularity: 43, preview_url: "some updated preview_url", spotify_id: "some updated spotify_id", spotify_uri: "some updated spotify_uri", spotify_url: "some updated spotify_url", track_number: "some updated track_number"}
+
+      assert {:ok, %Song{} = song} = Repertoire.update_song(song, update_attrs)
+      assert song.duration_ms == 43
+      assert song.explicit == false
+      assert song.href == "some updated href"
+      assert song.name == "some updated name"
+      assert song.popularity == 43
+      assert song.preview_url == "some updated preview_url"
+      assert song.spotify_id == "some updated spotify_id"
+      assert song.spotify_uri == "some updated spotify_uri"
+      assert song.spotify_url == "some updated spotify_url"
+      assert song.track_number == "some updated track_number"
+    end
+
+    test "update_song/2 with invalid data returns error changeset" do
+      song = song_fixture()
+      assert {:error, %Ecto.Changeset{}} = Repertoire.update_song(song, @invalid_attrs)
+      assert song == Repertoire.get_song!(song.id)
+    end
+
+    test "delete_song/1 deletes the song" do
+      song = song_fixture()
+      assert {:ok, %Song{}} = Repertoire.delete_song(song)
+      assert_raise Ecto.NoResultsError, fn -> Repertoire.get_song!(song.id) end
+    end
+
+    test "change_song/1 returns a song changeset" do
+      song = song_fixture()
+      assert %Ecto.Changeset{} = Repertoire.change_song(song)
+    end
+  end
 end

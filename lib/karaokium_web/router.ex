@@ -43,12 +43,34 @@ defmodule KaraokiumWeb.Router do
     end
 
     scope "/events" do
+      scope "/karaokes" do
+        live "/", KaraokeLive.Index, :index
+        live "/new", KaraokeLive.Index, :new
+        live "/:id/edit", KaraokeLive.Index, :edit
+        live "/:id", KaraokeLive.Show, :show
+        live "/:id/show/edit", KaraokeLive.Show, :edit
+
+        live "/:karaoke_id/performances", PerformanceLive.Index, :index
+        live "/:karaoke_id/performances/new", PerformanceLive.Index, :new
+        live "/:karaoke_id/performances/:id/edit", PerformanceLive.Index, :edit
+        live "/:karaoke_id/performances/:id", PerformanceLive.Show, :show
+        live "/:karaoke_id/performances/:id/show/edit", PerformanceLive.Show, :edit
+      end
+
       live "/locations", LocationLive.Index, :index
       live "/locations/new", LocationLive.Index, :new
       live "/locations/:id/edit", LocationLive.Index, :edit
       live "/locations/:id", LocationLive.Show, :show
       live "/locations/:id/show/edit", LocationLive.Show, :edit
     end
+  end
+
+  scope "/polling" do
+    live "/votes", VoteLive.Index, :index
+    live "/votes/new", VoteLive.Index, :new
+    live "/votes/:id/edit", VoteLive.Index, :edit
+    live "/votes/:id", VoteLive.Show, :show
+    live "/votes/:id/show/edit", VoteLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

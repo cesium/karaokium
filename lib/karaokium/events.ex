@@ -101,4 +101,100 @@ defmodule Karaokium.Events do
   def change_location(%Location{} = location, attrs \\ %{}) do
     Location.changeset(location, attrs)
   end
+
+  alias Karaokium.Events.Karaoke
+
+  @doc """
+  Returns the list of karaokes.
+
+  ## Examples
+
+      iex> list_karaokes()
+      [%Karaoke{}, ...]
+
+  """
+  def list_karaokes do
+    Repo.all(Karaoke)
+  end
+
+  @doc """
+  Gets a single karaoke.
+
+  Raises `Ecto.NoResultsError` if the Karaoke does not exist.
+
+  ## Examples
+
+      iex> get_karaoke!(123)
+      %Karaoke{}
+
+      iex> get_karaoke!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_karaoke!(id), do: Repo.get!(Karaoke, id)
+
+  @doc """
+  Creates a karaoke.
+
+  ## Examples
+
+      iex> create_karaoke(%{field: value})
+      {:ok, %Karaoke{}}
+
+      iex> create_karaoke(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_karaoke(attrs \\ %{}) do
+    %Karaoke{}
+    |> Karaoke.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a karaoke.
+
+  ## Examples
+
+      iex> update_karaoke(karaoke, %{field: new_value})
+      {:ok, %Karaoke{}}
+
+      iex> update_karaoke(karaoke, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_karaoke(%Karaoke{} = karaoke, attrs) do
+    karaoke
+    |> Karaoke.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a karaoke.
+
+  ## Examples
+
+      iex> delete_karaoke(karaoke)
+      {:ok, %Karaoke{}}
+
+      iex> delete_karaoke(karaoke)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_karaoke(%Karaoke{} = karaoke) do
+    Repo.delete(karaoke)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking karaoke changes.
+
+  ## Examples
+
+      iex> change_karaoke(karaoke)
+      %Ecto.Changeset{data: %Karaoke{}}
+
+  """
+  def change_karaoke(%Karaoke{} = karaoke, attrs \\ %{}) do
+    Karaoke.changeset(karaoke, attrs)
+  end
 end
