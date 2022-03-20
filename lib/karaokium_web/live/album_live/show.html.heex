@@ -1,0 +1,51 @@
+<h1>Show Album</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.album_show_path(@socket, :show, @album)}>
+    <.live_component
+      module={KaraokiumWeb.AlbumLive.FormComponent}
+      id={@album.id}
+      title={@page_title}
+      action={@live_action}
+      album={@album}
+      return_to={Routes.album_show_path(@socket, :show, @album)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Spotify:</strong>
+    <%= @album.spotify_id %>
+  </li>
+
+  <li>
+    <strong>Spotify uri:</strong>
+    <%= @album.spotify_uri %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @album.name %>
+  </li>
+
+  <li>
+    <strong>Total tracks:</strong>
+    <%= @album.total_tracks %>
+  </li>
+
+  <li>
+    <strong>Album type:</strong>
+    <%= @album.album_type %>
+  </li>
+
+  <li>
+    <strong>Release date:</strong>
+    <%= @album.release_date %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.album_show_path(@socket, :edit, @album), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.album_index_path(@socket, :index) %></span>

@@ -21,6 +21,34 @@ defmodule KaraokiumWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    scope "/repertoire" do
+      live "/songs", SongLive.Index, :index
+      live "/songs/new", SongLive.Index, :new
+      live "/songs/:id/edit", SongLive.Index, :edit
+      live "/songs/:id", SongLive.Show, :show
+      live "/songs/:id/show/edit", SongLive.Show, :edit
+
+      live "/artists", ArtistLive.Index, :index
+      live "/artists/new", ArtistLive.Index, :new
+      live "/artists/:id/edit", ArtistLive.Index, :edit
+      live "/artists/:id", ArtistLive.Show, :show
+      live "/artists/:id/show/edit", ArtistLive.Show, :edit
+
+      live "/albums", AlbumLive.Index, :index
+      live "/albums/new", AlbumLive.Index, :new
+      live "/albums/:id/edit", AlbumLive.Index, :edit
+      live "/albums/:id", AlbumLive.Show, :show
+      live "/albums/:id/show/edit", AlbumLive.Show, :edit
+    end
+
+    scope "/events" do
+      live "/locations", LocationLive.Index, :index
+      live "/locations/new", LocationLive.Index, :new
+      live "/locations/:id/edit", LocationLive.Index, :edit
+      live "/locations/:id", LocationLive.Show, :show
+      live "/locations/:id/show/edit", LocationLive.Show, :edit
+    end
   end
 
   # Other scopes may use custom stacks.
