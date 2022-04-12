@@ -2,14 +2,7 @@
 
 <%= if @live_action in [:new, :edit] do %>
   <.modal return_to={Routes.artist_index_path(@socket, :index)}>
-    <.live_component
-      module={KaraokiumWeb.ArtistLive.FormComponent}
-      id={@artist.id || :new}
-      title={@page_title}
-      action={@live_action}
-      artist={@artist}
-      return_to={Routes.artist_index_path(@socket, :index)}
-    />
+    <.live_component module={KaraokiumWeb.ArtistLive.FormComponent} id={@artist.id || :new} title={@page_title} action={@live_action} artist={@artist} return_to={Routes.artist_index_path(@socket, :index)} />
   </.modal>
 <% end %>
 
@@ -35,13 +28,13 @@
         <td><%= artist.spotify_url %></td>
 
         <td>
-          <span><%= live_redirect "Show", to: Routes.artist_show_path(@socket, :show, artist) %></span>
-          <span><%= live_patch "Edit", to: Routes.artist_index_path(@socket, :edit, artist) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: artist.id, data: [confirm: "Are you sure?"] %></span>
+          <span><%= live_redirect("Show", to: Routes.artist_show_path(@socket, :show, artist)) %></span>
+          <span><%= live_patch("Edit", to: Routes.artist_index_path(@socket, :edit, artist)) %></span>
+          <span><%= link("Delete", to: "#", phx_click: "delete", phx_value_id: artist.id, data: [confirm: "Are you sure?"]) %></span>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<span><%= live_patch "New Artist", to: Routes.artist_index_path(@socket, :new) %></span>
+<span><%= live_patch("New Artist", to: Routes.artist_index_path(@socket, :new)) %></span>

@@ -175,6 +175,7 @@ defmodule Karaokium.Accounts.UserToken do
   end
 
   def user_and_contexts_query(user, [_ | _] = contexts) do
-    from t in Karaokium.Accounts.UserToken, where: t.user_id == ^user.id and t.context in ^contexts
+    from t in Karaokium.Accounts.UserToken,
+      where: t.user_id == ^user.id and t.context in ^contexts
   end
 end

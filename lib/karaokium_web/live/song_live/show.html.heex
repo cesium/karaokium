@@ -2,19 +2,11 @@
 
 <%= if @live_action in [:edit] do %>
   <.modal return_to={Routes.song_show_path(@socket, :show, @song)}>
-    <.live_component
-      module={KaraokiumWeb.SongLive.FormComponent}
-      id={@song.id}
-      title={@page_title}
-      action={@live_action}
-      song={@song}
-      return_to={Routes.song_show_path(@socket, :show, @song)}
-    />
+    <.live_component module={KaraokiumWeb.SongLive.FormComponent} id={@song.id} title={@page_title} action={@live_action} song={@song} return_to={Routes.song_show_path(@socket, :show, @song)} />
   </.modal>
 <% end %>
 
 <ul>
-
   <li>
     <strong>Spotify:</strong>
     <%= @song.spotify_id %>
@@ -64,8 +56,6 @@
     <strong>Explicit:</strong>
     <%= @song.explicit %>
   </li>
-
 </ul>
 
-<span><%= live_patch "Edit", to: Routes.song_show_path(@socket, :edit, @song), class: "button" %></span> |
-<span><%= live_redirect "Back", to: Routes.song_index_path(@socket, :index) %></span>
+<span><%= live_patch("Edit", to: Routes.song_show_path(@socket, :edit, @song), class: "button") %></span> | <span><%= live_redirect("Back", to: Routes.song_index_path(@socket, :index)) %></span>

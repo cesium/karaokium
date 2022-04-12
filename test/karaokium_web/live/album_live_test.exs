@@ -4,9 +4,30 @@ defmodule KaraokiumWeb.AlbumLiveTest do
   import Phoenix.LiveViewTest
   import Karaokium.RepertoireFixtures
 
-  @create_attrs %{album_type: "some album_type", name: "some name", release_date: "some release_date", spotify_id: "some spotify_id", spotify_uri: "some spotify_uri", total_tracks: "some total_tracks"}
-  @update_attrs %{album_type: "some updated album_type", name: "some updated name", release_date: "some updated release_date", spotify_id: "some updated spotify_id", spotify_uri: "some updated spotify_uri", total_tracks: "some updated total_tracks"}
-  @invalid_attrs %{album_type: nil, name: nil, release_date: nil, spotify_id: nil, spotify_uri: nil, total_tracks: nil}
+  @create_attrs %{
+    album_type: "some album_type",
+    name: "some name",
+    release_date: "some release_date",
+    spotify_id: "some spotify_id",
+    spotify_uri: "some spotify_uri",
+    total_tracks: "some total_tracks"
+  }
+  @update_attrs %{
+    album_type: "some updated album_type",
+    name: "some updated name",
+    release_date: "some updated release_date",
+    spotify_id: "some updated spotify_id",
+    spotify_uri: "some updated spotify_uri",
+    total_tracks: "some updated total_tracks"
+  }
+  @invalid_attrs %{
+    album_type: nil,
+    name: nil,
+    release_date: nil,
+    spotify_id: nil,
+    spotify_uri: nil,
+    total_tracks: nil
+  }
 
   defp create_album(_) do
     album = album_fixture()

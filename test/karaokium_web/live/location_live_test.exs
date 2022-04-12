@@ -4,8 +4,20 @@ defmodule KaraokiumWeb.LocationLiveTest do
   import Phoenix.LiveViewTest
   import Karaokium.EventsFixtures
 
-  @create_attrs %{address: "some address", county: "some county", district: "some district", locality: "some locality", name: "some name"}
-  @update_attrs %{address: "some updated address", county: "some updated county", district: "some updated district", locality: "some updated locality", name: "some updated name"}
+  @create_attrs %{
+    address: "some address",
+    county: "some county",
+    district: "some district",
+    locality: "some locality",
+    name: "some name"
+  }
+  @update_attrs %{
+    address: "some updated address",
+    county: "some updated county",
+    district: "some updated district",
+    locality: "some updated locality",
+    name: "some updated name"
+  }
   @invalid_attrs %{address: nil, county: nil, district: nil, locality: nil, name: nil}
 
   defp create_location(_) do

@@ -34,12 +34,16 @@ defmodule Karaokium.PerformancesTest do
       performance = performance_fixture()
       update_attrs = %{}
 
-      assert {:ok, %Performance{} = performance} = Performances.update_performance(performance, update_attrs)
+      assert {:ok, %Performance{} = performance} =
+               Performances.update_performance(performance, update_attrs)
     end
 
     test "update_performance/2 with invalid data returns error changeset" do
       performance = performance_fixture()
-      assert {:error, %Ecto.Changeset{}} = Performances.update_performance(performance, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Performances.update_performance(performance, @invalid_attrs)
+
       assert performance == Performances.get_performance!(performance.id)
     end
 

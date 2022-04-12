@@ -2,19 +2,11 @@
 
 <%= if @live_action in [:edit] do %>
   <.modal return_to={Routes.artist_show_path(@socket, :show, @artist)}>
-    <.live_component
-      module={KaraokiumWeb.ArtistLive.FormComponent}
-      id={@artist.id}
-      title={@page_title}
-      action={@live_action}
-      artist={@artist}
-      return_to={Routes.artist_show_path(@socket, :show, @artist)}
-    />
+    <.live_component module={KaraokiumWeb.ArtistLive.FormComponent} id={@artist.id} title={@page_title} action={@live_action} artist={@artist} return_to={Routes.artist_show_path(@socket, :show, @artist)} />
   </.modal>
 <% end %>
 
 <ul>
-
   <li>
     <strong>Spotify:</strong>
     <%= @artist.spotify_id %>
@@ -39,8 +31,6 @@
     <strong>Spotify url:</strong>
     <%= @artist.spotify_url %>
   </li>
-
 </ul>
 
-<span><%= live_patch "Edit", to: Routes.artist_show_path(@socket, :edit, @artist), class: "button" %></span> |
-<span><%= live_redirect "Back", to: Routes.artist_index_path(@socket, :index) %></span>
+<span><%= live_patch("Edit", to: Routes.artist_show_path(@socket, :edit, @artist), class: "button") %></span> | <span><%= live_redirect("Back", to: Routes.artist_index_path(@socket, :index)) %></span>

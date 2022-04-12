@@ -22,7 +22,29 @@ defmodule Karaokium.Repertoire.Song do
   @doc false
   def changeset(song, attrs) do
     song
-    |> cast(attrs, [:spotify_id, :spotify_uri, :name, :duration_ms, :popularity, :preview_url, :spotify_url, :href, :track_number, :explicit])
-    |> validate_required([:spotify_id, :spotify_uri, :name, :duration_ms, :popularity, :preview_url, :spotify_url, :href, :track_number, :explicit])
+    |> cast(attrs, [
+      :spotify_id,
+      :spotify_uri,
+      :name,
+      :duration_ms,
+      :popularity,
+      :preview_url,
+      :spotify_url,
+      :href,
+      :track_number,
+      :explicit
+    ])
+    |> validate_required([
+      :spotify_id,
+      :spotify_uri,
+      :name,
+      :duration_ms,
+      :popularity,
+      :preview_url,
+      :spotify_url,
+      :href,
+      :track_number,
+      :explicit
+    ])
   end
 end

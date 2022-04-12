@@ -4,9 +4,42 @@ defmodule KaraokiumWeb.SongLiveTest do
   import Phoenix.LiveViewTest
   import Karaokium.RepertoireFixtures
 
-  @create_attrs %{duration_ms: 42, explicit: true, href: "some href", name: "some name", popularity: 42, preview_url: "some preview_url", spotify_id: "some spotify_id", spotify_uri: "some spotify_uri", spotify_url: "some spotify_url", track_number: "some track_number"}
-  @update_attrs %{duration_ms: 43, explicit: false, href: "some updated href", name: "some updated name", popularity: 43, preview_url: "some updated preview_url", spotify_id: "some updated spotify_id", spotify_uri: "some updated spotify_uri", spotify_url: "some updated spotify_url", track_number: "some updated track_number"}
-  @invalid_attrs %{duration_ms: nil, explicit: false, href: nil, name: nil, popularity: nil, preview_url: nil, spotify_id: nil, spotify_uri: nil, spotify_url: nil, track_number: nil}
+  @create_attrs %{
+    duration_ms: 42,
+    explicit: true,
+    href: "some href",
+    name: "some name",
+    popularity: 42,
+    preview_url: "some preview_url",
+    spotify_id: "some spotify_id",
+    spotify_uri: "some spotify_uri",
+    spotify_url: "some spotify_url",
+    track_number: "some track_number"
+  }
+  @update_attrs %{
+    duration_ms: 43,
+    explicit: false,
+    href: "some updated href",
+    name: "some updated name",
+    popularity: 43,
+    preview_url: "some updated preview_url",
+    spotify_id: "some updated spotify_id",
+    spotify_uri: "some updated spotify_uri",
+    spotify_url: "some updated spotify_url",
+    track_number: "some updated track_number"
+  }
+  @invalid_attrs %{
+    duration_ms: nil,
+    explicit: false,
+    href: nil,
+    name: nil,
+    popularity: nil,
+    preview_url: nil,
+    spotify_id: nil,
+    spotify_uri: nil,
+    spotify_url: nil,
+    track_number: nil
+  }
 
   defp create_song(_) do
     song = song_fixture()

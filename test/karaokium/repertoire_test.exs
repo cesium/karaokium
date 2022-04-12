@@ -21,7 +21,13 @@ defmodule Karaokium.RepertoireTest do
     end
 
     test "create_artist/1 with valid data creates a artist" do
-      valid_attrs = %{href: "some href", name: "some name", spotify_id: "some spotify_id", spotify_uri: "some spotify_uri", spotify_url: "some spotify_url"}
+      valid_attrs = %{
+        href: "some href",
+        name: "some name",
+        spotify_id: "some spotify_id",
+        spotify_uri: "some spotify_uri",
+        spotify_url: "some spotify_url"
+      }
 
       assert {:ok, %Artist{} = artist} = Repertoire.create_artist(valid_attrs)
       assert artist.href == "some href"
@@ -37,7 +43,14 @@ defmodule Karaokium.RepertoireTest do
 
     test "update_artist/2 with valid data updates the artist" do
       artist = artist_fixture()
-      update_attrs = %{href: "some updated href", name: "some updated name", spotify_id: "some updated spotify_id", spotify_uri: "some updated spotify_uri", spotify_url: "some updated spotify_url"}
+
+      update_attrs = %{
+        href: "some updated href",
+        name: "some updated name",
+        spotify_id: "some updated spotify_id",
+        spotify_uri: "some updated spotify_uri",
+        spotify_url: "some updated spotify_url"
+      }
 
       assert {:ok, %Artist{} = artist} = Repertoire.update_artist(artist, update_attrs)
       assert artist.href == "some updated href"
@@ -70,7 +83,14 @@ defmodule Karaokium.RepertoireTest do
 
     import Karaokium.RepertoireFixtures
 
-    @invalid_attrs %{album_type: nil, name: nil, release_date: nil, spotify_id: nil, spotify_uri: nil, total_tracks: nil}
+    @invalid_attrs %{
+      album_type: nil,
+      name: nil,
+      release_date: nil,
+      spotify_id: nil,
+      spotify_uri: nil,
+      total_tracks: nil
+    }
 
     test "list_albums/0 returns all albums" do
       album = album_fixture()
@@ -83,7 +103,14 @@ defmodule Karaokium.RepertoireTest do
     end
 
     test "create_album/1 with valid data creates a album" do
-      valid_attrs = %{album_type: "some album_type", name: "some name", release_date: "some release_date", spotify_id: "some spotify_id", spotify_uri: "some spotify_uri", total_tracks: "some total_tracks"}
+      valid_attrs = %{
+        album_type: "some album_type",
+        name: "some name",
+        release_date: "some release_date",
+        spotify_id: "some spotify_id",
+        spotify_uri: "some spotify_uri",
+        total_tracks: "some total_tracks"
+      }
 
       assert {:ok, %Album{} = album} = Repertoire.create_album(valid_attrs)
       assert album.album_type == "some album_type"
@@ -100,7 +127,15 @@ defmodule Karaokium.RepertoireTest do
 
     test "update_album/2 with valid data updates the album" do
       album = album_fixture()
-      update_attrs = %{album_type: "some updated album_type", name: "some updated name", release_date: "some updated release_date", spotify_id: "some updated spotify_id", spotify_uri: "some updated spotify_uri", total_tracks: "some updated total_tracks"}
+
+      update_attrs = %{
+        album_type: "some updated album_type",
+        name: "some updated name",
+        release_date: "some updated release_date",
+        spotify_id: "some updated spotify_id",
+        spotify_uri: "some updated spotify_uri",
+        total_tracks: "some updated total_tracks"
+      }
 
       assert {:ok, %Album{} = album} = Repertoire.update_album(album, update_attrs)
       assert album.album_type == "some updated album_type"
@@ -134,7 +169,18 @@ defmodule Karaokium.RepertoireTest do
 
     import Karaokium.RepertoireFixtures
 
-    @invalid_attrs %{duration_ms: nil, explicit: nil, href: nil, name: nil, popularity: nil, preview_url: nil, spotify_id: nil, spotify_uri: nil, spotify_url: nil, track_number: nil}
+    @invalid_attrs %{
+      duration_ms: nil,
+      explicit: nil,
+      href: nil,
+      name: nil,
+      popularity: nil,
+      preview_url: nil,
+      spotify_id: nil,
+      spotify_uri: nil,
+      spotify_url: nil,
+      track_number: nil
+    }
 
     test "list_songs/0 returns all songs" do
       song = song_fixture()
@@ -147,7 +193,18 @@ defmodule Karaokium.RepertoireTest do
     end
 
     test "create_song/1 with valid data creates a song" do
-      valid_attrs = %{duration_ms: 42, explicit: true, href: "some href", name: "some name", popularity: 42, preview_url: "some preview_url", spotify_id: "some spotify_id", spotify_uri: "some spotify_uri", spotify_url: "some spotify_url", track_number: "some track_number"}
+      valid_attrs = %{
+        duration_ms: 42,
+        explicit: true,
+        href: "some href",
+        name: "some name",
+        popularity: 42,
+        preview_url: "some preview_url",
+        spotify_id: "some spotify_id",
+        spotify_uri: "some spotify_uri",
+        spotify_url: "some spotify_url",
+        track_number: "some track_number"
+      }
 
       assert {:ok, %Song{} = song} = Repertoire.create_song(valid_attrs)
       assert song.duration_ms == 42
@@ -168,7 +225,19 @@ defmodule Karaokium.RepertoireTest do
 
     test "update_song/2 with valid data updates the song" do
       song = song_fixture()
-      update_attrs = %{duration_ms: 43, explicit: false, href: "some updated href", name: "some updated name", popularity: 43, preview_url: "some updated preview_url", spotify_id: "some updated spotify_id", spotify_uri: "some updated spotify_uri", spotify_url: "some updated spotify_url", track_number: "some updated track_number"}
+
+      update_attrs = %{
+        duration_ms: 43,
+        explicit: false,
+        href: "some updated href",
+        name: "some updated name",
+        popularity: 43,
+        preview_url: "some updated preview_url",
+        spotify_id: "some updated spotify_id",
+        spotify_uri: "some updated spotify_uri",
+        spotify_url: "some updated spotify_url",
+        track_number: "some updated track_number"
+      }
 
       assert {:ok, %Song{} = song} = Repertoire.update_song(song, update_attrs)
       assert song.duration_ms == 43

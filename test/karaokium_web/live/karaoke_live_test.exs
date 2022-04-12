@@ -4,9 +4,21 @@ defmodule KaraokiumWeb.KaraokeLiveTest do
   import Phoenix.LiveViewTest
   import Karaokium.EventsFixtures
 
-  @create_attrs %{end_date: %{day: 19, month: 3, year: 2022}, name: "some name", start_date: %{day: 19, month: 3, year: 2022}}
-  @update_attrs %{end_date: %{day: 20, month: 3, year: 2022}, name: "some updated name", start_date: %{day: 20, month: 3, year: 2022}}
-  @invalid_attrs %{end_date: %{day: 30, month: 2, year: 2022}, name: nil, start_date: %{day: 30, month: 2, year: 2022}}
+  @create_attrs %{
+    end_date: %{day: 19, month: 3, year: 2022},
+    name: "some name",
+    start_date: %{day: 19, month: 3, year: 2022}
+  }
+  @update_attrs %{
+    end_date: %{day: 20, month: 3, year: 2022},
+    name: "some updated name",
+    start_date: %{day: 20, month: 3, year: 2022}
+  }
+  @invalid_attrs %{
+    end_date: %{day: 30, month: 2, year: 2022},
+    name: nil,
+    start_date: %{day: 30, month: 2, year: 2022}
+  }
 
   defp create_karaoke(_) do
     karaoke = karaoke_fixture()

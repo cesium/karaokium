@@ -21,7 +21,13 @@ defmodule Karaokium.EventsTest do
     end
 
     test "create_location/1 with valid data creates a location" do
-      valid_attrs = %{address: "some address", county: "some county", district: "some district", locality: "some locality", name: "some name"}
+      valid_attrs = %{
+        address: "some address",
+        county: "some county",
+        district: "some district",
+        locality: "some locality",
+        name: "some name"
+      }
 
       assert {:ok, %Location{} = location} = Events.create_location(valid_attrs)
       assert location.address == "some address"
@@ -37,7 +43,14 @@ defmodule Karaokium.EventsTest do
 
     test "update_location/2 with valid data updates the location" do
       location = location_fixture()
-      update_attrs = %{address: "some updated address", county: "some updated county", district: "some updated district", locality: "some updated locality", name: "some updated name"}
+
+      update_attrs = %{
+        address: "some updated address",
+        county: "some updated county",
+        district: "some updated district",
+        locality: "some updated locality",
+        name: "some updated name"
+      }
 
       assert {:ok, %Location{} = location} = Events.update_location(location, update_attrs)
       assert location.address == "some updated address"
@@ -97,7 +110,12 @@ defmodule Karaokium.EventsTest do
 
     test "update_karaoke/2 with valid data updates the karaoke" do
       karaoke = karaoke_fixture()
-      update_attrs = %{end_date: ~D[2022-03-20], name: "some updated name", start_date: ~D[2022-03-20]}
+
+      update_attrs = %{
+        end_date: ~D[2022-03-20],
+        name: "some updated name",
+        start_date: ~D[2022-03-20]
+      }
 
       assert {:ok, %Karaoke{} = karaoke} = Events.update_karaoke(karaoke, update_attrs)
       assert karaoke.end_date == ~D[2022-03-20]

@@ -4,8 +4,20 @@ defmodule KaraokiumWeb.ArtistLiveTest do
   import Phoenix.LiveViewTest
   import Karaokium.RepertoireFixtures
 
-  @create_attrs %{href: "some href", name: "some name", spotify_id: "some spotify_id", spotify_uri: "some spotify_uri", spotify_url: "some spotify_url"}
-  @update_attrs %{href: "some updated href", name: "some updated name", spotify_id: "some updated spotify_id", spotify_uri: "some updated spotify_uri", spotify_url: "some updated spotify_url"}
+  @create_attrs %{
+    href: "some href",
+    name: "some name",
+    spotify_id: "some spotify_id",
+    spotify_uri: "some spotify_uri",
+    spotify_url: "some spotify_url"
+  }
+  @update_attrs %{
+    href: "some updated href",
+    name: "some updated name",
+    spotify_id: "some updated spotify_id",
+    spotify_uri: "some updated spotify_uri",
+    spotify_url: "some updated spotify_url"
+  }
   @invalid_attrs %{href: nil, name: nil, spotify_id: nil, spotify_uri: nil, spotify_url: nil}
 
   defp create_artist(_) do

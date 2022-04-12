@@ -2,14 +2,7 @@
 
 <%= if @live_action in [:new, :edit] do %>
   <.modal return_to={Routes.location_index_path(@socket, :index)}>
-    <.live_component
-      module={KaraokiumWeb.LocationLive.FormComponent}
-      id={@location.id || :new}
-      title={@page_title}
-      action={@live_action}
-      location={@location}
-      return_to={Routes.location_index_path(@socket, :index)}
-    />
+    <.live_component module={KaraokiumWeb.LocationLive.FormComponent} id={@location.id || :new} title={@page_title} action={@live_action} location={@location} return_to={Routes.location_index_path(@socket, :index)} />
   </.modal>
 <% end %>
 
@@ -35,13 +28,13 @@
         <td><%= location.address %></td>
 
         <td>
-          <span><%= live_redirect "Show", to: Routes.location_show_path(@socket, :show, location) %></span>
-          <span><%= live_patch "Edit", to: Routes.location_index_path(@socket, :edit, location) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: location.id, data: [confirm: "Are you sure?"] %></span>
+          <span><%= live_redirect("Show", to: Routes.location_show_path(@socket, :show, location)) %></span>
+          <span><%= live_patch("Edit", to: Routes.location_index_path(@socket, :edit, location)) %></span>
+          <span><%= link("Delete", to: "#", phx_click: "delete", phx_value_id: location.id, data: [confirm: "Are you sure?"]) %></span>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<span><%= live_patch "New Location", to: Routes.location_index_path(@socket, :new) %></span>
+<span><%= live_patch("New Location", to: Routes.location_index_path(@socket, :new)) %></span>

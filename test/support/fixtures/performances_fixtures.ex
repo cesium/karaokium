@@ -10,9 +10,7 @@ defmodule Karaokium.PerformancesFixtures do
   def performance_fixture(attrs \\ %{}) do
     {:ok, performance} =
       attrs
-      |> Enum.into(%{
-
-      })
+      |> Enum.into(%{})
       |> Karaokium.Performances.create_performance()
 
     performance

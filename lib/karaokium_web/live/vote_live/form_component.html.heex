@@ -1,20 +1,13 @@
 <div>
   <h2><%= @title %></h2>
 
-  <.form
-    let={f}
-    for={@changeset}
-    id="vote-form"
-    phx-target={@myself}
-    phx-change="validate"
-    phx-submit="save">
-  
-    <%= label f, :pontuation %>
-    <%= number_input f, :pontuation %>
-    <%= error_tag f, :pontuation %>
-  
+  <.form let={f} for={@changeset} id="vote-form" phx-target={@myself} phx-change="validate" phx-submit="save">
+    <%= label(f, :pontuation) %>
+    <%= number_input(f, :pontuation) %>
+    <%= error_tag(f, :pontuation) %>
+
     <div>
-      <%= submit "Save", phx_disable_with: "Saving..." %>
+      <%= submit("Save", phx_disable_with: "Saving...") %>
     </div>
   </.form>
 </div>

@@ -19,6 +19,13 @@ defmodule Karaokium.Repertoire.Album do
   def changeset(album, attrs) do
     album
     |> cast(attrs, [:spotify_id, :spotify_uri, :name, :total_tracks, :album_type, :release_date])
-    |> validate_required([:spotify_id, :spotify_uri, :name, :total_tracks, :album_type, :release_date])
+    |> validate_required([
+      :spotify_id,
+      :spotify_uri,
+      :name,
+      :total_tracks,
+      :album_type,
+      :release_date
+    ])
   end
 end
