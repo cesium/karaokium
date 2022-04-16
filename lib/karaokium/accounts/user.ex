@@ -1,8 +1,13 @@
 defmodule Karaokium.Accounts.User do
   use Karaokium.Schema
 
+  @permissions [:admin, :sysadmin]
+
   schema "users" do
+    field :name, :string
+    field :username, :string
     field :email, :string
+    field :permissions, {:array, Ecto.Enum}, values: @permissions, default: []
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
@@ -29,9 +34,27 @@ defmodule Karaokium.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, [:name, :username, :email, :password])
+    |> validate_name()
+    |> validate_username()
     |> validate_email()
     |> validate_password(opts)
+  end
+
+  defp validate_name(changeset) do
+    changeset
+    |> validate_required([:name])
+  end
+
+  defp validate_username(changeset) do
+    changeset
+    |> validate_required([:username])
+    |> validate_format(:username, ~r/^[a-z0-9_.]+$/,
+      message: "must be alphanumeric characters not uppercase"
+    )
+    |> validate_length(:username, min: 3, max: 26)
+    |> unsafe_validate_unique(:username, Karaokium.Repo)
+    |> unique_constraint(:username)
   end
 
   defp validate_email(changeset) do

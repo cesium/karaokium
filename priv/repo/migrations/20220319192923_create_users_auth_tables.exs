@@ -4,12 +4,16 @@ defmodule Karaokium.Repo.Migrations.CreateUsersAuthTables do
   def change do
     create table(:users, primary_key: false) do
       add :id, :binary_id, primary_key: true
+      add :name, :string, null: false
+      add :username, :string, null: false, collate: :nocase
       add :email, :string, null: false, collate: :nocase
+      add :permissions, {:array, :string}, default: []
       add :hashed_password, :string, null: false
       add :confirmed_at, :naive_datetime
       timestamps()
     end
 
+    create unique_index(:users, [:username])
     create unique_index(:users, [:email])
 
     create table(:users_tokens, primary_key: false) do
