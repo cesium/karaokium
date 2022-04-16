@@ -9,15 +9,15 @@
     <%= error_tag(f, :name) %>
 
     <%= label(f, :start_date) %>
-    <%= datetime_select(f, :start_date) %>
+    <%= datetime_local_input(f, :start_date) %>
     <%= error_tag(f, :start_date) %>
 
     <%= label(f, :end_date) %>
-    <%= datetime_select(f, :end_date) %>
+    <%= datetime_local_input(f, :end_date) %>
     <%= error_tag(f, :end_date) %>
 
     <div>
-      <%= submit("Save", phx_disable_with: "Saving...") %>
+      <%= submit("Save", phx_disable_with: "Saving...", class: "action-btn") %>
     </div>
   </.form>
 </section>
