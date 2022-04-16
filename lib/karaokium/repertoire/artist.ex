@@ -1,9 +1,6 @@
 defmodule Karaokium.Repertoire.Artist do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use Karaokium.Schema
 
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
   schema "artists" do
     field :href, :string
     field :name, :string

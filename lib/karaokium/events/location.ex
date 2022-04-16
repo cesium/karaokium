@@ -1,9 +1,6 @@
 defmodule Karaokium.Events.Location do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use Karaokium.Schema
 
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
   schema "locations" do
     field :address, :string
     field :county, :string

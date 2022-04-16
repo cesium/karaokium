@@ -1,9 +1,6 @@
 defmodule Karaokium.Repertoire.Song do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use Karaokium.Schema
 
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
   schema "songs" do
     field :duration_ms, :integer
     field :explicit, :boolean, default: false

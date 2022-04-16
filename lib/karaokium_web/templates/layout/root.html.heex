@@ -6,27 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <%= csrf_meta_tag() %>
     <%= live_title_tag(assigns[:page_title] || "Karaokium", suffix: " · Phoenix Framework") %>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")} />
+    <%# <link rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Oldstyle.css" />
+    <link rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Modernist.css" />
+    <link rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Midnight.css" />
+    <link rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Ultramarine.css" />
+    <link rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Swiss.css" />
+    <link rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Chocolate.css" />
+    <link rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Traditional.css" />
+    <link rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Steely.css" /> %>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}>
     </script>
   </head>
-  <body>
-    <header>
-      <section class="container">
-        <nav>
-          <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link("LiveDashboard", to: Routes.live_dashboard_path(@conn, :home)) %></li>
-            <% end %>
-          </ul>
-          <%= render("_user_menu.html", assigns) %>
-        </nav>
-        <a href="https://phoenixframework.org/" class="phx-logo">
-          <img src={Routes.static_path(@conn, "/images/phoenix.png")} alt="Phoenix Framework Logo" />
-        </a>
-      </section>
-    </header>
+  <body class="lightMode">
+    <%= render("_header.html", assigns) %>
     <%= @inner_content %>
   </body>
 </html>

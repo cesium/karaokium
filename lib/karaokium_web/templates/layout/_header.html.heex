@@ -1,0 +1,25 @@
+<header>
+  <nav>
+    <%= live_patch to: Routes.page_path(@conn, :index) do %>
+      <img alt="Phoenix Framework Logo" src={Routes.static_path(@conn, "/images/phoenix.png")} height="70" />
+    <% end %>
+    <ul>
+      <%= for entry <- menu(@conn) do %>
+        <li>
+          <a href={entry.url}><%= entry.title %></a>
+          <%= unless Enum.empty?(entry.submenu) do %>
+            <ul>
+              <%= for subentry <- entry.submenu do %>
+                <li><a href={subentry.url}><%= subentry.title %></a></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </li>
+      <% end %>
+      <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+        <li><%= link("LiveDashboard", to: Routes.live_dashboard_path(@conn, :home)) %></li>
+      <% end %>
+    </ul>
+    <%= render("_user_menu.html", assigns) %>
+  </nav>
+</header>

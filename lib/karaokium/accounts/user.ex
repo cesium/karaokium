@@ -1,8 +1,6 @@
 defmodule Karaokium.Accounts.User do
-  use Ecto.Schema
-  import Ecto.Changeset
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
+  use Karaokium.Schema
+
   schema "users" do
     field :email, :string
     field :password, :string, virtual: true, redact: true

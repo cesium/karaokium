@@ -1,9 +1,6 @@
 defmodule Karaokium.Events.Karaoke do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use Karaokium.Schema
 
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
   schema "karaokes" do
     field :end_date, :date
     field :name, :string
