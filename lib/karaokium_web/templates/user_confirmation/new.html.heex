@@ -1,14 +1,18 @@
-<h1>Resend confirmation instructions</h1>
+<section>
+  <.form let={f} for={:user} action={Routes.user_confirmation_path(@conn, :create)}>
+    <header>
+      <h1>Resend confirmation instructions</h1>
+    </header>
 
-<.form let={f} for={:user} action={Routes.user_confirmation_path(@conn, :create)}>
-  <%= label(f, :email) %>
-  <%= email_input(f, :email, required: true) %>
+    <%= label(f, :email) %>
+    <%= email_input(f, :email, required: true) %>
 
-  <div>
-    <%= submit("Resend confirmation instructions") %>
-  </div>
-</.form>
+    <p>
+      <%= link("Register", to: Routes.user_registration_path(@conn, :new)) %> | <%= link("Log in", to: Routes.user_session_path(@conn, :new)) %>
+    </p>
 
-<p>
-  <%= link("Register", to: Routes.user_registration_path(@conn, :new)) %> | <%= link("Log in", to: Routes.user_session_path(@conn, :new)) %>
-</p>
+    <div>
+      <%= submit("Resend confirmation instructions", class: "action-btn") %>
+    </div>
+  </.form>
+</section>

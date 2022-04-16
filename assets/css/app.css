@@ -35,6 +35,19 @@ main {
   padding: 1rem 1rem;
 }
 
+input {
+  min-width: inherit;
+}
+
+input[type="checkbox"] {
+  min-width: auto;
+}
+
+.action-btn {
+  width: 100%;
+  padding: 5px;
+}
+
 /* Alerts and form errors used by phx.new */
 .alert {
   padding: 15px;
