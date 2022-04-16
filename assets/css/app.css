@@ -25,6 +25,16 @@
   --width-content: 1080px;
 }
 
+nav {
+  margin-bottom: 0;
+}
+
+footer,
+header,
+main {
+  padding: 1rem 1rem;
+}
+
 /* Alerts and form errors used by phx.new */
 .alert {
   padding: 15px;

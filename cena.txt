@@ -1,3 +1,11 @@
+    <link rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Oldstyle.css" />
+    <link rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Modernist.css" />
+    <link rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Midnight.css" />
+    <link rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Ultramarine.css" />
+    <link rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Swiss.css" />
+    <link rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Chocolate.css" />
+    <link rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Traditional.css" />
+    <link rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Steely.css" />
 {
   "tracks" : {
     "href" : "https://api.spotify.com/v1/search?query=James+Blunt+You+are+beautiful&type=track&offset=0&limit=20",

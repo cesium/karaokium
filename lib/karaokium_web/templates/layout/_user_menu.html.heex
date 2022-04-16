@@ -1,7 +1,9 @@
 <ul>
   <%= if @current_user do %>
     <li>
-      <%= @current_user.email %>
+      <a href="#">
+        <%= @current_user.email %>
+      </a>
       <ul>
         <li><%= link("Settings", to: Routes.user_settings_path(@conn, :edit)) %></li>
         <li><%= link("Log out", to: Routes.user_session_path(@conn, :delete), method: :delete) %></li>
