@@ -16,6 +16,10 @@
     <%= datetime_local_input(f, :end_date) %>
     <%= error_tag(f, :end_date) %>
 
+    <%= label(f, :location_id) %>
+    <%= select(f, :location_id, Enum.map(@locations, &{&1.name, &1.id}), prompt: gettext("Choose a location")) %>
+    <%= error_tag(f, :location_id) %>
+
     <div>
       <%= submit("Save", phx_disable_with: "Saving...", class: "action-btn") %>
     </div>

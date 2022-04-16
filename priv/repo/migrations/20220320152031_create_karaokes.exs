@@ -7,11 +7,11 @@ defmodule Karaokium.Repo.Migrations.CreateKaraokes do
       add :name, :string
       add :start_date, :naive_datetime
       add :end_date, :naive_datetime
-      add :location, references(:locations, on_delete: :nothing, type: :binary_id)
+      add :location_id, references(:locations, on_delete: :nothing, type: :binary_id)
 
       timestamps()
     end
 
-    create index(:karaokes, [:location])
+    create index(:karaokes, [:location_id])
   end
 end

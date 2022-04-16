@@ -17,8 +17,10 @@ defmodule Karaokium.Events do
       [%Location{}, ...]
 
   """
-  def list_locations do
-    Repo.all(Location)
+  def list_locations(opts \\ []) do
+    Location
+    |> apply_filters(opts)
+    |> Repo.all()
   end
 
   @doc """
@@ -113,8 +115,10 @@ defmodule Karaokium.Events do
       [%Karaoke{}, ...]
 
   """
-  def list_karaokes do
-    Repo.all(Karaoke)
+  def list_karaokes(opts \\ []) do
+    Karaoke
+    |> apply_filters(opts)
+    |> Repo.all()
   end
 
   @doc """
@@ -131,7 +135,7 @@ defmodule Karaokium.Events do
       ** (Ecto.NoResultsError)
 
   """
-  def get_karaoke!(id), do: Repo.get!(Karaoke, id)
+  def get_karaoke!(id, preloads \\ []), do: Repo.get!(Karaoke, id) |> Repo.preload(preloads)
 
   @doc """
   Creates a karaoke.
@@ -196,5 +200,32 @@ defmodule Karaokium.Events do
   """
   def change_karaoke(%Karaoke{} = karaoke, attrs \\ %{}) do
     Karaoke.changeset(karaoke, attrs)
+  end
+
+  defp apply_filters(query, opts) do
+    Enum.reduce(opts, query, fn
+      {:where, filters}, query ->
+        where(query, ^filters)
+
+      {:fields, fields}, query ->
+        select(query, [i], map(i, ^fields))
+
+      {:order_by, criteria}, query ->
+        order_by(query, ^criteria)
+
+      {:limit, criteria}, query ->
+        limit(query, ^criteria)
+
+      {:preloads, preloads}, query when is_list(preloads) ->
+        Enum.reduce(preloads, query, fn preload, query ->
+          preload(query, ^preload)
+        end)
+
+      {:preloads, preload}, query ->
+        preload(query, ^preload)
+
+      _, query ->
+        query
+    end)
   end
 end

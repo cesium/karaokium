@@ -6,10 +6,12 @@ defmodule KaraokiumWeb.AdminKaraokeLive.FormComponent do
   @impl true
   def update(%{karaoke: karaoke} = assigns, socket) do
     changeset = Events.change_karaoke(karaoke)
+    locations = Events.list_locations()
 
     {:ok,
      socket
      |> assign(assigns)
+     |> assign(:locations, locations)
      |> assign(:changeset, changeset)}
   end
 

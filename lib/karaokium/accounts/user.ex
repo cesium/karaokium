@@ -41,6 +41,15 @@ defmodule Karaokium.Accounts.User do
     |> validate_password(opts)
   end
 
+  def admin_changeset(user, attrs, opts \\ []) do
+    user
+    |> cast(attrs, [:name, :username, :email, :password, :permissions])
+    |> validate_name()
+    |> validate_username()
+    |> validate_email()
+    |> validate_password(opts)
+  end
+
   defp validate_name(changeset) do
     changeset
     |> validate_required([:name])

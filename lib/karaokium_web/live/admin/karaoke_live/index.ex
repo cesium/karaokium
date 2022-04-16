@@ -41,6 +41,7 @@ defmodule KaraokiumWeb.AdminKaraokeLive.Index do
   end
 
   defp list_karaokes do
-    Events.list_karaokes()
+    Events.list_karaokes(preloads: :location)
+    |> IO.inspect()
   end
 end

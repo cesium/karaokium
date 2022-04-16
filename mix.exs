@@ -46,6 +46,7 @@ defmodule Karaokium.MixProject do
       {:esbuild, "~> 0.3", runtime: Mix.env() == :dev},
       {:httpoison, "~> 1.8"},
       {:swoosh, "~> 1.3"},
+      {:timex, "~> 3.0"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},

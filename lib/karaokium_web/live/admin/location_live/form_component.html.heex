@@ -7,6 +7,10 @@
     <%= text_input(f, :name) %>
     <%= error_tag(f, :name) %>
 
+    <%= label(f, :address) %>
+    <%= text_input(f, :address) %>
+    <%= error_tag(f, :address) %>
+
     <%= label(f, :district) %>
     <%= text_input(f, :district) %>
     <%= error_tag(f, :district) %>
@@ -15,13 +19,13 @@
     <%= text_input(f, :county) %>
     <%= error_tag(f, :county) %>
 
+    <%= label(f, "Postal Code") %>
+    <%= text_input(f, :postcode) %>
+    <%= error_tag(f, :postcode) %>
+
     <%= label(f, :locality) %>
     <%= text_input(f, :locality) %>
     <%= error_tag(f, :locality) %>
-
-    <%= label(f, :address) %>
-    <%= text_input(f, :address) %>
-    <%= error_tag(f, :address) %>
 
     <div>
       <%= submit("Save", phx_disable_with: "Saving...", class: "action-btn") %>

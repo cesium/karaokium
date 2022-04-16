@@ -18,10 +18,9 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>District</th>
-        <th>County</th>
-        <th>Locality</th>
         <th>Address</th>
+        <th>Locality</th>
+        <th>Postal code</th>
 
         <th></th>
       </tr>
@@ -29,11 +28,10 @@
     <tbody id="locations">
       <%= for location <- @locations do %>
         <tr id={"location-#{location.id}"}>
-          <td><%= location.name %></td>
-          <td><%= location.district %></td>
-          <td><%= location.county %></td>
+          <td><strong><%= location.name %></strong></td>
+          <td><i><%= location.address %></i></td>
           <td><%= location.locality %></td>
-          <td><%= location.address %></td>
+          <td><%= location.postcode %></td>
 
           <td>
             <span>

@@ -18,6 +18,7 @@
     <thead>
       <tr>
         <th>Name</th>
+        <th>Location</th>
         <th>Start date</th>
         <th>End date</th>
 
@@ -27,7 +28,8 @@
     <tbody id="karaokes">
       <%= for karaoke <- @karaokes do %>
         <tr id={"karaoke-#{karaoke.id}"}>
-          <td><%= karaoke.name %></td>
+          <td><strong><%= karaoke.name %></strong></td>
+          <td><%= karaoke.location.name %></td>
           <td><%= karaoke.start_date %></td>
           <td><%= karaoke.end_date %></td>
 
