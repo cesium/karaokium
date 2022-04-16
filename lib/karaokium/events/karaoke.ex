@@ -2,9 +2,9 @@ defmodule Karaokium.Events.Karaoke do
   use Karaokium.Schema
 
   schema "karaokes" do
-    field :end_date, :date
+    field :end_date, :naive_datetime
     field :name, :string
-    field :start_date, :date
+    field :start_date, :naive_datetime
     field :location, :binary_id
 
     timestamps()

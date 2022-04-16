@@ -5,8 +5,8 @@ defmodule Karaokium.Repo.Migrations.CreateKaraokes do
     create table(:karaokes, primary_key: false) do
       add :id, :binary_id, primary_key: true
       add :name, :string
-      add :start_date, :date
-      add :end_date, :date
+      add :start_date, :naive_datetime
+      add :end_date, :naive_datetime
       add :location, references(:locations, on_delete: :nothing, type: :binary_id)
 
       timestamps()
