@@ -1,0 +1,44 @@
+<h1>Listing Albums</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.admin_album_index_path(@socket, :index)}>
+    <.live_component module={KaraokiumWeb.AdminAlbumLive.FormComponent} id={@album.id || :new} title={@page_title} action={@live_action} album={@album} return_to={Routes.admin_album_index_path(@socket, :index)} />
+  </.modal>
+<% end %>
+
+<section>
+  <table>
+    <thead>
+      <tr>
+        <th>Spotify</th>
+        <th>Spotify uri</th>
+        <th>Name</th>
+        <th>Total tracks</th>
+        <th>Album type</th>
+        <th>Release date</th>
+
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="albums">
+      <%= for album <- @albums do %>
+        <tr id={"album-#{album.id}"}>
+          <td><%= album.spotify_id %></td>
+          <td><%= album.spotify_uri %></td>
+          <td><%= album.name %></td>
+          <td><%= album.total_tracks %></td>
+          <td><%= album.album_type %></td>
+          <td><%= album.release_date %></td>
+
+          <td>
+            <span><%= live_redirect("Show", to: Routes.admin_album_show_path(@socket, :show, album)) %></span>
+            <span><%= live_patch("Edit", to: Routes.admin_album_index_path(@socket, :edit, album)) %></span>
+            <span><%= link("Delete", to: "#", phx_click: "delete", phx_value_id: album.id, data: [confirm: "Are you sure?"]) %></span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>
+
+<span><%= live_patch("New Album", to: Routes.admin_album_index_path(@socket, :new)) %></span>

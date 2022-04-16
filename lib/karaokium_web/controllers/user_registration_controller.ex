@@ -3,7 +3,7 @@ defmodule KaraokiumWeb.UserRegistrationController do
 
   alias Karaokium.Accounts
   alias Karaokium.Accounts.User
-  alias KaraokiumWeb.UserAuth
+  alias KaraokiumWeb.Plugs
 
   def new(conn, _params) do
     changeset = Accounts.change_user_registration(%User{})
@@ -21,7 +21,7 @@ defmodule KaraokiumWeb.UserRegistrationController do
 
         conn
         |> put_flash(:info, "User created successfully.")
-        |> UserAuth.log_in_user(user)
+        |> Plugs.Auth.log_in_user(user)
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)

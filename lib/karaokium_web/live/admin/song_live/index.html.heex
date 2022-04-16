@@ -1,0 +1,52 @@
+<h1>Listing Songs</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.admin_song_index_path(@socket, :index)}>
+    <.live_component module={KaraokiumWeb.AdminSongLive.FormComponent} id={@song.id || :new} title={@page_title} action={@live_action} song={@song} return_to={Routes.admin_song_index_path(@socket, :index)} />
+  </.modal>
+<% end %>
+
+<section>
+  <table>
+    <thead>
+      <tr>
+        <th>Spotify</th>
+        <th>Spotify uri</th>
+        <th>Name</th>
+        <th>Duration ms</th>
+        <th>Popularity</th>
+        <th>Preview url</th>
+        <th>Spotify url</th>
+        <th>Href</th>
+        <th>Track number</th>
+        <th>Explicit</th>
+
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="songs">
+      <%= for song <- @songs do %>
+        <tr id={"song-#{song.id}"}>
+          <td><%= song.spotify_id %></td>
+          <td><%= song.spotify_uri %></td>
+          <td><%= song.name %></td>
+          <td><%= song.duration_ms %></td>
+          <td><%= song.popularity %></td>
+          <td><%= song.preview_url %></td>
+          <td><%= song.spotify_url %></td>
+          <td><%= song.href %></td>
+          <td><%= song.track_number %></td>
+          <td><%= song.explicit %></td>
+
+          <td>
+            <span><%= live_redirect("Show", to: Routes.admin_song_show_path(@socket, :show, song)) %></span>
+            <span><%= live_patch("Edit", to: Routes.admin_song_index_path(@socket, :edit, song)) %></span>
+            <span><%= link("Delete", to: "#", phx_click: "delete", phx_value_id: song.id, data: [confirm: "Are you sure?"]) %></span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>
+
+<span><%= live_patch("New Song", to: Routes.admin_song_index_path(@socket, :new)) %></span>

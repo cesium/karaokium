@@ -2,7 +2,7 @@ defmodule KaraokiumWeb.UserSettingsController do
   use KaraokiumWeb, :controller
 
   alias Karaokium.Accounts
-  alias KaraokiumWeb.UserAuth
+  alias KaraokiumWeb.Plugs
 
   plug :assign_email_and_password_changesets
 
@@ -43,7 +43,7 @@ defmodule KaraokiumWeb.UserSettingsController do
         conn
         |> put_flash(:info, "Password updated successfully.")
         |> put_session(:user_return_to, Routes.user_settings_path(conn, :edit))
-        |> UserAuth.log_in_user(user)
+        |> Plugs.Auth.log_in_user(user)
 
       {:error, changeset} ->
         render(conn, "edit.html", password_changeset: changeset)

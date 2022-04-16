@@ -10,17 +10,17 @@ defmodule KaraokiumWeb.LayoutView do
         title: "Events",
         url: "#",
         submenu: [
-          %{title: "Karaokes", url: Routes.karaoke_index_path(conn, :index)},
-          %{title: "Locations", url: Routes.location_index_path(conn, :index)}
+          %{title: "Karaokes", url: Routes.admin_karaoke_index_path(conn, :index)},
+          %{title: "Locations", url: Routes.admin_location_index_path(conn, :index)}
         ]
       },
       %{
         title: "Repertoire",
         url: "#",
         submenu: [
-          %{title: "Songs", url: Routes.song_index_path(conn, :index)},
-          %{title: "Artists", url: Routes.artist_index_path(conn, :index)},
-          %{title: "Albums", url: Routes.album_index_path(conn, :index)}
+          %{title: "Songs", url: Routes.admin_song_index_path(conn, :index)},
+          %{title: "Artists", url: Routes.admin_artist_index_path(conn, :index)},
+          %{title: "Albums", url: Routes.admin_album_index_path(conn, :index)}
         ]
       }
     ]

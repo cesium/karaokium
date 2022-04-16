@@ -1,7 +1,7 @@
 defmodule KaraokiumWeb.Router do
   use KaraokiumWeb, :router
 
-  import KaraokiumWeb.UserAuth
+  import KaraokiumWeb.Plugs.Auth
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -22,55 +22,86 @@ defmodule KaraokiumWeb.Router do
 
     get "/", PageController, :index
 
-    scope "/repertoire" do
-      live "/songs", SongLive.Index, :index
-      live "/songs/new", SongLive.Index, :new
-      live "/songs/:id/edit", SongLive.Index, :edit
-      live "/songs/:id", SongLive.Show, :show
-      live "/songs/:id/show/edit", SongLive.Show, :edit
-
-      live "/artists", ArtistLive.Index, :index
-      live "/artists/new", ArtistLive.Index, :new
-      live "/artists/:id/edit", ArtistLive.Index, :edit
-      live "/artists/:id", ArtistLive.Show, :show
-      live "/artists/:id/show/edit", ArtistLive.Show, :edit
-
-      live "/albums", AlbumLive.Index, :index
-      live "/albums/new", AlbumLive.Index, :new
-      live "/albums/:id/edit", AlbumLive.Index, :edit
-      live "/albums/:id", AlbumLive.Show, :show
-      live "/albums/:id/show/edit", AlbumLive.Show, :edit
-    end
-
-    scope "/events" do
-      scope "/karaokes" do
-        live "/", KaraokeLive.Index, :index
-        live "/new", KaraokeLive.Index, :new
-        live "/:id/edit", KaraokeLive.Index, :edit
-        live "/:id", KaraokeLive.Show, :show
-        live "/:id/show/edit", KaraokeLive.Show, :edit
-
-        live "/:karaoke_id/performances", PerformanceLive.Index, :index
-        live "/:karaoke_id/performances/new", PerformanceLive.Index, :new
-        live "/:karaoke_id/performances/:id/edit", PerformanceLive.Index, :edit
-        live "/:karaoke_id/performances/:id", PerformanceLive.Show, :show
-        live "/:karaoke_id/performances/:id/show/edit", PerformanceLive.Show, :edit
+    scope "/auth" do
+      scope "/accounts" do
+        pipe_through [:redirect_if_user_is_authenticated]
+        get "/register", UserRegistrationController, :new
+        post "/register", UserRegistrationController, :create
+        get "/log_in", UserSessionController, :new
+        post "/log_in", UserSessionController, :create
+        get "/reset_password", UserResetPasswordController, :new
+        post "/reset_password", UserResetPasswordController, :create
+        get "/reset_password/:token", UserResetPasswordController, :edit
+        put "/reset_password/:token", UserResetPasswordController, :update
       end
 
-      live "/locations", LocationLive.Index, :index
-      live "/locations/new", LocationLive.Index, :new
-      live "/locations/:id/edit", LocationLive.Index, :edit
-      live "/locations/:id", LocationLive.Show, :show
-      live "/locations/:id/show/edit", LocationLive.Show, :edit
-    end
-  end
+      scope "/accounts" do
+        pipe_through [:require_authenticated_user]
+        get "/settings", UserSettingsController, :edit
+        put "/settings", UserSettingsController, :update
+        get "/settings/confirm_email/:token", UserSettingsController, :confirm_email
+      end
 
-  scope "/polling" do
-    live "/votes", VoteLive.Index, :index
-    live "/votes/new", VoteLive.Index, :new
-    live "/votes/:id/edit", VoteLive.Index, :edit
-    live "/votes/:id", VoteLive.Show, :show
-    live "/votes/:id/show/edit", VoteLive.Show, :edit
+      scope "/accounts" do
+        delete "/log_out", UserSessionController, :delete
+        get "/confirm", UserConfirmationController, :new
+        post "/confirm", UserConfirmationController, :create
+        get "/confirm/:token", UserConfirmationController, :edit
+        post "/confirm/:token", UserConfirmationController, :update
+      end
+    end
+
+    scope "/admin" do
+      scope "/repertoire" do
+        live "/songs", AdminSongLive.Index, :index
+        live "/songs/new", AdminSongLive.Index, :new
+        live "/songs/:id/edit", AdminSongLive.Index, :edit
+        live "/songs/:id", AdminSongLive.Show, :show
+        live "/songs/:id/show/edit", AdminSongLive.Show, :edit
+
+        live "/artists", AdminArtistLive.Index, :index
+        live "/artists/new", AdminArtistLive.Index, :new
+        live "/artists/:id/edit", AdminArtistLive.Index, :edit
+        live "/artists/:id", AdminArtistLive.Show, :show
+        live "/artists/:id/show/edit", AdminArtistLive.Show, :edit
+
+        live "/albums", AdminAlbumLive.Index, :index
+        live "/albums/new", AdminAlbumLive.Index, :new
+        live "/albums/:id/edit", AdminAlbumLive.Index, :edit
+        live "/albums/:id", AdminAlbumLive.Show, :show
+        live "/albums/:id/show/edit", AdminAlbumLive.Show, :edit
+      end
+
+      scope "/events" do
+        scope "/karaokes" do
+          live "/", AdminKaraokeLive.Index, :index
+          live "/new", AdminKaraokeLive.Index, :new
+          live "/:id/edit", AdminKaraokeLive.Index, :edit
+          live "/:id", AdminKaraokeLive.Show, :show
+          live "/:id/show/edit", AdminKaraokeLive.Show, :edit
+
+          live "/:karaoke_id/performances", AdminPerformanceLive.Index, :index
+          live "/:karaoke_id/performances/new", AdminPerformanceLive.Index, :new
+          live "/:karaoke_id/performances/:id/edit", AdminPerformanceLive.Index, :edit
+          live "/:karaoke_id/performances/:id", AdminPerformanceLive.Show, :show
+          live "/:karaoke_id/performances/:id/show/edit", AdminPerformanceLive.Show, :edit
+        end
+
+        live "/locations", AdminLocationLive.Index, :index
+        live "/locations/new", AdminLocationLive.Index, :new
+        live "/locations/:id/edit", AdminLocationLive.Index, :edit
+        live "/locations/:id", AdminLocationLive.Show, :show
+        live "/locations/:id/show/edit", AdminLocationLive.Show, :edit
+      end
+    end
+
+    scope "/polling" do
+      live "/votes", VoteLive.Index, :index
+      live "/votes/new", VoteLive.Index, :new
+      live "/votes/:id/edit", VoteLive.Index, :edit
+      live "/votes/:id", VoteLive.Show, :show
+      live "/votes/:id/show/edit", VoteLive.Show, :edit
+    end
   end
 
   # Other scopes may use custom stacks.
@@ -104,45 +135,6 @@ defmodule KaraokiumWeb.Router do
       pipe_through :browser
 
       forward "/mailbox", Plug.Swoosh.MailboxPreview
-    end
-  end
-
-  ## Authentication routes
-
-  scope "/", KaraokiumWeb do
-    pipe_through [:browser, :redirect_if_user_is_authenticated]
-
-    scope "/accounts" do
-      get "/register", UserRegistrationController, :new
-      post "/register", UserRegistrationController, :create
-      get "/log_in", UserSessionController, :new
-      post "/log_in", UserSessionController, :create
-      get "/reset_password", UserResetPasswordController, :new
-      post "/reset_password", UserResetPasswordController, :create
-      get "/reset_password/:token", UserResetPasswordController, :edit
-      put "/reset_password/:token", UserResetPasswordController, :update
-    end
-  end
-
-  scope "/", KaraokiumWeb do
-    pipe_through [:browser, :require_authenticated_user]
-
-    scope "/accounts" do
-      get "/settings", UserSettingsController, :edit
-      put "/settings", UserSettingsController, :update
-      get "/settings/confirm_email/:token", UserSettingsController, :confirm_email
-    end
-  end
-
-  scope "/", KaraokiumWeb do
-    pipe_through [:browser]
-
-    scope "/accounts" do
-      delete "/log_out", UserSessionController, :delete
-      get "/confirm", UserConfirmationController, :new
-      post "/confirm", UserConfirmationController, :create
-      get "/confirm/:token", UserConfirmationController, :edit
-      post "/confirm/:token", UserConfirmationController, :update
     end
   end
 end
