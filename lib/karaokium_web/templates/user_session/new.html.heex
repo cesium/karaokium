@@ -20,7 +20,8 @@
     <%= label(f, :remember_me, "Keep me logged in for 60 days", style: "display: inline;") %>
 
     <p>
-      <%= link("Register", to: Routes.user_registration_path(@conn, :new)) %> | <%= link("Forgot your password?", to: Routes.user_reset_password_path(@conn, :new)) %>
+      <%= link("Register", to: Routes.user_registration_path(@conn, :new)) %> |
+      <%= link("Forgot your password?", to: Routes.user_reset_password_path(@conn, :new)) %>
     </p>
 
     <div>

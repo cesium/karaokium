@@ -6,7 +6,9 @@
       </a>
       <ul>
         <li><%= link("Settings", to: Routes.user_settings_path(@conn, :edit)) %></li>
-        <li><%= link("Log out", to: Routes.user_session_path(@conn, :delete), method: :delete) %></li>
+        <li>
+          <%= link("Log out", to: Routes.user_session_path(@conn, :delete), method: :delete) %>
+        </li>
       </ul>
     </li>
   <% else %>

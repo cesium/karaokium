@@ -29,7 +29,13 @@ defmodule KaraokiumWeb.LiveHelpers do
     ~H"""
     <section>
       <div id="modal" class="phx-modal fade-in" phx-remove={hide_modal()}>
-        <div id="modal-content" class="phx-modal-content fade-in-scale" phx-click-away={JS.dispatch("click", to: "#close")} phx-window-keydown={JS.dispatch("click", to: "#close")} phx-key="escape">
+        <div
+          id="modal-content"
+          class="phx-modal-content fade-in-scale"
+          phx-click-away={JS.dispatch("click", to: "#close")}
+          phx-window-keydown={JS.dispatch("click", to: "#close")}
+          phx-key="escape"
+        >
           <%= if @return_to do %>
             <%= live_patch("X",
               to: @return_to,

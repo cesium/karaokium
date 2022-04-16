@@ -2,7 +2,14 @@
 
 <%= if @live_action in [:new, :edit] do %>
   <.modal return_to={Routes.vote_index_path(@socket, :index)}>
-    <.live_component module={KaraokiumWeb.VoteLive.FormComponent} id={@vote.id || :new} title={@page_title} action={@live_action} vote={@vote} return_to={Routes.vote_index_path(@socket, :index)} />
+    <.live_component
+      module={KaraokiumWeb.VoteLive.FormComponent}
+      id={@vote.id || :new}
+      title={@page_title}
+      action={@live_action}
+      vote={@vote}
+      return_to={Routes.vote_index_path(@socket, :index)}
+    />
   </.modal>
 <% end %>
 
@@ -21,9 +28,18 @@
           <td><%= vote.pontuation %></td>
 
           <td>
-            <span><%= live_redirect("Show", to: Routes.vote_show_path(@socket, :show, vote)) %></span>
+            <span>
+              <%= live_redirect("Show", to: Routes.vote_show_path(@socket, :show, vote)) %>
+            </span>
             <span><%= live_patch("Edit", to: Routes.vote_index_path(@socket, :edit, vote)) %></span>
-            <span><%= link("Delete", to: "#", phx_click: "delete", phx_value_id: vote.id, data: [confirm: "Are you sure?"]) %></span>
+            <span>
+              <%= link("Delete",
+                to: "#",
+                phx_click: "delete",
+                phx_value_id: vote.id,
+                data: [confirm: "Are you sure?"]
+              ) %>
+            </span>
           </td>
         </tr>
       <% end %>
