@@ -17,6 +17,7 @@ defmodule Karaokium.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
+      releases: releases(),
       aliases: aliases(),
       deps: deps(),
       docs: docs()
@@ -36,6 +37,15 @@ defmodule Karaokium.MixProject do
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
+
+  defp releases() do
+    [
+      karaokium: [
+        include_executables_for: [:unix],
+        steps: [:assemble, :tar]
+      ]
+    ]
+  end
 
   # Specifies your project documentation.
   defp docs do
