@@ -1,3 +1,7 @@
+# Ignore secreat files
+.env.*
+!.env.*.sample
+
 # The directory Mix will write compiled artifacts to.
 /_build/
 
