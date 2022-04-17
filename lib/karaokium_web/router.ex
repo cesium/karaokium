@@ -21,6 +21,7 @@ defmodule KaraokiumWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/_version", PageController, :version
 
     scope "/auth" do
       scope "/accounts" do
@@ -104,10 +105,11 @@ defmodule KaraokiumWeb.Router do
     end
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", KaraokiumWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", KaraokiumWeb do
+    pipe_through :api
+
+    get "/", PageController, :about
+  end
 
   # Enables LiveDashboard only for development
   #
