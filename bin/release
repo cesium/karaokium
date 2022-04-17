@@ -65,6 +65,10 @@ case ${1:-dev} in
     env=${1:-dev}
     load_env_file ".env.${env}"
 
+    mix deps.get --only $env
+
+    MIX_ENV=$env mix compile
+    MIX_ENV=$env mix assets.deploy
     MIX_ENV=$env mix release
     ;;
   *)
