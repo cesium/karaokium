@@ -7,8 +7,8 @@
     <%= csrf_meta_tag() %>
     <%= live_title_tag(assigns[:page_title] || "Karaokium", suffix: " · Phoenix Framework") %>
     <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
-    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")} />
-    <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}>
+    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/karaokium/assets/app.css")} />
+    <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/karaokium/assets/app.js")}>
     </script>
   </head>
   <body>

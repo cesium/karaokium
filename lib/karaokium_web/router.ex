@@ -17,7 +17,15 @@ defmodule KaraokiumWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", KaraokiumWeb do
+  scope "/karaokium/api", KaraokiumWeb do
+    pipe_through :api
+
+    get "/", PageController, :about
+  end
+
+  get "/", KaraokiumWeb.PageController, :goto
+
+  scope "/karaokium", KaraokiumWeb do
     pipe_through :browser
 
     get "/", PageController, :index
@@ -105,7 +113,7 @@ defmodule KaraokiumWeb.Router do
     end
   end
 
-  scope "/api", KaraokiumWeb do
+  scope "/karaokium/api", KaraokiumWeb do
     pipe_through :api
 
     get "/", PageController, :about
@@ -121,10 +129,12 @@ defmodule KaraokiumWeb.Router do
   if Mix.env() in [:dev, :test] do
     import Phoenix.LiveDashboard.Router
 
-    scope "/" do
+    scope "/karaokium" do
       pipe_through :browser
 
-      live_dashboard "/dashboard", metrics: KaraokiumWeb.Telemetry
+      live_dashboard "/dashboard",
+        metrics: KaraokiumWeb.Telemetry,
+        live_socket_path: "/karaokium/live"
     end
   end
 

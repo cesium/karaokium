@@ -10,14 +10,15 @@ defmodule KaraokiumWeb.Endpoint do
     signing_salt: "mOcaEgaL"
   ]
 
-  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
+  socket "/karaokium/live", Phoenix.LiveView.Socket,
+    websocket: [connect_info: [session: @session_options]]
 
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phx.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/",
+    at: "/karaokium",
     from: :karaokium,
     gzip: false,
     only: ~w(assets fonts images themes favicon.ico robots.txt)

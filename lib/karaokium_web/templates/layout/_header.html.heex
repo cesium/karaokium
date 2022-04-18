@@ -1,7 +1,11 @@
 <header>
   <nav>
     <%= live_patch to: Routes.page_path(@conn, :index) do %>
-      <img alt="Phoenix Framework Logo" src={Routes.static_path(@conn, "/images/logos/cesium-DARK.svg")} height="50" />
+      <img
+        alt="Phoenix Framework Logo"
+        src={Routes.static_path(@conn, "/karaokium/images/logos/cesium-DARK.svg")}
+        height="50"
+      />
     <% end %>
     <ul>
       <%= for entry <- menu(@conn) do %>

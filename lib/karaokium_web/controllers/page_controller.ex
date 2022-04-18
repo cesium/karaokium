@@ -25,6 +25,10 @@ defmodule KaraokiumWeb.PageController do
     render(conn, "index.html")
   end
 
+  def goto(conn, _params) do
+    redirect(conn, to: "/karaokium")
+  end
+
   def about(conn, _params) do
     conn
     |> json(%{

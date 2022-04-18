@@ -29,7 +29,7 @@ import topbar from "../vendor/topbar";
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
-let liveSocket = new LiveSocket("/live", Socket, {
+let liveSocket = new LiveSocket("/karaokium/live", Socket, {
   params: { _csrf_token: csrfToken },
 });
 
