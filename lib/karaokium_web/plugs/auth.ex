@@ -81,7 +81,7 @@ defmodule KaraokiumWeb.Plugs.Auth do
     conn
     |> renew_session()
     |> delete_resp_cookie(@remember_me_cookie)
-    |> redirect(to: "/")
+    |> redirect(to: "/karaokium")
   end
 
   @doc """
@@ -161,5 +161,5 @@ defmodule KaraokiumWeb.Plugs.Auth do
 
   defp maybe_store_return_to(conn), do: conn
 
-  defp signed_in_path(_conn), do: "/"
+  defp signed_in_path(_conn), do: "/karaokium"
 end
