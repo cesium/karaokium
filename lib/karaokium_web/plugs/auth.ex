@@ -139,6 +139,22 @@ defmodule KaraokiumWeb.Plugs.Auth do
     end
   end
 
+  def require_admin(conn, _opts) do
+    check_permissions(conn, :admin)
+  end
+
+  def require_sysadmin(conn, _opts) do
+    check_permissions(conn, :sysadmin)
+  end
+
+  defp check_permissions(conn, role) when is_atom(role) do
+    if role in conn.assigns.current_user.permissions do
+      conn
+    else
+      conn |> send_resp(:not_found, "") |> halt()
+    end
+  end
+
   defp maybe_store_return_to(%{method: "GET"} = conn) do
     put_session(conn, :user_return_to, current_path(conn))
   end

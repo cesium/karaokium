@@ -1,6 +1,7 @@
 defmodule KaraokiumWeb.Router do
   use KaraokiumWeb, :router
 
+  import Phoenix.LiveDashboard.Router
   import KaraokiumWeb.Plugs.Auth
 
   pipeline :browser do
@@ -61,6 +62,8 @@ defmodule KaraokiumWeb.Router do
     end
 
     scope "/admin" do
+      pipe_through [:require_authenticated_user, :require_admin]
+
       scope "/repertoire" do
         live "/songs", AdminSongLive.Index, :index
         live "/songs/new", AdminSongLive.Index, :new
@@ -104,37 +107,20 @@ defmodule KaraokiumWeb.Router do
       end
     end
 
+    scope "/sysadmin" do
+      pipe_through [:require_authenticated_user, :require_sysadmin]
+
+      live_dashboard "/dashboard",
+        metrics: KaraokiumWeb.Telemetry,
+        live_socket_path: "/karaokium/live"
+    end
+
     scope "/polling" do
       live "/votes", VoteLive.Index, :index
       live "/votes/new", VoteLive.Index, :new
       live "/votes/:id/edit", VoteLive.Index, :edit
       live "/votes/:id", VoteLive.Show, :show
       live "/votes/:id/show/edit", VoteLive.Show, :edit
-    end
-  end
-
-  scope "/karaokium/api", KaraokiumWeb do
-    pipe_through :api
-
-    get "/", PageController, :about
-  end
-
-  # Enables LiveDashboard only for development
-  #
-  # If you want to use the LiveDashboard in production, you should put
-  # it behind authentication and allow only admins to access it.
-  # If your application does not have an admins-only section yet,
-  # you can use Plug.BasicAuth to set up some basic authentication
-  # as long as you are also using SSL (which you should anyway).
-  if Mix.env() in [:dev, :test] do
-    import Phoenix.LiveDashboard.Router
-
-    scope "/karaokium" do
-      pipe_through :browser
-
-      live_dashboard "/dashboard",
-        metrics: KaraokiumWeb.Telemetry,
-        live_socket_path: "/karaokium/live"
     end
   end
 
