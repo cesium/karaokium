@@ -1,0 +1,31 @@
+<h1>Search Songs</h1>
+
+<form id="search-form" phx-submit="search" style="max-width: 100%; margin-bottom: 0.5rem;">
+  <div style="display: flex; align-items: middle; margin: auto;">
+    <%= text_input(:search, :q,
+      phx_debounce: "1000",
+      placeholder: "Song title...",
+      style: "max-width: 100%; width: 100%; margin: 0.5rem;"
+    ) %>
+    <%= submit("Search", class: "action-btn", style: "max-width: 200px;") %>
+  </div>
+</form>
+
+<section style="justify-content: space-between;">
+  <%= for result <- @results do %>
+    <aside style="margin: 0.5rem 0;">
+      <img alt="HTML only" src={hd(result["album"]["images"])["url"]} height="300" />
+      <h3><%= result["name"] %></h3>
+      <p>
+        <strong><%= result["album"]["name"] %></strong> (<em><%= result["album"]["release_date"] %></em>)
+      </p>
+      <p>
+        <em><%= result["artists"] |> Enum.map(&Map.get(&1, "name")) |> Enum.join(", ") %></em>
+      </p>
+      <audio src={result["preview_url"]} controls></audio>
+      <button phx-click="save" phx-value-id={result["id"]} class="action-btn">
+        Save
+      </button>
+    </aside>
+  <% end %>
+</section>

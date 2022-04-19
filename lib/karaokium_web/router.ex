@@ -67,6 +67,7 @@ defmodule KaraokiumWeb.Router do
       scope "/repertoire" do
         live "/songs", AdminSongLive.Index, :index
         live "/songs/new", AdminSongLive.Index, :new
+        live "/songs/search", AdminSongLive.Search, :new
         live "/songs/:id/edit", AdminSongLive.Index, :edit
         live "/songs/:id", AdminSongLive.Show, :show
         live "/songs/:id/show/edit", AdminSongLive.Show, :edit

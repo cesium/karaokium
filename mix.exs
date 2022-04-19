@@ -99,7 +99,7 @@ defmodule Karaokium.MixProject do
 
       # development
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:esbuild, "~> 0.3", runtime: Mix.env() == :dev},
+      {:esbuild, "~> 0.4", runtime: Mix.env() == :dev},
 
       # tools
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},

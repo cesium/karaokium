@@ -5,13 +5,19 @@ import Config
 # system starts, so it is typically used to load production configuration
 # and secrets from environment variables or elsewhere. Do not define
 # any compile-time configuration in here, as it won't be applied.
-# The block below contains prod specific runtime configuration.
+
+if config_env() == :dev do
+  config :karaokium, Karaokium.Spotify,
+    client_id: "",
+    client_secret: ""
+end
 
 # Start the phoenix server if environment is set and running in a release
-if System.get_env("PHX_SERVER") && System.get_env("RELEASE_NAME") do
+if System.get_env("PHX_SERVER") do
   config :karaokium, KaraokiumWeb.Endpoint, server: true
 end
 
+# The block below contains prod specific runtime configuration.
 if config_env() == :prod do
   database_path =
     System.get_env("DATABASE_PATH") ||

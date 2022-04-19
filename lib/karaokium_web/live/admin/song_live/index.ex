@@ -41,6 +41,6 @@ defmodule KaraokiumWeb.AdminSongLive.Index do
   end
 
   defp list_songs do
-    Repertoire.list_songs()
+    Repertoire.list_songs(preloads: [:album])
   end
 end

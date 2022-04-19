@@ -7,6 +7,7 @@ config :karaokium, Karaokium.Repo,
       "priv/repo/databases/karaokium_#{config_env()}.db",
       "../Path.dirname(__ENV__.file)"
     ),
+  stacktrace: true,
   pool_size: 5,
   show_sensitive_data_on_connection_error: true
 

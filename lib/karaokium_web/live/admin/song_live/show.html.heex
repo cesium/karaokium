@@ -31,7 +31,7 @@
 
   <li>
     <strong>Duration ms:</strong>
-    <%= @song.duration_ms %>
+    <%= Timex.Format.Duration.Formatters.Humanized.format(Timex.Duration.from_milliseconds(@song.duration_ms)) %>
   </li>
 
   <li>

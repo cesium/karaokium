@@ -42,6 +42,7 @@ defmodule KaraokiumWeb.LayoutView do
         title: "Repertoire",
         url: "#",
         submenu: [
+          %{title: "Search Songs", url: Routes.admin_song_search_path(conn, :new)},
           %{title: "Songs", url: Routes.admin_song_index_path(conn, :index)},
           %{title: "Artists", url: Routes.admin_artist_index_path(conn, :index)},
           %{title: "Albums", url: Routes.admin_album_index_path(conn, :index)}

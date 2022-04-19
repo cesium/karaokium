@@ -4,6 +4,7 @@ defmodule Karaokium.Repertoire do
   """
 
   import Ecto.Query, warn: false
+  import Karaokium.Context
   alias Karaokium.Repo
 
   alias Karaokium.Repertoire.Artist
@@ -209,8 +210,10 @@ defmodule Karaokium.Repertoire do
       [%Song{}, ...]
 
   """
-  def list_songs do
-    Repo.all(Song)
+  def list_songs(opts \\ []) do
+    Song
+    |> apply_filters(opts)
+    |> Repo.all()
   end
 
   @doc """
