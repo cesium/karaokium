@@ -19,7 +19,7 @@ You can start the release with the following script.
 
 ```
 source .env.<env>
-_build/<env>/rel/karaokium/bin/server
+PHX_SERVER=true _build/<env>/rel/karaokium/bin/server
 ```
 
 Please [check the official deployment
