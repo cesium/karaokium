@@ -7,9 +7,12 @@ import Config
 # any compile-time configuration in here, as it won't be applied.
 
 if config_env() == :dev do
+  import Dotenvy
+  source([".env", ".env.#{config_env()}", ".env.#{config_env()}.local"])
+
   config :karaokium, Karaokium.Spotify,
-    client_id: "",
-    client_secret: ""
+    client_id: env!("SPOTIFY_CLIENT_ID"),
+    client_secret: env!("SPOTIFY_CLIENT_SECRET")
 end
 
 # Start the phoenix server if environment is set and running in a release
@@ -19,6 +22,24 @@ end
 
 # The block below contains prod specific runtime configuration.
 if config_env() == :prod do
+  spotify_client_id =
+    System.get_env("SPOTIFY_CLIENT_ID") ||
+      raise """
+      environment variable SPOTIFY_CLIENT_ID is missing.
+      Go to https://developer.spotify.com/dashboard/applications get one.
+      """
+
+  spotify_client_secret =
+    System.get_env("SPOTIFY_CLIENT_SECRET") ||
+      raise """
+      environment variable SPOTIFY_CLIENT_SECRET is missing.
+      Go to https://developer.spotify.com/dashboard/applications get one.
+      """
+
+  config :karaokium, Karaokium.Spotify,
+    client_id: spotify_client_id,
+    client_secret: spotify_client_secret
+
   database_path =
     System.get_env("DATABASE_PATH") ||
       raise """

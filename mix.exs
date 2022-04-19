@@ -100,6 +100,7 @@ defmodule Karaokium.MixProject do
       # development
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:esbuild, "~> 0.4", runtime: Mix.env() == :dev},
+      {:dotenvy, "~> 0.6.0"},
 
       # tools
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
