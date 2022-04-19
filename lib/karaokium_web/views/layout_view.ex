@@ -23,9 +23,7 @@ defmodule KaraokiumWeb.LayoutView do
   end
 
   defp base_menu(conn) do
-    [
-      %{title: "Home", url: Routes.page_path(conn, :index), submenu: []}
-    ]
+    []
   end
 
   defp admin_menu(conn) do
