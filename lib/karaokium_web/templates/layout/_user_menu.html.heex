@@ -1,9 +1,12 @@
 <ul>
   <%= if @current_user do %>
     <li>
-      <a href="#">
-        <%= @current_user.email %>
-      </a>
+      <div style="display: flex; align-items: center;">
+        <img class="avatar" src={Karaokium.Media.Gravatar.picture(@current_user)} />
+        <a href="#" style="margin: 0 10px;">
+          <%= @current_user.name %>
+        </a>
+      </div>
       <ul>
         <li><%= link("Settings", to: Routes.user_settings_path(@conn, :edit)) %></li>
         <li>
