@@ -8,7 +8,7 @@ defmodule Karaokium.Accounts.UserNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"MyApp", "contact@example.com"})
+      |> from({"Karaokium | CeSIUM", "cesium@di.uminho.pt"})
       |> subject(subject)
       |> text_body(body)
 
