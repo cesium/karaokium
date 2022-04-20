@@ -22,7 +22,7 @@ defmodule KaraokiumWeb.LayoutView do
     base_menu(conn)
   end
 
-  defp base_menu(conn) do
+  defp base_menu(_conn) do
     []
   end
 
