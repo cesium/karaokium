@@ -1,4 +1,4 @@
-defmodule KaraokiumWeb.AdminArtistLive.FormComponent do
+defmodule KaraokiumWeb.Admin.ArtistLive.FormComponent do
   use KaraokiumWeb, :live_component
 
   alias Karaokium.Repertoire

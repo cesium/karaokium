@@ -61,50 +61,50 @@ defmodule KaraokiumWeb.Router do
       end
     end
 
-    scope "/admin" do
+    scope "/admin", Admin, as: :admin do
       pipe_through [:require_authenticated_user, :require_admin]
 
       scope "/repertoire" do
-        live "/songs", AdminSongLive.Index, :index
-        live "/songs/new", AdminSongLive.Index, :new
-        live "/songs/search", AdminSongLive.Search, :new
-        live "/songs/:id/edit", AdminSongLive.Index, :edit
-        live "/songs/:id", AdminSongLive.Show, :show
-        live "/songs/:id/show/edit", AdminSongLive.Show, :edit
+        live "/songs", SongLive.Index, :index
+        live "/songs/new", SongLive.Index, :new
+        live "/songs/search", SongLive.Search, :new
+        live "/songs/:id/edit", SongLive.Index, :edit
+        live "/songs/:id", SongLive.Show, :show
+        live "/songs/:id/show/edit", SongLive.Show, :edit
 
-        live "/artists", AdminArtistLive.Index, :index
-        live "/artists/new", AdminArtistLive.Index, :new
-        live "/artists/:id/edit", AdminArtistLive.Index, :edit
-        live "/artists/:id", AdminArtistLive.Show, :show
-        live "/artists/:id/show/edit", AdminArtistLive.Show, :edit
+        live "/artists", ArtistLive.Index, :index
+        live "/artists/new", ArtistLive.Index, :new
+        live "/artists/:id/edit", ArtistLive.Index, :edit
+        live "/artists/:id", ArtistLive.Show, :show
+        live "/artists/:id/show/edit", ArtistLive.Show, :edit
 
-        live "/albums", AdminAlbumLive.Index, :index
-        live "/albums/new", AdminAlbumLive.Index, :new
-        live "/albums/:id/edit", AdminAlbumLive.Index, :edit
-        live "/albums/:id", AdminAlbumLive.Show, :show
-        live "/albums/:id/show/edit", AdminAlbumLive.Show, :edit
+        live "/albums", AlbumLive.Index, :index
+        live "/albums/new", AlbumLive.Index, :new
+        live "/albums/:id/edit", AlbumLive.Index, :edit
+        live "/albums/:id", AlbumLive.Show, :show
+        live "/albums/:id/show/edit", AlbumLive.Show, :edit
       end
 
       scope "/events" do
         scope "/karaokes" do
-          live "/", AdminKaraokeLive.Index, :index
-          live "/new", AdminKaraokeLive.Index, :new
-          live "/:id/edit", AdminKaraokeLive.Index, :edit
-          live "/:id", AdminKaraokeLive.Show, :show
-          live "/:id/show/edit", AdminKaraokeLive.Show, :edit
+          live "/", KaraokeLive.Index, :index
+          live "/new", KaraokeLive.Index, :new
+          live "/:id/edit", KaraokeLive.Index, :edit
+          live "/:id", KaraokeLive.Show, :show
+          live "/:id/show/edit", KaraokeLive.Show, :edit
 
-          live "/:karaoke_id/performances", AdminPerformanceLive.Index, :index
-          live "/:karaoke_id/performances/new", AdminPerformanceLive.Index, :new
-          live "/:karaoke_id/performances/:id/edit", AdminPerformanceLive.Index, :edit
-          live "/:karaoke_id/performances/:id", AdminPerformanceLive.Show, :show
-          live "/:karaoke_id/performances/:id/show/edit", AdminPerformanceLive.Show, :edit
+          live "/:karaoke_id/performances", PerformanceLive.Index, :index
+          live "/:karaoke_id/performances/new", PerformanceLive.Index, :new
+          live "/:karaoke_id/performances/:id/edit", PerformanceLive.Index, :edit
+          live "/:karaoke_id/performances/:id", PerformanceLive.Show, :show
+          live "/:karaoke_id/performances/:id/show/edit", PerformanceLive.Show, :edit
         end
 
-        live "/locations", AdminLocationLive.Index, :index
-        live "/locations/new", AdminLocationLive.Index, :new
-        live "/locations/:id/edit", AdminLocationLive.Index, :edit
-        live "/locations/:id", AdminLocationLive.Show, :show
-        live "/locations/:id/show/edit", AdminLocationLive.Show, :edit
+        live "/locations", LocationLive.Index, :index
+        live "/locations/new", LocationLive.Index, :new
+        live "/locations/:id/edit", LocationLive.Index, :edit
+        live "/locations/:id", LocationLive.Show, :show
+        live "/locations/:id/show/edit", LocationLive.Show, :edit
       end
     end
 

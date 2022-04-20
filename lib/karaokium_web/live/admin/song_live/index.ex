@@ -1,4 +1,4 @@
-defmodule KaraokiumWeb.AdminSongLive.Index do
+defmodule KaraokiumWeb.Admin.SongLive.Index do
   use KaraokiumWeb, :live_view
 
   alias Karaokium.Repertoire

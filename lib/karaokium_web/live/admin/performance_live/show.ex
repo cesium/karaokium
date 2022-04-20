@@ -1,4 +1,4 @@
-defmodule KaraokiumWeb.AdminPerformanceLive.Show do
+defmodule KaraokiumWeb.Admin.PerformanceLive.Show do
   use KaraokiumWeb, :live_view
 
   alias Karaokium.Performances

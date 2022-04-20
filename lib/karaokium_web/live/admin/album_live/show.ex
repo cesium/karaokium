@@ -1,4 +1,4 @@
-defmodule KaraokiumWeb.AdminAlbumLive.Show do
+defmodule KaraokiumWeb.Admin.AlbumLive.Show do
   use KaraokiumWeb, :live_view
 
   alias Karaokium.Repertoire
