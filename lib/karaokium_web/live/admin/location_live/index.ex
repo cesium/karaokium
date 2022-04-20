@@ -1,4 +1,4 @@
-defmodule KaraokiumWeb.AdminLocationLive.Index do
+defmodule KaraokiumWeb.Admin.LocationLive.Index do
   use KaraokiumWeb, :live_view
 
   alias Karaokium.Events

@@ -1,4 +1,4 @@
-defmodule KaraokiumWeb.AdminKaraokeLive.Show do
+defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
   use KaraokiumWeb, :live_view
 
   alias Karaokium.Events
