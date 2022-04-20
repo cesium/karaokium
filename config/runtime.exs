@@ -78,27 +78,24 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
-  # ## Using releases
-  #
-  # If you are doing OTP releases, you need to instruct Phoenix
-  # to start each relevant endpoint:
-  #
-  #     config :karaokium, KaraokiumWeb.Endpoint, server: true
-  #
-  # Then you can assemble a release by calling `mix release`.
-  # See `mix help release` for more information.
-
   # ## Configuring the mailer
   #
   # In production you need to configure the mailer to use a different adapter.
   # Also, you may need to configure the Swoosh API client of your choice if you
   # are not using SMTP. Here is an example of the configuration:
-  #
-  #     config :karaokium, Karaokium.Mailer,
-  #       adapter: Swoosh.Adapters.Mailgun,
-  #       api_key: System.get_env("MAILGUN_API_KEY"),
-  #       domain: System.get_env("MAILGUN_DOMAIN")
-  #
+  sendinblue_api_key =
+    System.get_env("SENDINBLUE_API_KEY") ||
+      raise """
+      environment variable SENDINBLUE_API_KEY is missing.
+      """
+
+  # Swoosh API client is needed for adapters other than SMTP.
+  config :swoosh, :api_client, Swoosh.ApiClient.Hackney
+
+  config :karaokium, Karaokium.Mailer,
+    adapter: Swoosh.Adapters.Sendinblue,
+    api_key: sendinblue_api_key
+
   # For this example you need include a HTTP client required by Swoosh API client.
   # Swoosh supports Hackney and Finch out of the box:
   #
