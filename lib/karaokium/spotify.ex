@@ -56,6 +56,29 @@ defmodule Karaokium.Spotify do
     end
   end
 
+  def get_track(spotify_id) do
+    {:ok, token} = get_token()
+
+    url = "https://api.spotify.com/v1/tracks/"
+
+    header = [
+      {"Accept", "application/json"},
+      {"Content-Type", "application/json"},
+      {"Authorization", "Bearer " <> token}
+    ]
+
+    case HTTPoison.get(url <> "#{spotify_id}", header) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        body
+        |> Jason.decode!()
+
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        Logger.error(reason)
+
+        {:error, reason}
+    end
+  end
+
   defp encode_token do
     Base.encode64(client_id() <> ":" <> client_secret())
   end
