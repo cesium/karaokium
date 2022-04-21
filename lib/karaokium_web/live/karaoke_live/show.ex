@@ -5,7 +5,7 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
 
   @impl true
   def handle_params(%{"id" => id}, _, socket) do
-    karaoke = Events.get_karaoke!(id)
+    karaoke = Events.get_karaoke!(id, [:performing])
 
     {:noreply,
      socket

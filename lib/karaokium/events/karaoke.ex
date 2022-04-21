@@ -3,6 +3,7 @@ defmodule Karaokium.Events.Karaoke do
 
   alias Karaokium.Events.Location
   alias Karaokium.Groups
+  alias Karaokium.Performances.Performance
 
   @digits "0123456789"
 
@@ -17,8 +18,10 @@ defmodule Karaokium.Events.Karaoke do
     field :end_date, :naive_datetime
 
     belongs_to :location, Location
+    belongs_to :performing, Performance
 
     many_to_many :teams, Groups.Team, join_through: "teams_karaokes"
+    has_many :performances, Performances
 
     timestamps()
   end
