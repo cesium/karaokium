@@ -6,7 +6,7 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
   @impl true
   def handle_params(%{"id" => id}, _, socket) do
     karaoke =
-      Events.get_karaoke!(id, [:performing])
+      Events.get_karaoke!(id, performing: [:team, song: [:album, :artists]])
       |> Map.put(:status, :started)
 
     {:noreply,

@@ -1,29 +1,25 @@
 <%= if @karaoke.status == :started do %>
   <section style="margin-top: -50px;">
     <aside style="padding: 0;">
-      <img
-        alt="HTML only"
-        src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimagine-club.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fproduct_zoom%2Fpublic%2Fphotos%2Fqueen-greatest-hits_0.jpeg%3Fitok%3D4rVe7LGr&f=1&nofb=1"
-        height="285"
-      />
+      <img alt="HTML only" src={hd(@karaoke.performing.song.album.images).url} height="285" />
       <div style="padding: 0 0.5rem;">
-        <h3>We are the Champions</h3>
+        <h3><%= @karaoke.performing.song.name %></h3>
         <p>
-          <strong>The Greatest Hits</strong>
+          <strong><%= @karaoke.performing.song.album.name %></strong>
         </p>
         <p>
-          <em>Eminem</em>
+          <em><%= Enum.map(@karaoke.performing.song.artists, & &1.name) |> Enum.join(", ") %></em>
         </p>
         <center>
           <table style="padding: 0; margin-bottom: 10px;">
             <tbody>
               <tr>
                 <td><strong>Team</strong></td>
-                <td><%= @karaoke.performing || "No name" %></td>
+                <td><%= @karaoke.performing.team.name || "No name" %></td>
               </tr>
               <tr>
                 <td><strong>Score</strong></td>
-                <td><%= @karaoke.performing || 0.0 %></td>
+                <td><%= 0.0 %></td>
               </tr>
             </tbody>
           </table>

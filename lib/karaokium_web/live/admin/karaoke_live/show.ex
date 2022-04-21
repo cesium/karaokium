@@ -2,6 +2,7 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
   use KaraokiumWeb, :live_view
 
   alias Karaokium.Events
+  alias Karaokium.Performances
 
   @impl true
   def mount(_params, _session, socket) do
@@ -9,15 +10,47 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
   end
 
   @impl true
-  def handle_params(%{"id" => id}, _, socket) do
+  def handle_params(%{"id" => id} = assigns, _, socket) do
     {:noreply,
      socket
+     |> assign(:id, id)
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:karaoke, Events.get_karaoke!(id, [:location, performances: [:team, :song]]))}
+     |> reload()}
+  end
+
+  @impl true
+  def handle_event("open_voting", %{"id" => id}, socket) do
+    Performances.get_performance!(id)
+    |> Performances.update_performance(%{voting?: true})
+
+    {:noreply, reload(socket)}
+  end
+
+  @impl true
+  def handle_event("close_voting", %{"id" => id}, socket) do
+    Performances.get_performance!(id)
+    |> Performances.update_performance(%{voting?: false})
+
+    {:noreply, reload(socket)}
+  end
+
+  @impl true
+  def handle_event("start", %{"id" => id}, socket) do
+    socket.assigns.karaoke
+    |> Events.update_karaoke(%{performing_id: id})
+
+    {:noreply, reload(socket)}
   end
 
   defp page_title(:show), do: "Show Karaoke"
   defp page_title(:edit), do: "Edit Karaoke"
+
+  defp reload(socket) do
+    id = socket.assigns.id
+
+    socket
+    |> assign(:karaoke, Events.get_karaoke!(id, [:location, performances: [:team, :song]]))
+  end
 
   defp qrcode(url) do
     url

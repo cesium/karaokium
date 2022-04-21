@@ -8,6 +8,8 @@ defmodule Karaokium.Repo.Migrations.CreatePerformances do
       add :team_id, references(:teams, on_delete: :nothing, type: :binary_id)
       add :song_id, references(:songs, on_delete: :nothing, type: :binary_id)
 
+      add :voting?, :boolean, default: false
+
       timestamps()
     end
 

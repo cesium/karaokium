@@ -72,19 +72,42 @@
         <th></th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="performances">
       <%= for {performance, index} <- Enum.with_index(@karaoke.performances) do %>
-        <tr>
+        <tr id={"performance-#{performance.id}"}>
           <td><strong><%= index %></strong></td>
           <td><strong><%= performance.team.name %></strong></td>
           <td><i><%= performance.song.name %></i></td>
           <td>0.0</td>
           <td>
-            <button style="padding: 5px 10px; background-color: green; border-color: green;">Open Voting</button>
-            <%= if performance.id == @karaoke.performing do %>
+            <%= if performance.voting? do %>
+              <button
+                phx-click="close_voting"
+                phx-value-id={performance.id}
+                style="padding: 5px 10px; background-color: red; border-color: red;"
+              >
+                Close Voting
+              </button>
+            <% else %>
+              <button
+                phx-click="open_voting"
+                phx-value-id={performance.id}
+                style="padding: 5px 10px; background-color: green; border-color: green;"
+              >
+                Open Voting
+              </button>
+            <% end %>
+
+            <%= if performance.id == @karaoke.performing_id do %>
               <button style="padding: 5px 10px;" disabled>Started</button>
             <% else %>
-              <button style="padding: 5px 10px;">Start</button>
+              <button
+                phx-click="start"
+                phx-value-id={performance.id}
+                style="padding: 5px 10px; background-color: #118bee; border-color: #118bee;"
+              >
+                Start
+              </button>
             <% end %>
           </td>
         </tr>

@@ -3,7 +3,6 @@ defmodule Karaokium.Groups.Team do
 
   alias Karaokium.Accounts
   alias Karaokium.Events
-  alias Karaokium.Repertoire
 
   schema "teams" do
     field :name, :string
