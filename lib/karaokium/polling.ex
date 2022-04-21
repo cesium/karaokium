@@ -53,6 +53,7 @@ defmodule Karaokium.Polling do
     %Vote{}
     |> Vote.changeset(attrs)
     |> Repo.insert()
+    |> broadcast(:created)
   end
 
   @doc """
@@ -100,5 +101,17 @@ defmodule Karaokium.Polling do
   """
   def change_vote(%Vote{} = vote, attrs \\ %{}) do
     Vote.changeset(vote, attrs)
+  end
+
+  def subscribe(topic) when topic in ["votes"] do
+    Phoenix.PubSub.subscribe(Karaokium.PubSub, topic)
+  end
+
+  defp broadcast({:error, _reason} = error, _event), do: error
+
+  defp broadcast({:ok, %Vote{} = vote}, event)
+       when event in [:created] do
+    Phoenix.PubSub.broadcast!(Karaokium.PubSub, "votes", {event, vote})
+    {:ok, vote}
   end
 end

@@ -40,9 +40,7 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
   defp reload(socket) do
     id = socket.assigns.id
 
-    karaoke =
-      Events.get_karaoke!(id, performing: [:team, :votes, song: [:album, :artists]])
-      |> Map.put(:status, :started)
+    karaoke = Events.get_karaoke!(id, performing: [:team, :votes, song: [:album, :artists]])
 
     socket
     |> assign(:page_title, karaoke.name)

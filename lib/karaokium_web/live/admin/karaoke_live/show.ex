@@ -3,9 +3,14 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
 
   alias Karaokium.Events
   alias Karaokium.Performances
+  alias Karaokium.Polling
 
   @impl true
   def mount(_params, _session, socket) do
+    if connected?(socket) do
+      Polling.subscribe("votes")
+    end
+
     {:ok, socket}
   end
 
@@ -47,6 +52,11 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
     socket.assigns.karaoke
     |> Events.update_karaoke(%{performing_id: id})
 
+    {:noreply, reload(socket)}
+  end
+
+  @impl true
+  def handle_info({:update, _changes}, socket) do
     {:noreply, reload(socket)}
   end
 
