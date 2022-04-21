@@ -1,7 +1,7 @@
 <%= if @live_action in [:edit] do %>
   <.modal return_to={Routes.admin_karaoke_show_path(@socket, :show, @karaoke)}>
     <.live_component
-      module={KaraokiumWeb.AdminKaraokeLive.FormComponent}
+      module={KaraokiumWeb.Admin.KaraokeLive.FormComponent}
       id={@karaoke.id}
       title={@page_title}
       action={@live_action}
@@ -15,6 +15,7 @@
   <h1>
     <%= @karaoke.name %>
   </h1>
+  <%= raw(qrcode(Routes.karaoke_show_path(@socket, :show, @karaoke))) %>
 </center>
 
 <section>

@@ -91,9 +91,10 @@ defmodule Karaokium.MixProject do
       {:phoenix_live_dashboard, "~> 0.6"},
 
       # utilities
-      {:nanoid, "~> 2.0.5"},
       {:httpoison, "~> 1.8"},
       {:jason, "~> 1.2"},
+      {:nanoid, "~> 2.0.5"},
+      {:qrcode_ex, "~> 0.1.0"},
 
       # testing
       {:floki, ">= 0.30.0", only: :test},

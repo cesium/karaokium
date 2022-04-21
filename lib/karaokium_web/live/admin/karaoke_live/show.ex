@@ -18,4 +18,10 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
 
   defp page_title(:show), do: "Show Karaoke"
   defp page_title(:edit), do: "Edit Karaoke"
+
+  defp qrcode(url) do
+    url
+    |> QRCodeEx.encode()
+    |> QRCodeEx.svg(color: "#ed7950", background_color: :transparent)
+  end
 end
