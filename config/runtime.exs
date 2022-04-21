@@ -68,7 +68,7 @@ if config_env() == :prod do
 
   config :karaokium, KaraokiumWeb.Endpoint,
     url: [host: host],
-    https: [
+    http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
       # See the documentation on https://hexdocs.pm/plug_cowboy/Plug.Cowboy.html
