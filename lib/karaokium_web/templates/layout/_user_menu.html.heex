@@ -4,7 +4,8 @@
       <div style="display: flex; align-items: center;">
         <img class="avatar" src={Karaokium.Media.Gravatar.picture(@current_user)} />
         <a href="#" style="margin: 0 10px;">
-          <%= @current_user.name %>
+          <p style="margin: -10px 0; font-size: 1.5rem;"><%= @current_user.name %></p>
+          <p style="margin: -10px 1px; color: #94A3B8;">@<%= @current_user.username %></p>
         </a>
       </div>
       <ul>
