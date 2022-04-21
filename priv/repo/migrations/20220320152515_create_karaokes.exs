@@ -5,6 +5,8 @@ defmodule Karaokium.Repo.Migrations.CreateKaraokes do
     create table(:karaokes, primary_key: false) do
       add :id, :binary_id, primary_key: true
       add :name, :string
+      add :code, :string
+      add :status, :string
       add :start_date, :naive_datetime
       add :end_date, :naive_datetime
       add :location_id, references(:locations, on_delete: :nothing, type: :binary_id)
@@ -13,5 +15,6 @@ defmodule Karaokium.Repo.Migrations.CreateKaraokes do
     end
 
     create index(:karaokes, [:location_id])
+    create unique_index(:karaokes, [:code])
   end
 end
