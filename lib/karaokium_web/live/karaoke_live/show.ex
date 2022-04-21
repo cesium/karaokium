@@ -15,32 +15,29 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
 
   def status(%{karaoke: karaoke} = assigns) when karaoke.status == :waiting do
     ~H"""
-    <section>
-      <img
-        src={Routes.static_path(KaraokiumWeb.Endpoint, "/karaokium/images/illustrations/undraw/season_change.svg")}
-        style="max-width: 80%;margin: auto;"
-        width="700"
-      />
-      <header>
-        <h1>
-          <%= @karaoke.name %> - The Karaoke is not ready yet
-        </h1>
-      </header>
-    </section>
+    <.status
+      img={Routes.static_path(KaraokiumWeb.Endpoint, "/karaokium/images/illustrations/undraw/season_change.svg")}
+      text={"#{@karaoke.name} - Waiting to start"}
+    />
     """
   end
 
   def status(%{karaoke: karaoke} = assigns) when karaoke.status == :ready do
     ~H"""
+    <.status
+      img={Routes.static_path(KaraokiumWeb.Endpoint, "/karaokium/images/illustrations/undraw/happy_music.svg")}
+      text={"#{@karaoke.name} - Starting soon"}
+    />
+    """
+  end
+
+  def status(%{img: img, text: text} = assigns) do
+    ~H"""
     <section>
-      <img
-        src={Routes.static_path(KaraokiumWeb.Endpoint, "/karaokium/images/illustrations/undraw/happy_music.svg")}
-        style="max-width: 80%;margin: auto;"
-        width="700"
-      />
+      <img src={@img} style="max-width: 80%;margin: auto;" width="700" />
       <header>
         <h1>
-          <%= @karaoke.name %> - The Karaoke is starting soon
+          <%= @text %>
         </h1>
       </header>
     </section>
