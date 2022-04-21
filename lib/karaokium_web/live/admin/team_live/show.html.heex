@@ -1,0 +1,24 @@
+<h1>Show Team</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.admin_team_show_path(@socket, :show, @team)}>
+    <.live_component
+      module={KaraokiumWeb.Admin.TeamLive.FormComponent}
+      id={@team.id}
+      title={@page_title}
+      action={@live_action}
+      team={@team}
+      return_to={Routes.admin_team_show_path(@socket, :show, @team)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+  <li>
+    <strong>Name:</strong>
+    <%= @team.name %>
+  </li>
+</ul>
+
+<span><%= live_patch("Edit", to: Routes.admin_team_show_path(@socket, :edit, @team), class: "button") %></span> |
+<span><%= live_redirect("Back", to: Routes.admin_team_index_path(@socket, :index)) %></span>

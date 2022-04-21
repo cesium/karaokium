@@ -36,6 +36,7 @@ defmodule KaraokiumWeb.LayoutView do
           %{title: "Locations", url: Routes.admin_location_index_path(conn, :index)}
         ]
       },
+      %{title: "Teams", url: Routes.admin_team_index_path(conn, :index), submenu: []},
       %{
         title: "Repertoire",
         url: "#",

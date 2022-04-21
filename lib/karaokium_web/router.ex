@@ -106,6 +106,17 @@ defmodule KaraokiumWeb.Router do
         live "/locations/:id", LocationLive.Show, :show
         live "/locations/:id/show/edit", LocationLive.Show, :edit
       end
+
+      scope "/groups" do
+        scope "/teams" do
+          live "/teams", TeamLive.Index, :index
+          live "/teams/new", TeamLive.Index, :new
+          live "/teams/:id/edit", TeamLive.Index, :edit
+
+          live "/teams/:id", TeamLive.Show, :show
+          live "/teams/:id/show/edit", TeamLive.Show, :edit
+        end
+      end
     end
 
     scope "/sysadmin" do
