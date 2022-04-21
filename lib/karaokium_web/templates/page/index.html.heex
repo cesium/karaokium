@@ -1,11 +1,28 @@
 <%= if @current_user do %>
   <header>
+    <img
+      src={Routes.static_path(@conn, "/karaokium/images/illustrations/undraw/well_done.svg")}
+      style="max-width: 80%;"
+      width="300"
+    />
     <h1>Hello, <%= @current_user.name %>!</h1>
-    <p>Scan a QRCode and start voting!</p>
+    <p>Scan a QRCode or intruduce the Karaoke PIN bellow!</p>
   </header>
+  <section>
+    <form>
+      <div style="display: flex;">
+        <%= text_input(:karaoke, :code, placeholder: "PIN", style: "margin: auto 10px;") %>
+        <%= submit("Go", class: "action-btn") %>
+      </div>
+    </form>
+  </section>
 <% else %>
   <header>
-  <img src={Routes.static_path(@conn, "/karaokium/images/illustrations/undraw/compose_music_ovo.svg")} style="max-width: 100%;" width="700"  />
+    <img
+      src={Routes.static_path(@conn, "/karaokium/images/illustrations/undraw/compose_music.svg")}
+      style="max-width: 100%;"
+      width="700"
+    />
     <h1>Welcome to Karaokium!</h1>
     <p>A voting plaform for Karaoke performances!</p>
     <p>

@@ -127,6 +127,10 @@ defmodule KaraokiumWeb.Router do
         live_socket_path: "/karaokium/live"
     end
 
+    scope "/karaoke" do
+      live "/:id", KaraokeLive.Show, :show
+    end
+
     scope "/polling" do
       live "/votes", VoteLive.Index, :index
       live "/votes/new", VoteLive.Index, :new

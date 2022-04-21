@@ -138,6 +138,10 @@ defmodule Karaokium.Events do
   """
   def get_karaoke!(id, preloads \\ []), do: Repo.get!(Karaoke, id) |> Repo.preload(preloads)
 
+  def get_karaoke_by_code(code) when is_binary(code) do
+    Repo.get_by(Karaoke, code: code)
+  end
+
   @doc """
   Creates a karaoke.
 
