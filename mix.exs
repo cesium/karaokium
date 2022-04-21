@@ -91,6 +91,7 @@ defmodule Karaokium.MixProject do
       {:phoenix_live_dashboard, "~> 0.6"},
 
       # utilities
+      {:csv, "~> 2.4.1"},
       {:httpoison, "~> 1.8"},
       {:jason, "~> 1.2"},
       {:nanoid, "~> 2.0.5"},
