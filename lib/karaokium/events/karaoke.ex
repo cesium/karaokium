@@ -21,7 +21,7 @@ defmodule Karaokium.Events.Karaoke do
     belongs_to :performing, Performance
 
     many_to_many :teams, Groups.Team, join_through: "teams_karaokes"
-    has_many :performances, Performances
+    has_many :performances, Performance
 
     timestamps()
   end
