@@ -13,7 +13,7 @@ defmodule KaraokiumWeb.Admin.TeamLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:team, Groups.get_team!(id))}
+     |> assign(:team, Groups.get_team!(id, [:users]))}
   end
 
   defp page_title(:show), do: "Show Team"

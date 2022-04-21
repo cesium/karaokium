@@ -38,7 +38,7 @@ defmodule Karaokium.Events do
       ** (Ecto.NoResultsError)
 
   """
-  def get_location!(id), do: Repo.get!(Location, id)
+  def get_location!(id, preloads \\ []), do: Repo.get!(Location, id) |> Repo.preload(preloads)
 
   @doc """
   Creates a location.

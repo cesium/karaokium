@@ -4,8 +4,10 @@ defmodule Karaokium.Groups do
   """
 
   import Ecto.Query, warn: false
+  import Karaokium.Context
   alias Karaokium.Repo
 
+  alias Karaokium.Accounts.User
   alias Karaokium.Groups.Team
 
   @doc """
@@ -17,8 +19,10 @@ defmodule Karaokium.Groups do
       [%Team{}, ...]
 
   """
-  def list_teams do
-    Repo.all(Team)
+  def list_teams(opts \\ []) do
+    Team
+    |> apply_filters(opts)
+    |> Repo.all()
   end
 
   @doc """
@@ -35,7 +39,7 @@ defmodule Karaokium.Groups do
       ** (Ecto.NoResultsError)
 
   """
-  def get_team!(id), do: Repo.get!(Team, id)
+  def get_team!(id, preloads \\ []), do: Repo.get!(Team, id) |> Repo.preload(preloads)
 
   @doc """
   Creates a team.

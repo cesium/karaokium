@@ -2,6 +2,7 @@ defmodule Karaokium.Events.Karaoke do
   use Karaokium.Schema
 
   alias Karaokium.Events.Location
+  alias Karaokium.Groups
 
   schema "karaokes" do
     field :name, :string
@@ -9,6 +10,8 @@ defmodule Karaokium.Events.Karaoke do
     field :end_date, :naive_datetime
 
     belongs_to :location, Location
+
+    many_to_many :teams, Groups.Team, join_through: "teams_karaokes"
 
     timestamps()
   end

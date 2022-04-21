@@ -41,6 +41,6 @@ defmodule KaraokiumWeb.Admin.TeamLive.Index do
   end
 
   defp list_teams do
-    Groups.list_teams()
+    Groups.list_teams([:users])
   end
 end

@@ -7,8 +7,8 @@ defmodule Karaokium.Groups.Team do
   schema "teams" do
     field :name, :string
 
-    has_many :users, Accounts.User
-    has_many :karaokes, Events.Karaoke
+    many_to_many :karaokes, Events.Karaoke, join_through: "teams_karaokes"
+    many_to_many :users, Accounts.User, join_through: "teams_users"
 
     timestamps()
   end

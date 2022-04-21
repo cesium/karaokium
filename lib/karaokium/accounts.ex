@@ -4,9 +4,16 @@ defmodule Karaokium.Accounts do
   """
 
   import Ecto.Query, warn: false
+  import Karaokium.Context
   alias Karaokium.Repo
 
   alias Karaokium.Accounts.{User, UserToken, UserNotifier}
+
+  def list_users(opts \\ []) do
+    User
+    |> apply_filters(opts)
+    |> Repo.all()
+  end
 
   ## Database getters
 

@@ -1,6 +1,7 @@
 defmodule KaraokiumWeb.Admin.TeamLive.FormComponent do
   use KaraokiumWeb, :live_component
 
+  alias Karaokium.Accounts
   alias Karaokium.Groups
 
   @impl true
