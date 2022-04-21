@@ -176,6 +176,7 @@ defmodule Karaokium.Events do
     karaoke
     |> Karaoke.changeset(attrs)
     |> Repo.update()
+    |> broadcast(:update)
   end
 
   @doc """
@@ -205,5 +206,17 @@ defmodule Karaokium.Events do
   """
   def change_karaoke(%Karaoke{} = karaoke, attrs \\ %{}) do
     Karaoke.changeset(karaoke, attrs)
+  end
+
+  def subscribe(topic) when topic in ["karaokes"] do
+    Phoenix.PubSub.subscribe(Karaokium.PubSub, topic)
+  end
+
+  defp broadcast({:error, _reason} = error, _event), do: error
+
+  defp broadcast({:ok, %Karaoke{} = karaoke}, event)
+       when event in [:update] do
+    Phoenix.PubSub.broadcast!(Karaokium.PubSub, "karaokes", {event, karaoke})
+    {:ok, karaoke}
   end
 end

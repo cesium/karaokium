@@ -71,6 +71,7 @@ defmodule Karaokium.Performances do
     performance
     |> Performance.changeset(attrs)
     |> Repo.update()
+    |> broadcast(:update)
   end
 
   @doc """
@@ -100,5 +101,17 @@ defmodule Karaokium.Performances do
   """
   def change_performance(%Performance{} = performance, attrs \\ %{}) do
     Performance.changeset(performance, attrs)
+  end
+
+  def subscribe(topic) when topic in ["performances"] do
+    Phoenix.PubSub.subscribe(Karaokium.PubSub, topic)
+  end
+
+  defp broadcast({:error, _reason} = error, _event), do: error
+
+  defp broadcast({:ok, %Performance{} = performance}, event)
+       when event in [:update] do
+    Phoenix.PubSub.broadcast!(Karaokium.PubSub, "performances", {event, performance})
+    {:ok, performance}
   end
 end

@@ -2,17 +2,38 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
   use KaraokiumWeb, :live_view
 
   alias Karaokium.Events
+  alias Karaokium.Performances
+
+  @impl true
+  def mount(%{"id" => id}, _session, socket) do
+    if connected?(socket) do
+      Events.subscribe("karaokes")
+      Performances.subscribe("performances")
+    end
+
+    {:ok, assign(socket, :id, id)}
+  end
 
   @impl true
   def handle_params(%{"id" => id}, _, socket) do
+    {:noreply, reload(socket)}
+  end
+
+  @impl true
+  def handle_info({:update, _changes}, socket) do
+    {:noreply, reload(socket)}
+  end
+
+  defp reload(socket) do
+    id = socket.assigns.id
+
     karaoke =
       Events.get_karaoke!(id, performing: [:team, song: [:album, :artists]])
       |> Map.put(:status, :started)
 
-    {:noreply,
-     socket
-     |> assign(:page_title, karaoke.name)
-     |> assign(:karaoke, karaoke)}
+    socket
+    |> assign(:page_title, karaoke.name)
+    |> assign(:karaoke, karaoke)
   end
 
   def status(%{karaoke: karaoke} = assigns) when karaoke.status == :waiting do

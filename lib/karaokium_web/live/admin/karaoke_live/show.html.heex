@@ -15,7 +15,7 @@
   <h1>
     <%= @karaoke.name %>
   </h1>
-  <%= raw(qrcode(Routes.karaoke_show_path(@socket, :show, @karaoke))) %>
+  <%= raw(qrcode(Routes.karaoke_show_url(@socket, :show, @karaoke))) %>
 </center>
 
 <section>

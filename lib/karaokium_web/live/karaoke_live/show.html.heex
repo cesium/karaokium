@@ -30,11 +30,13 @@
   <section style=""></section>
 
   <section>
-    <header>
-      <p>Vote now!</p>
-    </header>
-    <%= for n <- 1..10 do %>
-      <button style="margin: 10px;"><%= n %></button>
+    <%= if @karaoke.performing.voting? do %>
+      <header>
+        <p>Vote now!</p>
+      </header>
+      <%= for n <- 1..10 do %>
+        <button style="margin: 10px;"><%= n %></button>
+      <% end %>
     <% end %>
   </section>
 <% else %>
