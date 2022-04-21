@@ -19,6 +19,14 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
   end
 
   @impl true
+  def handle_event("status", %{"status" => status}, socket) do
+    socket.assigns.karaoke
+    |> Events.update_karaoke(%{status: String.to_existing_atom(status)})
+
+    {:noreply, reload(socket)}
+  end
+
+  @impl true
   def handle_event("open_voting", %{"id" => id}, socket) do
     Performances.get_performance!(id)
     |> Performances.update_performance(%{voting?: true})

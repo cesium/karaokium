@@ -26,6 +26,12 @@ defmodule Karaokium.Events.Karaoke do
     timestamps()
   end
 
+  def create_changeset(karaoke, attrs) do
+    karaoke
+    |> cast(attrs, [:name, :status, :start_date, :end_date, :performing_id, :location_id])
+    |> validate_required([:name, :status, :start_date, :end_date, :location_id])
+  end
+
   @doc false
   def changeset(karaoke, attrs) do
     karaoke

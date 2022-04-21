@@ -55,6 +55,26 @@
   | <span><%= live_redirect("Back", to: Routes.admin_karaoke_index_path(@socket, :index)) %></span>
 </center>
 
+<center>
+  <div style="margin: 50px 20%;">
+    <%= if @karaoke.status == :started do %>
+      <button class="action-btn" phx-click="status" phx-value-status="waiting">
+        Stop
+      </button>
+    <% end %>
+    <%= if @karaoke.status == :waiting do %>
+      <button class="action-btn" phx-click="status" phx-value-status="ready">
+        Ready
+      </button>
+    <% end %>
+    <%= if @karaoke.status == :ready do %>
+      <button class="action-btn" phx-click="status" phx-value-status="started">
+        Start
+      </button>
+    <% end %>
+  </div>
+</center>
+
 <hr />
 
 <section>

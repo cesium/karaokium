@@ -37,8 +37,8 @@ defmodule Karaokium.Repo.Seeds.Accounts do
         ]
         |> Enum.each(&insert_admin/1)
 
-        # get_fake_users()
-        # |> Enum.each(&insert_user/1)
+      # get_fake_users()
+      # |> Enum.each(&insert_user/1)
 
       _ ->
         Mix.shell().error("Found users, aborting seeding admin users.")

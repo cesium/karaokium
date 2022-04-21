@@ -156,7 +156,7 @@ defmodule Karaokium.Events do
   """
   def create_karaoke(attrs \\ %{}) do
     %Karaoke{}
-    |> Karaoke.changeset(attrs)
+    |> Karaoke.create_changeset(attrs)
     |> Repo.insert()
   end
 
