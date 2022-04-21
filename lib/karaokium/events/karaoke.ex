@@ -4,8 +4,15 @@ defmodule Karaokium.Events.Karaoke do
   alias Karaokium.Events.Location
   alias Karaokium.Groups
 
+  @digits "0123456789"
+
   schema "karaokes" do
+    field :code, :string
+
     field :name, :string
+
+    field :status, Ecto.Enum, values: [:waiting, :ready, :started], default: :waiting
+
     field :start_date, :naive_datetime
     field :end_date, :naive_datetime
 
@@ -19,7 +26,16 @@ defmodule Karaokium.Events.Karaoke do
   @doc false
   def changeset(karaoke, attrs) do
     karaoke
-    |> cast(attrs, [:name, :start_date, :end_date, :location_id])
-    |> validate_required([:name, :start_date, :end_date, :location_id])
+    |> cast(attrs, [:name, :status, :start_date, :end_date, :location_id])
+    |> validate_required([:name, :status, :start_date, :end_date, :location_id])
+    |> maybe_generate_code()
   end
+
+  defp maybe_generate_code(%Ecto.Changeset{valid?: true, changes: changes} = changeset)
+       when not is_map_key(changes, :code) do
+    changeset
+    |> change(code: Nanoid.generate(6, @digits))
+  end
+
+  defp maybe_generate_code(changeset), do: changeset
 end
