@@ -13,7 +13,7 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:karaoke, Events.get_karaoke!(id, [:location]))}
+     |> assign(:karaoke, Events.get_karaoke!(id, [:location, performances: [:team, :song]]))}
   end
 
   defp page_title(:show), do: "Show Karaoke"

@@ -3,7 +3,7 @@
 <%= if @live_action in [:new, :edit] do %>
   <.modal return_to={Routes.admin_location_index_path(@socket, :index)}>
     <.live_component
-      module={KaraokiumWeb.AdminLocationLive.FormComponent}
+      module={KaraokiumWeb.Admin.LocationLive.FormComponent}
       id={@location.id || :new}
       title={@page_title}
       action={@live_action}

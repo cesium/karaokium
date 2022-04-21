@@ -54,3 +54,41 @@
   </span>
   | <span><%= live_redirect("Back", to: Routes.admin_karaoke_index_path(@socket, :index)) %></span>
 </center>
+
+<hr />
+
+<section>
+  <header>
+    <h1>Performances</h1>
+  </header>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Team</th>
+        <th>Song</th>
+        <th>Score</th>
+
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for {performance, index} <- Enum.with_index(@karaoke.performances) do %>
+        <tr>
+          <td><strong><%= index %></strong></td>
+          <td><strong><%= performance.team.name %></strong></td>
+          <td><i><%= performance.song.name %></i></td>
+          <td>0.0</td>
+          <td>
+            <button style="padding: 5px 10px; background-color: green; border-color: green;">Open Voting</button>
+            <%= if performance.id == @karaoke.performing do %>
+              <button style="padding: 5px 10px;" disabled>Started</button>
+            <% else %>
+              <button style="padding: 5px 10px;">Start</button>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>

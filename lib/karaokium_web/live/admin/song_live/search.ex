@@ -35,7 +35,6 @@ defmodule KaraokiumWeb.Admin.SongLive.Search do
     song_params =
       socket.assigns.results
       |> Enum.find(fn entry -> entry["id"] == id end)
-      |> IO.inspect()
 
     album_params =
       song_params["album"]
@@ -65,8 +64,6 @@ defmodule KaraokiumWeb.Admin.SongLive.Search do
          |> assign(:results, [])}
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        IO.inspect(changeset)
-
         {:noreply,
          socket
          |> put_flash(:error, "Couldn't add song")}

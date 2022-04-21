@@ -11,6 +11,43 @@ alias Karaokium.Repertoire.Song
 alias Karaokium.Repo
 alias Karaokium.Spotify
 
+swap_field = fn map, old_key, new_key ->
+  value = Map.get(map, old_key)
+
+  Map.put(map, new_key, value)
+  |> Map.drop([old_key])
+end
+
+fix_spotify_url = fn map ->
+  spotify_url = map["external_urls"]["spotify"]
+
+  Map.put(map, "spotify_url", spotify_url)
+end
+
+parse_song_entry = fn map ->
+  song_params = Spotify.get_track(map["spotify_id"])
+
+  album_params =
+    song_params["album"]
+    |> swap_field.("id", "spotify_id")
+    |> swap_field.("uri", "spotify_uri")
+    |> fix_spotify_url.()
+
+  artists_params =
+    song_params["artists"]
+    |> Enum.map(&swap_field.(&1, "id", "spotify_id"))
+    |> Enum.map(&swap_field.(&1, "uri", "spotify_uri"))
+    |> Enum.map(&fix_spotify_url.(&1))
+
+  song_params =
+    song_params
+    |> swap_field.("id", "spotify_id")
+    |> swap_field.("uri", "spotify_uri")
+    |> fix_spotify_url.()
+    |> Map.put("album", album_params)
+    |> Map.put("artists", artists_params)
+end
+
 location =
   %Location{}
   |> Location.changeset(%{
@@ -36,44 +73,27 @@ karaoke =
 "performances.csv"
 |> File.stream!()
 |> CSV.decode!(headers: true, strip_fields: true)
-|> Enum.each(fn performance ->
-  IO.inspect(performance)
-
+|> Enum.group_by(& &1["team"])
+|> Enum.each(fn {team_name, list_of_songs} ->
   team =
     %Team{}
-    |> Team.changeset(%{name: performance["team"]})
+    |> Team.changeset(%{name: team_name})
     |> Repo.insert!()
 
-  song_params = Spotify.get_track(performance["spotify_id"])
+  list_of_songs
+  |> Enum.map(&parse_song_entry.(&1))
+  |> Enum.each(fn song_params ->
+    song =
+      %Song{}
+      |> Song.changeset(song_params)
+      |> Repo.insert!()
 
-    album_params =
-      song_params["album"]
-      |> swap_field("id", "spotify_id")
-      |> swap_field("uri", "spotify_uri")
-      |> fix_spotify_url()
-
-    artists_params =
-      song_params["artists"]
-      |> Enum.map(&swap_field(&1, "id", "spotify_id"))
-      |> Enum.map(&swap_field(&1, "uri", "spotify_uri"))
-      |> Enum.map(&fix_spotify_url/1)
-
-    song_params =
-      song_params
-      |> swap_field("id", "spotify_id")
-      |> swap_field("uri", "spotify_uri")
-      |> fix_spotify_url()
-      |> Map.put("album", album_params)
-      |> Map.put("artists", artists_params)
-  song =
-    Karaokium.Repo.get_by(Karaokium.Repertoire.Song, spotify_id: performance["spotify_id"])
-    |> IO.inspect()
-
-  %Performance{}
-  |> Performance.changeset(%{
-    karaoke_id: karaoke.id,
-    team_id: team.id,
-    song_id: song.id
-  })
-  |> Repo.insert!()
+    %Performance{}
+    |> Performance.changeset(%{
+      karaoke_id: karaoke.id,
+      team_id: team.id,
+      song_id: song.id
+    })
+    |> Repo.insert!()
+  end)
 end)
