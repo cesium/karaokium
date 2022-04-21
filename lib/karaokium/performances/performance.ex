@@ -4,11 +4,14 @@ defmodule Karaokium.Performances.Performance do
   alias Karaokium.Events
   alias Karaokium.Groups
   alias Karaokium.Repertoire
+  alias Karaokium.Polling
 
   schema "performances" do
     belongs_to :karaoke, Events.Karaoke
     belongs_to :team, Groups.Team
     belongs_to :song, Repertoire.Song
+
+    has_many :votes, Polling.Vote
 
     field :voting?, :boolean, default: false
 

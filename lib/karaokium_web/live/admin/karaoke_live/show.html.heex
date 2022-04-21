@@ -78,7 +78,9 @@
           <td><strong><%= index %></strong></td>
           <td><strong><%= performance.team.name %></strong></td>
           <td><i><%= performance.song.name %></i></td>
-          <td>0.0</td>
+          <td>
+            <%= score(performance) %>
+          </td>
           <td>
             <%= if performance.voting? do %>
               <button

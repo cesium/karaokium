@@ -3,6 +3,7 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
 
   alias Karaokium.Events
   alias Karaokium.Performances
+  alias Karaokium.Polling
 
   @impl true
   def mount(%{"id" => id}, _session, socket) do
@@ -20,6 +21,18 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
   end
 
   @impl true
+  def handle_event("vote", %{"pontuation" => pontuation}, socket) do
+    karaoke = Events.get_karaoke!(socket.assigns.id, performing: [:votes])
+
+    %{pontuation: pontuation}
+    |> Map.put(:user_id, socket.assigns.current_user.id)
+    |> Map.put(:performance_id, karaoke.performing_id)
+    |> Polling.create_vote()
+
+    {:noreply, reload(socket)}
+  end
+
+  @impl true
   def handle_info({:update, _changes}, socket) do
     {:noreply, reload(socket)}
   end
@@ -28,7 +41,7 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
     id = socket.assigns.id
 
     karaoke =
-      Events.get_karaoke!(id, performing: [:team, song: [:album, :artists]])
+      Events.get_karaoke!(id, performing: [:team, :votes, song: [:album, :artists]])
       |> Map.put(:status, :started)
 
     socket
@@ -43,6 +56,26 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
       text={"#{@karaoke.name} - Waiting to start"}
     />
     """
+  end
+
+  defp score(performance) do
+    if performance.votes != [] do
+      pontuations = Enum.map(performance.votes, & &1.pontuation)
+
+      (Enum.sum(pontuations) / Enum.count(pontuations))
+      |> Decimal.from_float()
+      |> Decimal.round(1)
+    else
+      0
+    end
+  end
+
+  defp has_voted?(current_user, performance) do
+    users =
+      performance.votes
+      |> Enum.map(& &1.user_id)
+
+    current_user.id in users
   end
 
   def status(%{karaoke: karaoke} = assigns) when karaoke.status == :ready do

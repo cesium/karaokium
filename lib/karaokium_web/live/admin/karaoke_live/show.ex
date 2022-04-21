@@ -49,7 +49,22 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
     id = socket.assigns.id
 
     socket
-    |> assign(:karaoke, Events.get_karaoke!(id, [:location, performances: [:team, :song]]))
+    |> assign(
+      :karaoke,
+      Events.get_karaoke!(id, [:location, performances: [:team, :song, :votes]])
+    )
+  end
+
+  defp score(performance) do
+    if performance.votes != [] do
+      pontuations = Enum.map(performance.votes, & &1.pontuation)
+
+      (Enum.sum(pontuations) / Enum.count(pontuations))
+      |> Decimal.from_float()
+      |> Decimal.round(1)
+    else
+      0
+    end
   end
 
   defp qrcode(url) do

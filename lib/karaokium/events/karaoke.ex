@@ -30,7 +30,7 @@ defmodule Karaokium.Events.Karaoke do
   def changeset(karaoke, attrs) do
     karaoke
     |> cast(attrs, [:name, :status, :start_date, :end_date, :performing_id, :location_id])
-    |> validate_required([:name, :status, :start_date, :end_date, :performing_id, :location_id])
+    |> validate_required([:name, :status, :start_date, :end_date, :location_id])
     |> maybe_generate_code()
   end
 
