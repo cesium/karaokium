@@ -15,7 +15,7 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
   end
 
   @impl true
-  def handle_params(%{"id" => id} = assigns, _, socket) do
+  def handle_params(%{"id" => id} = _assigns, _, socket) do
     {:noreply,
      socket
      |> assign(:id, id)
