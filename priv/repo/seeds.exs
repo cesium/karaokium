@@ -9,7 +9,7 @@ defmodule Karaokium.Repo.Seeds do
     [
       "accounts.exs",
       "events.exs",
-      "groups.exs",
+      "groups.exs"
     ]
     |> Enum.each(fn file ->
       Code.require_file("#{@seeds_dir}/#{file}")
