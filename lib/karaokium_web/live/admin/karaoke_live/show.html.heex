@@ -92,6 +92,7 @@
         <th>Team</th>
         <th>Song</th>
         <th>Score</th>
+        <th># Votes</th>
 
         <th></th>
       </tr>
@@ -104,6 +105,9 @@
           <td><i><%= performance.song.name %></i></td>
           <td>
             <%= score(performance) %>
+          </td>
+          <td>
+            <%= Enum.count(performance.votes) %>
           </td>
           <td>
             <%= if performance.voting? do %>
