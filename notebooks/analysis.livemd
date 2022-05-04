@@ -2,8 +2,6 @@
 
 # Karaokium #2 (21/04/2022)
 
-## Setup
-
 ```elixir
 import Ecto.Query, warn: false
 alias Karaokium.Repo
@@ -26,7 +24,7 @@ karaoke =
 <!-- livebook:{"output":true} -->
 
 ```
-[debug] QUERY OK source="karaokes" db=4.6ms decode=2.1ms queue=0.4ms idle=1165.3ms
+[debug] QUERY OK source="karaokes" db=3.0ms decode=4.4ms queue=0.1ms idle=1085.2ms
 SELECT k0."id", k0."code", k0."name", k0."status", k0."start_date", k0."end_date", k0."location_id", k0."performing_id", k0."inserted_at", k0."updated_at" FROM "karaokes" AS k0 WHERE (k0."name" = ?) ["Karaoke #2"]
 
 ```
@@ -165,13 +163,13 @@ end)
 <!-- livebook:{"output":true} -->
 
 ```
-[debug] QUERY OK source="performances" db=0.8ms queue=0.1ms idle=1357.5ms
+[debug] QUERY OK source="performances" db=0.9ms queue=0.3ms idle=1272.9ms
 SELECT p0."id", p0."karaoke_id", p0."team_id", p0."song_id", p0."voting?", p0."inserted_at", p0."updated_at" FROM "performances" AS p0 WHERE (p0."karaoke_id" = ?) ["99a28792-103f-4b84-a3e5-fa6a64444190"]
-[debug] QUERY OK source="teams" db=1.4ms idle=1383.1ms
+[debug] QUERY OK source="teams" db=1.1ms idle=1294.7ms
 SELECT t0."id", t0."name", t0."inserted_at", t0."updated_at", t0."id" FROM "teams" AS t0 WHERE (t0."id" IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)) ["b815eb21-38e9-4b55-8308-2669b0971dd8", "9c296304-3024-417a-9876-9b5b042e2a87", "00fab797-55e7-4438-95b2-7035aebe04e5", "b26ca1fc-ee71-438d-a2ea-bb4b709a121e", "151f9cc8-03ab-4de6-b480-0eadd4cbd210", "3e8d4f29-1c17-4f0f-ad02-a691f4ed731b", "3d7c4b38-1bb4-463d-a956-4b3c90fa641a", "a2ef65c0-284a-4159-b1d5-d3a312240d71", "0f5e83bb-ba60-4cbc-a6cf-d20e7d4cfa56", "32c68554-27ef-475d-a148-0fb8125bf99e", "8b378a4f-8490-4fd8-be86-39434e936dd1", "f417f15b-25bb-4352-b9c9-b7649f69a6f5", "f7d47425-64b7-4004-ba52-07b9b31cbf12", "d2b67efb-9032-4be5-bfee-db46830d560d", "ae25e91a-3f70-43c2-9f76-60c537a7418d", "6cd5e4e1-9fa4-4427-968c-8a7a043985bb"]
-[debug] QUERY OK source="songs" db=3.3ms idle=1383.1ms
+[debug] QUERY OK source="songs" db=1.9ms queue=0.2ms idle=1294.8ms
 SELECT s0."id", s0."name", s0."duration_ms", s0."track_number", s0."explicit", s0."href", s0."spotify_id", s0."spotify_uri", s0."spotify_url", s0."preview_url", s0."popularity", s0."album_id", s0."inserted_at", s0."updated_at", s0."id" FROM "songs" AS s0 WHERE (s0."id" IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)) ["4e3d6ce2-4027-4961-88d0-4b5caf80e148", "c0f67eda-b38e-4d6b-ac78-dd65dd46deb8", "725b9776-b4c6-4144-8c4d-360b759748ee", "d7893334-b8ec-4e66-8c55-db1bcac28b4d", "e8cd217f-fa01-4209-a0cd-1ffd33b6003c", "b3b628b1-9f70-4187-b0ef-203c9d1df522", "58b0e4e8-073b-423b-ab28-cb734a2c9ec3", "81a08367-b2ef-4c96-971c-6a36085ee2bf", "8dddd383-35a2-4d5d-9b45-3b7698b4e9d3", "91ba5846-5f54-4820-b54a-343dc5810564", "18a2c675-4b04-45f4-974b-5d3649d0296c", "54a2a4bc-9eda-419e-ba48-d2913205f98b", "9ee4148e-ff2d-486d-9efa-2846f072245f", "e1c2f7b8-1e51-4d2b-8d2b-ff5b09a1a32b", "b80e0bd8-74bb-4b9e-b4f8-644a8e1f6f5d", "395126d7-29cb-410f-bd49-e54e27a2ae16", "80bcb7d4-989a-48ba-ad54-d6f8be2dd45c", "a29cb6a4-c103-4f02-8753-65572ac8ddeb", "d433befb-dec9-43c7-997a-6232ae36ea1d", "679ea63a-9a59-481a-8292-553140617969", "35ad223f-518f-4e35-afd5-59d08404f2aa", "992ca69b-0eda-4b2b-abb4-bb1b048c5ac6", "f9ecf457-c99e-477a-9f22-03fe09c2de51", "70ac3d2f-95c7-4d0f-8163-674db7cf18be", "80de5e06-2e8d-4202-8779-673d3eeccd2f"]
-[debug] QUERY OK source="votes" db=5.1ms queue=0.1ms idle=1383.1ms
+[debug] QUERY OK source="votes" db=5.6ms queue=0.1ms idle=1294.6ms
 SELECT v0."id", v0."pontuation", v0."performance_id", v0."user_id", v0."inserted_at", v0."updated_at", v0."performance_id" FROM "votes" AS v0 WHERE (v0."performance_id" IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)) ORDER BY v0."performance_id" ["0bb58c29-25c4-4dae-a9f8-64090b9504bb", "35af460f-2ceb-4d5c-bea8-91415b37df3c", "eaf5d952-4dbe-433d-8a98-08bde1f5311e", "1f0429a6-0c36-442b-969e-1f9e3c9fe352", "1014b1ba-8368-49b5-b387-982fa9e9962e", "c7c6a3f5-69a8-4a35-8bbd-c17cf55599ef", "61056e33-5481-4016-a4dc-201f37cdcc90", "2eb92e5c-94af-434a-9495-047c306cbe49", "11d45a69-d028-4c22-a66f-de3cca75e3e3", "0bbc2b04-1554-4ba6-816d-3ff2005ac8a2", "654c4a2e-0fa4-4eb5-ab41-d5af09b18451", "9a776432-868e-461a-9ee0-8331e9e8bbca", "7d250b1b-9f01-4426-9576-1cf273a9fb16", "94264249-453e-4217-b0fb-a9fbc2ae5a96", "4cf36187-e108-41b6-86e9-9279d59afb8e", "3cb3f737-a66a-4eca-a982-84163f70e2ab", "f53c6e9a-45ce-466c-bbd8-245a3e1f82e5", "bd5f78dd-c285-42d7-99e4-a7f294817d15", "0b382d67-976e-4dd5-8ab3-a85199a7a8ee", "f748887d-82d3-469e-901d-8bfc92a9562f", "d6a176a8-4598-418b-8fa7-4a4d232e37f3", "b2b033d8-6054-4bc5-853b-35e1c863de4a", "6f391685-c76e-4383-95ba-308f726bce76", "20ab80e7-5b59-44b8-94d9-88834116f9d9", "d4b43d58-54f8-459d-a915-6a2e299edcae"]
 
 ```
