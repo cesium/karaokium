@@ -45,6 +45,8 @@ fi
 log_info "setup" "Installing dependencies..."
 MIX_ENV=$env mix local.hex --force
 MIX_ENV=$env mix local.rebar --force
+MIX_ENV=$env mix archive.install hex phx_new --force
+MIX_ENV=$env mix escript.install hex livebook --force
 MIX_ENV=$env mix deps.get
 
 log_info "setup" "Creating, running migrations and populating database..."
