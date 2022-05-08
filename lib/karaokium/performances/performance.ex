@@ -61,15 +61,18 @@ defmodule Karaokium.Performances.Performance do
       |> Enum.map(& &1.pontuation)
       |> Enum.sort()
 
+    half = div(length(pontuations), 2)
+    half = if half == 0 do 1 else half end
+
     q1 =
       pontuations
-      |> Enum.take(div(length(pontuations), 2))
-      |> Stats.mean()
+      |> Enum.take(half)
+      |> Stats.median()
 
     q3 =
       pontuations
-      |> Enum.take(-div(length(pontuations), 2))
-      |> Stats.mean()
+      |> Enum.take(-half)
+      |> Stats.median()
 
     iqr = q3 - q1
 
