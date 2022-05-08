@@ -53,11 +53,7 @@ defmodule Karaokium.Performances.Performance do
 
   """
   def score(%__MODULE__{votes: %Ecto.Association.NotLoaded{}} = performance) do
-    if Ecto.assoc_loaded?(performance.votes) do
-      performance
-    else
-      Repo.preload(performance, :votes)
-    end
+    Repo.preload(performance, :votes)
     |> score()
   end
 
