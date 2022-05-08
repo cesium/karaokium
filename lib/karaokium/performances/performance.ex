@@ -62,7 +62,13 @@ defmodule Karaokium.Performances.Performance do
       |> Enum.sort()
 
     half = div(length(pontuations), 2)
-    half = if half == 0 do 1 else half end
+
+    half =
+      if half == 0 do
+        1
+      else
+        half
+      end
 
     q1 =
       pontuations
