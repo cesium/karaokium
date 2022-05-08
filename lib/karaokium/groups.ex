@@ -7,7 +7,6 @@ defmodule Karaokium.Groups do
   import Karaokium.Context
   alias Karaokium.Repo
 
-  alias Karaokium.Accounts.User
   alias Karaokium.Groups.Team
 
   @doc """

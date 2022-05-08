@@ -7,7 +7,7 @@ defmodule Karaokium.Accounts do
   import Karaokium.Context
   alias Karaokium.Repo
 
-  alias Karaokium.Accounts.{User, UserToken, UserNotifier}
+  alias Karaokium.Accounts.{User, UserNotifier, UserToken}
 
   def list_users(opts \\ []) do
     User

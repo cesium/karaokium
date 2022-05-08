@@ -17,6 +17,8 @@ defmodule KaraokiumWeb.ConnCase do
 
   use ExUnit.CaseTemplate
 
+  alias Ecto.Adapters.SQL
+
   using do
     quote do
       # Import conveniences for testing with connections
@@ -32,8 +34,8 @@ defmodule KaraokiumWeb.ConnCase do
   end
 
   setup tags do
-    pid = Ecto.Adapters.SQL.Sandbox.start_owner!(Karaokium.Repo, shared: not tags[:async])
-    on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
+    pid = SQL.Sandbox.start_owner!(Karaokium.Repo, shared: not tags[:async])
+    on_exit(fn -> SQL.Sandbox.stop_owner(pid) end)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 

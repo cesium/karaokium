@@ -1,5 +1,8 @@
 defmodule KaraokiumWeb.KaraokeLive.Show do
+  @moduledoc false
   use KaraokiumWeb, :live_view
+
+  import Karaokium.Performances.Performance, only: [score: 1]
 
   alias Karaokium.Events
   alias Karaokium.Performances
@@ -16,7 +19,7 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
   end
 
   @impl true
-  def handle_params(%{"id" => id}, _, socket) do
+  def handle_params(%{"id" => _id}, _, socket) do
     {:noreply, reload(socket)}
   end
 
@@ -37,16 +40,6 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
     {:noreply, reload(socket)}
   end
 
-  defp reload(socket) do
-    id = socket.assigns.id
-
-    karaoke = Events.get_karaoke!(id, performing: [:team, :votes, song: [:album, :artists]])
-
-    socket
-    |> assign(:page_title, karaoke.name)
-    |> assign(:karaoke, karaoke)
-  end
-
   def status(%{karaoke: karaoke} = assigns) when karaoke.status == :waiting do
     ~H"""
     <.status
@@ -54,18 +47,6 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
       text={"#{@karaoke.name} - Waiting to start"}
     />
     """
-  end
-
-  defp score(performance) do
-    Karaokium.Performances.Performance.score(performance)
-  end
-
-  defp has_voted?(current_user, performance) do
-    users =
-      performance.votes
-      |> Enum.map(& &1.user_id)
-
-    current_user.id in users
   end
 
   def status(%{karaoke: karaoke} = assigns) when karaoke.status == :ready do
@@ -77,7 +58,7 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
     """
   end
 
-  def status(%{img: img, text: text} = assigns) do
+  def status(%{img: _img, text: _text} = assigns) do
     ~H"""
     <section>
       <img src={@img} style="max-width: 80%;margin: auto;" width="700" />
@@ -88,5 +69,23 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
       </header>
     </section>
     """
+  end
+
+  defp has_voted?(current_user, performance) do
+    users =
+      performance.votes
+      |> Enum.map(& &1.user_id)
+
+    current_user.id in users
+  end
+
+  defp reload(socket) do
+    id = socket.assigns.id
+
+    karaoke = Events.get_karaoke!(id, performing: [:team, :votes, song: [:album, :artists]])
+
+    socket
+    |> assign(:page_title, karaoke.name)
+    |> assign(:karaoke, karaoke)
   end
 end

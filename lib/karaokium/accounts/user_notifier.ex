@@ -1,4 +1,7 @@
 defmodule Karaokium.Accounts.UserNotifier do
+  @moduledoc """
+  A module responsible to notify users on important account related transactions.
+  """
   import Swoosh.Email
 
   alias Karaokium.Mailer

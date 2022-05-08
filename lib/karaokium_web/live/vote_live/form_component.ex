@@ -1,4 +1,5 @@
 defmodule KaraokiumWeb.VoteLive.FormComponent do
+  @moduledoc false
   use KaraokiumWeb, :live_component
 
   alias Karaokium.Polling

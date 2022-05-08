@@ -1,4 +1,11 @@
 defmodule KaraokiumWeb.Plugs.Auth do
+  @moduledoc """
+  Authentication plug related functions.
+
+  By using a pipeline, apart from keeping your authentication logic together,
+  you're instructing downstream plugs to use a particular implementation module
+  and error handler.
+  """
   import Plug.Conn
   import Phoenix.Controller
 

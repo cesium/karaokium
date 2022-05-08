@@ -1,5 +1,8 @@
 defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
+  @moduledoc false
   use KaraokiumWeb, :live_view
+
+  import Karaokium.Performances.Performance, only: [score: 1]
 
   alias Karaokium.Events
   alias Karaokium.Performances
@@ -71,10 +74,6 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
       :karaoke,
       Events.get_karaoke!(id, [:location, performances: [:team, :song, :votes]])
     )
-  end
-
-  defp score(performance) do
-    Karaokium.Performances.Performance.score(performance)
   end
 
   defp qrcode(url) do
