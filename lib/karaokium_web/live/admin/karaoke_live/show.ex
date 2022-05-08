@@ -74,15 +74,7 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
   end
 
   defp score(performance) do
-    if performance.votes != [] do
-      pontuations = Enum.map(performance.votes, & &1.pontuation)
-
-      (Enum.sum(pontuations) / Enum.count(pontuations))
-      |> Decimal.from_float()
-      |> Decimal.round(1)
-    else
-      0
-    end
+    Karaokium.Performances.Performance.score(performance)
   end
 
   defp qrcode(url) do
