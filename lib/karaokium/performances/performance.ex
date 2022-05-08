@@ -47,10 +47,6 @@ defmodule Karaokium.Performances.Performance do
       iex> Karaokium.Performances.Performance.score(performance))
       #Decimal<0>
 
-      iex> performance = %Karaokium.Performances.Performance{}
-      iex> Karaokium.Performances.Performance.score(performance))
-      #Decimal<0>
-
   """
   def score(%__MODULE__{votes: %Ecto.Association.NotLoaded{}} = performance) do
     Repo.preload(performance, :votes)
