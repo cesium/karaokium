@@ -4,6 +4,8 @@ defmodule Karaokium.Polling do
   """
 
   import Ecto.Query, warn: false
+  import Karaokium.Context
+
   alias Karaokium.Repo
 
   alias Karaokium.Polling.Vote

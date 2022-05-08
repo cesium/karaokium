@@ -1,4 +1,5 @@
 defmodule KaraokiumWeb.Admin.LocationLive.FormComponent do
+  @moduledoc false
   use KaraokiumWeb, :live_component
 
   alias Karaokium.Events

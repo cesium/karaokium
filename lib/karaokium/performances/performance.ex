@@ -3,8 +3,8 @@ defmodule Karaokium.Performances.Performance do
 
   alias Karaokium.Events
   alias Karaokium.Groups
-  alias Karaokium.Repertoire
   alias Karaokium.Polling
+  alias Karaokium.Repertoire
   alias Karaokium.Repo
   alias Karaokium.Utils.Stats
 

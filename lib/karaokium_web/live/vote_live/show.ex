@@ -1,4 +1,5 @@
 defmodule KaraokiumWeb.VoteLive.Show do
+  @moduledoc false
   use KaraokiumWeb, :live_view
 
   alias Karaokium.Polling

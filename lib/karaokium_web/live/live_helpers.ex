@@ -1,4 +1,7 @@
 defmodule KaraokiumWeb.LiveHelpers do
+  @moduledoc """
+  Helper components for Live Views.
+  """
   import Phoenix.LiveView
   import Phoenix.LiveView.Helpers
 

@@ -1,4 +1,5 @@
 defmodule KaraokiumWeb.Admin.SongLive.Search do
+  @moduledoc false
   use KaraokiumWeb, :live_view
 
   alias Karaokium.Repertoire
@@ -63,7 +64,7 @@ defmodule KaraokiumWeb.Admin.SongLive.Search do
          |> put_flash(:info, "Song created successfully")
          |> assign(:results, [])}
 
-      {:error, %Ecto.Changeset{} = changeset} ->
+      {:error, %Ecto.Changeset{} = _changeset} ->
         {:noreply,
          socket
          |> put_flash(:error, "Couldn't add song")}

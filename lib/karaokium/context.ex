@@ -1,4 +1,8 @@
 defmodule Karaokium.Context do
+  @moduledoc """
+  Helper providing common functions to all context modules.
+  """
+
   import Ecto.Query, warn: false
 
   def apply_filters(query, opts) do
