@@ -1,5 +1,5 @@
 <div id="karaoke">
-  <%= if @karaoke.status == :started  do %>
+  <%= if @karaoke.status == :started do %>
     <%= unless is_nil(@karaoke.performing_id) do %>
       <section style="margin-top: -50px;">
         <aside style="padding: 0;">
@@ -32,12 +32,28 @@
       <section style=""></section>
 
       <section>
+        <%= for emoji <- Ecto.Enum.values(Karaokium.Polling.Reaction, :emoji) do %>
+          <%= if has_reacted?(@current_user, @karaoke.performing, emoji) do %>
+            <button phx-click="unreact" phx-value-emoji={emoji} style="font-size: 20px; padding: 10px; margin: 10px;">
+              <%= emoji %> <%= reaction_count(@reactions, emoji) %>
+            </button>
+          <% else %>
+            <button phx-click="react" phx-value-emoji={emoji} style="font-size: 20px; padding: 10px; margin: 10px;">
+              <%= emoji %> <%= reaction_count(@reactions, emoji) %>
+            </button>
+          <% end %>
+        <% end %>
+      </section>
+
+      <section>
         <%= if @karaoke.performing.voting? and not has_voted?(@current_user, @karaoke.performing) do %>
           <header>
-            <p>Vote now!</p>
+            <h2>Vote now!</h2>
           </header>
           <%= for pontuation <- 1..10 do %>
-            <button phx-click="vote" phx-value-pontuation={pontuation} style="margin: 10px;"><%= pontuation %></button>
+            <button phx-click="vote" phx-value-pontuation={pontuation} style="font-size: 30px; margin: 10px;">
+              <%= pontuation %>
+            </button>
           <% end %>
         <% end %>
       </section>

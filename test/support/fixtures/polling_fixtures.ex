@@ -17,4 +17,18 @@ defmodule Karaokium.PollingFixtures do
 
     vote
   end
+
+  @doc """
+  Generate a reaction.
+  """
+  def reaction_fixture(attrs \\ %{}) do
+    {:ok, reaction} =
+      attrs
+      |> Enum.into(%{
+        emoji: :"👍"
+      })
+      |> Karaokium.Polling.create_reaction()
+
+    reaction
+  end
 end

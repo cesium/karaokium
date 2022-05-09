@@ -25,12 +25,33 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
 
   @impl true
   def handle_event("vote", %{"pontuation" => pontuation}, socket) do
-    karaoke = Events.get_karaoke!(socket.assigns.id, performing: [:votes])
+    karaoke = Events.get_karaoke!(socket.assigns.id)
 
     %{pontuation: pontuation}
     |> Map.put(:user_id, socket.assigns.current_user.id)
     |> Map.put(:performance_id, karaoke.performing_id)
     |> Polling.create_vote()
+
+    {:noreply, reload(socket)}
+  end
+
+  @impl true
+  def handle_event("react", %{"emoji" => emoji}, socket) do
+    karaoke = Events.get_karaoke!(socket.assigns.id)
+
+    %{emoji: emoji}
+    |> Map.put(:user_id, socket.assigns.current_user.id)
+    |> Map.put(:performance_id, karaoke.performing_id)
+    |> Polling.create_reaction()
+
+    {:noreply, reload(socket)}
+  end
+
+  @impl true
+  def handle_event("unreact", %{"emoji" => emoji}, socket) do
+    karaoke = Events.get_karaoke!(socket.assigns.id)
+
+    Polling.delete_reaction(karaoke.performing_id, socket.assigns.current_user.id, emoji)
 
     {:noreply, reload(socket)}
   end
@@ -71,6 +92,19 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
     """
   end
 
+  defp reaction_count(reactions, emoji) do
+    Map.get(reactions, emoji)
+  end
+
+  defp has_reacted?(current_user, performance, emoji) do
+    users =
+      performance.reactions
+      |> Enum.filter(fn reaction -> reaction.emoji == emoji end)
+      |> Enum.map(& &1.user_id)
+
+    current_user.id in users
+  end
+
   defp has_voted?(current_user, performance) do
     users =
       performance.votes
@@ -82,10 +116,14 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
   defp reload(socket) do
     id = socket.assigns.id
 
-    karaoke = Events.get_karaoke!(id, performing: [:team, :votes, song: [:album, :artists]])
+    karaoke =
+      Events.get_karaoke!(id, performing: [:team, :votes, :reactions, song: [:album, :artists]])
+
+    reactions = karaoke.performing && Polling.list_reactions(karaoke.performing)
 
     socket
     |> assign(:page_title, karaoke.name)
     |> assign(:karaoke, karaoke)
+    |> assign(:reactions, reactions)
   end
 end

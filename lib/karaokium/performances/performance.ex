@@ -14,6 +14,7 @@ defmodule Karaokium.Performances.Performance do
     belongs_to :song, Repertoire.Song
 
     has_many :votes, Polling.Vote
+    has_many :reactions, Polling.Reaction
 
     field :voting?, :boolean, default: false
 

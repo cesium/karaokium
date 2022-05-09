@@ -10,6 +10,10 @@
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/karaokium/assets/app.css")} />
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/karaokium/assets/app.js")}>
     </script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js">
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/party-js@latest/bundle/party.min.js">
+    </script>
   </head>
   <body>
     <%= render("_header.html", assigns) %>
