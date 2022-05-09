@@ -56,4 +56,58 @@ defmodule Karaokium.PollingTest do
       assert %Ecto.Changeset{} = Polling.change_vote(vote)
     end
   end
+
+  describe "reactions" do
+    alias Karaokium.Polling.Reaction
+
+    import Karaokium.PollingFixtures
+
+    @invalid_attrs %{emoji: nil}
+
+    test "list_reactions/0 returns all reactions" do
+      reaction = reaction_fixture()
+      assert Polling.list_reactions() == [reaction]
+    end
+
+    test "get_reaction!/1 returns the reaction with given id" do
+      reaction = reaction_fixture()
+      assert Polling.get_reaction!(reaction.id) == reaction
+    end
+
+    test "create_reaction/1 with valid data creates a reaction" do
+      valid_attrs = %{emoji: :"👍"}
+
+      assert {:ok, %Reaction{} = reaction} = Polling.create_reaction(valid_attrs)
+      assert reaction.emoji == :"👍"
+    end
+
+    test "create_reaction/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Polling.create_reaction(@invalid_attrs)
+    end
+
+    test "update_reaction/2 with valid data updates the reaction" do
+      reaction = reaction_fixture()
+      update_attrs = %{emoji: :"❤️"}
+
+      assert {:ok, %Reaction{} = reaction} = Polling.update_reaction(reaction, update_attrs)
+      assert reaction.emoji == :"❤️"
+    end
+
+    test "update_reaction/2 with invalid data returns error changeset" do
+      reaction = reaction_fixture()
+      assert {:error, %Ecto.Changeset{}} = Polling.update_reaction(reaction, @invalid_attrs)
+      assert reaction == Polling.get_reaction!(reaction.id)
+    end
+
+    test "delete_reaction/1 deletes the reaction" do
+      reaction = reaction_fixture()
+      assert {:ok, %Reaction{}} = Polling.delete_reaction(reaction)
+      assert_raise Ecto.NoResultsError, fn -> Polling.get_reaction!(reaction.id) end
+    end
+
+    test "change_reaction/1 returns a reaction changeset" do
+      reaction = reaction_fixture()
+      assert %Ecto.Changeset{} = Polling.change_reaction(reaction)
+    end
+  end
 end

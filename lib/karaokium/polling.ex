@@ -8,6 +8,7 @@ defmodule Karaokium.Polling do
 
   alias Karaokium.Repo
 
+  alias Karaokium.Accounts
   alias Karaokium.Polling.Vote
 
   @doc """
@@ -103,6 +104,120 @@ defmodule Karaokium.Polling do
   """
   def change_vote(%Vote{} = vote, attrs \\ %{}) do
     Vote.changeset(vote, attrs)
+  end
+
+  alias Karaokium.Performances
+  alias Karaokium.Polling.Reaction
+
+  @doc """
+  Returns the list of reactions.
+
+  ## Examples
+
+      iex> list_reactions()
+      [%Reaction{}, ...]
+
+  """
+  def list_reactions do
+    Repo.all(Reaction)
+  end
+
+  def list_reactions(%Performances.Performance{} = performance) do
+    from(q in Reaction,
+      where: q.performance_id == ^performance.id,
+      group_by: [q.emoji],
+      select: %{q.emoji => count(q.emoji)}
+    )
+    |> Repo.all()
+    |> Enum.reduce(%{}, fn m, acc -> Map.merge(acc, m) end)
+  end
+
+  @doc """
+  Gets a single reaction.
+
+  Raises `Ecto.NoResultsError` if the Reaction does not exist.
+
+  ## Examples
+
+      iex> get_reaction!(123)
+      %Reaction{}
+
+      iex> get_reaction!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_reaction!(id), do: Repo.get!(Reaction, id)
+
+  @doc """
+  Creates a reaction.
+
+  ## Examples
+
+      iex> create_reaction(%{field: value})
+      {:ok, %Reaction{}}
+
+      iex> create_reaction(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_reaction(attrs \\ %{}) do
+    %Reaction{}
+    |> Reaction.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a reaction.
+
+  ## Examples
+
+      iex> update_reaction(reaction, %{field: new_value})
+      {:ok, %Reaction{}}
+
+      iex> update_reaction(reaction, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_reaction(%Reaction{} = reaction, attrs) do
+    reaction
+    |> Reaction.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def delete_reaction(performance_id, user_id, emoji) do
+    Repo.delete_all(
+      from q in Reaction,
+        where: q.performance_id == ^performance_id and q.user_id == ^user_id and q.emoji == ^emoji
+    )
+  end
+
+  @doc """
+  Deletes a reaction.
+
+  ## Examples
+
+      iex> delete_reaction(reaction)
+      {:ok, %Reaction{}}
+
+      iex> delete_reaction(reaction)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_reaction(%Reaction{} = reaction) do
+    Repo.delete(reaction)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking reaction changes.
+
+  ## Examples
+
+      iex> change_reaction(reaction)
+      %Ecto.Changeset{data: %Reaction{}}
+
+  """
+  def change_reaction(%Reaction{} = reaction, attrs \\ %{}) do
+    Reaction.changeset(reaction, attrs)
   end
 
   def subscribe(topic) when topic in ["votes"] do
