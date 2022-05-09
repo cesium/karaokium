@@ -26,4 +26,26 @@ input[type="checkbox"] {
   width: 60px;
   height: 60px;
   border-radius: 50%;
+  margin: 0;
+}
+
+.username {
+  margin: 0 10px;
+}
+
+.usermenu {
+  margin-top: 50px;
+  margin-left: 60px;
+}
+
+@media screen and (max-width: 480px) {
+  .username {
+    margin: 0 10px;
+    display: none;
+  }
+
+  .usermenu {
+    margin-top: 50px;
+    margin-left: -50px;
+  }
 }
