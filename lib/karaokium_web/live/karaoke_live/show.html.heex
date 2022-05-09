@@ -38,9 +38,11 @@
               <%= emoji %> <%= reaction_count(@reactions, emoji) %>
             </button>
           <% else %>
-            <button phx-click="react" phx-value-emoji={emoji} style="font-size: 20px; padding: 10px; margin: 10px;">
-              <%= emoji %> <%= reaction_count(@reactions, emoji) %>
-            </button>
+            <div class="button" onmousedown={"reactions(this, '#{emoji}')"}>
+              <button phx-click="react" phx-value-emoji={emoji} style="font-size: 20px; padding: 10px; margin: 10px;">
+                <%= emoji %> <%= reaction_count(@reactions, emoji) %>
+              </button>
+            </div>
           <% end %>
         <% end %>
       </section>
