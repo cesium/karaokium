@@ -35,6 +35,14 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
   end
 
   @impl true
+  def handle_event("reset_pin", _args, socket) do
+    socket.assigns.karaoke
+    |> Events.reset_pin_karaoke()
+
+    {:noreply, reload(socket)}
+  end
+
+  @impl true
   def handle_event("open_voting", %{"id" => id}, socket) do
     Performances.get_performance!(id)
     |> Performances.update_performance(%{voting?: true})

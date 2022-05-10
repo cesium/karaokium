@@ -15,7 +15,7 @@
   <h1>
     <%= @karaoke.name %>
   </h1>
-  <%= raw(qrcode(Routes.karaoke_show_url(@socket, :show, @karaoke))) %>
+  <%= raw(qrcode(Routes.page_url(@socket, :index, %{"karaoke" => %{"code" => @karaoke.code}}))) %>
 </center>
 
 <section>
@@ -31,7 +31,12 @@
       </tr>
       <tr>
         <td><strong>PIN</strong></td>
-        <td><%= @karaoke.code %></td>
+        <td>
+          <%= @karaoke.code %>
+          <button phx-click="reset_pin" style="margin: auto; font-size: 20px; padding: 0px 5px; background-color: #118bee; border-color: #118bee;">
+            ↻
+          </button>
+        </td>
       </tr>
       <tr>
         <td><strong>Status:</strong></td>
@@ -114,7 +119,7 @@
               <button
                 phx-click="close_voting"
                 phx-value-id={performance.id}
-                style="padding: 5px 10px; background-color: red; border-color: red;"
+                style="min-width: 120px; padding: 5px 10px; background-color: red; border-color: red;"
               >
                 Close Voting
               </button>
@@ -122,19 +127,19 @@
               <button
                 phx-click="open_voting"
                 phx-value-id={performance.id}
-                style="padding: 5px 10px; background-color: green; border-color: green;"
+                style="min-width: 120px; padding: 5px 10px; background-color: green; border-color: green;"
               >
                 Open Voting
               </button>
             <% end %>
 
             <%= if performance.id == @karaoke.performing_id do %>
-              <button style="padding: 5px 10px;" disabled>Started</button>
+              <button style="min-width: 120px; padding: 5px 10px;" disabled>Started</button>
             <% else %>
               <button
                 phx-click="start"
                 phx-value-id={performance.id}
-                style="padding: 5px 10px; background-color: #118bee; border-color: #118bee;"
+                style="min-width: 120px; padding: 5px 10px; background-color: #118bee; border-color: #118bee;"
               >
                 Start
               </button>
