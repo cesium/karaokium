@@ -33,7 +33,10 @@
         <td><strong>PIN</strong></td>
         <td>
           <%= @karaoke.code %>
-          <button phx-click="reset_pin" style="margin: auto; font-size: 20px; padding: 0px 5px; background-color: #118bee; border-color: #118bee;">
+          <button
+            phx-click="reset_pin"
+            style="margin: auto; font-size: 20px; padding: 0px 5px; background-color: #118bee; border-color: #118bee;"
+          >
             ↻
           </button>
         </td>
@@ -66,19 +69,34 @@
 
 <center>
   <div style="margin: 50px 20%;">
-    <%= if @karaoke.status == :started do %>
-      <button class="action-btn" phx-click="status" phx-value-status="waiting">
-        Stop
-      </button>
-    <% end %>
     <%= if @karaoke.status == :waiting do %>
-      <button class="action-btn" phx-click="status" phx-value-status="ready">
+      <button phx-click="status" phx-value-status="ready" class="action-btn">
         Ready
       </button>
     <% end %>
     <%= if @karaoke.status == :ready do %>
-      <button class="action-btn" phx-click="status" phx-value-status="started">
+      <button phx-click="status" phx-value-status="started" class="action-btn">
         Start
+      </button>
+    <% end %>
+    <%= if @karaoke.status == :started do %>
+      <div>
+        <button phx-click="status" phx-value-status="ready" class="action-btn">
+          Pause
+        </button>
+        <button
+          phx-click="status"
+          phx-value-status="finished"
+          class="action-btn"
+          style="background-color: red; border-color: red;"
+        >
+          Finish
+        </button>
+      </div>
+    <% end %>
+    <%= if @karaoke.status == :finished do %>
+      <button phx-click="status" phx-value-status="started" class="action-btn">
+        Go back
       </button>
     <% end %>
   </div>
@@ -86,67 +104,89 @@
 
 <hr />
 
-<section>
-  <header>
-    <h1>Performances</h1>
-  </header>
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Team</th>
-        <th>Song</th>
-        <th>Score</th>
-        <th># Votes</th>
+<%= unless @karaoke.status == :finished do %>
+  <section>
+    <header>
+      <h1>Performances</h1>
+    </header>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Team</th>
+          <th>Song</th>
+          <th>Score</th>
+          <th># Votes</th>
 
-        <th></th>
-      </tr>
-    </thead>
-    <tbody id="performances">
-      <%= for {performance, index} <- Enum.with_index(@karaoke.performances) do %>
-        <tr id={"performance-#{performance.id}"}>
-          <td><strong><%= index %></strong></td>
-          <td><strong><%= performance.team.name %></strong></td>
-          <td><i><%= performance.song.name %></i></td>
-          <td>
-            <%= score(performance) %>
-          </td>
-          <td>
-            <%= Enum.count(performance.votes) %>
-          </td>
-          <td>
-            <%= if performance.voting? do %>
-              <button
-                phx-click="close_voting"
-                phx-value-id={performance.id}
-                style="min-width: 120px; padding: 5px 10px; background-color: red; border-color: red;"
-              >
-                Close Voting
-              </button>
-            <% else %>
-              <button
-                phx-click="open_voting"
-                phx-value-id={performance.id}
-                style="min-width: 120px; padding: 5px 10px; background-color: green; border-color: green;"
-              >
-                Open Voting
-              </button>
-            <% end %>
-
-            <%= if performance.id == @karaoke.performing_id do %>
-              <button style="min-width: 120px; padding: 5px 10px;" disabled>Started</button>
-            <% else %>
-              <button
-                phx-click="start"
-                phx-value-id={performance.id}
-                style="min-width: 120px; padding: 5px 10px; background-color: #118bee; border-color: #118bee;"
-              >
-                Start
-              </button>
-            <% end %>
-          </td>
+          <th></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-</section>
+      </thead>
+      <tbody id="performances">
+        <%= for {performance, index} <- Enum.with_index(@karaoke.performances) do %>
+          <tr id={"performance-#{performance.id}"}>
+            <td><strong><%= index %></strong></td>
+            <td><strong><%= performance.team.name %></strong></td>
+            <td><i><%= performance.song.name %></i></td>
+            <td>
+              <%= score(performance) %>
+            </td>
+            <td>
+              <%= Enum.count(performance.votes) %>
+            </td>
+            <td>
+              <%= if performance.voting? do %>
+                <button
+                  phx-click="close_voting"
+                  phx-value-id={performance.id}
+                  style="min-width: 120px; padding: 5px 10px; background-color: red; border-color: red;"
+                >
+                  Close Voting
+                </button>
+              <% else %>
+                <button
+                  phx-click="open_voting"
+                  phx-value-id={performance.id}
+                  style="min-width: 120px; padding: 5px 10px; background-color: green; border-color: green;"
+                >
+                  Open Voting
+                </button>
+              <% end %>
+
+              <%= if performance.id == @karaoke.performing_id do %>
+                <button style="min-width: 120px; padding: 5px 10px;" disabled>Started</button>
+              <% else %>
+                <button
+                  phx-click="start"
+                  phx-value-id={performance.id}
+                  style="min-width: 120px; padding: 5px 10px; background-color: #118bee; border-color: #118bee;"
+                >
+                  Start
+                </button>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </section>
+<% end %>
+
+<%= if @karaoke.status == :finished do %>
+  <section>
+    <header>
+      <h1>Results</h1>
+    </header>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Team</th>
+          <th>Song</th>
+          <th>Total Votes</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+<% end %>
