@@ -14,6 +14,7 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
       Events.subscribe("karaokes")
       Performances.subscribe("performances")
       Polling.subscribe("reactions")
+      Polling.subscribe("votes")
     end
 
     {:ok, assign(socket, :id, id)}
