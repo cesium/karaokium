@@ -36,6 +36,27 @@ let liveSocket = new LiveSocket("/karaokium/live", Socket, {
   params: { _csrf_token: csrfToken },
 });
 
+function reaction(emoji) {
+  let elem = document.getElementById("cover-album")
+  reactions(elem, emoji);
+}
+
+window.addEventListener("phx:likes-reactions", (e) => {
+  reaction("👍")
+});
+
+window.addEventListener("phx:hearts-reactions", (e) => {
+  reaction("❤️")
+});
+
+window.addEventListener("phx:confettis-reactions", (e) => {
+  reaction("🎉")
+});
+
+window.addEventListener("phx:stars-reactions", (e) => {
+  reaction("⭐️")
+});
+
 // Show progress bar on live navigation and form submits. Only displays if still
 // loading after 120 msec
 topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" });

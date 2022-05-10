@@ -60,6 +60,22 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
   end
 
   @impl true
+  def handle_info({:created, %Polling.Reaction{emoji: emoji}}, socket) do
+    key = case emoji do
+      :"👍" -> "likes-reactions"
+      :"❤️" -> "hearts-reactions"
+      :"🎉" -> "confettis-reactions"
+      :"⭐️" -> "stars-reactions"
+      _ -> "confettis-reactions"
+    end
+
+    {:noreply,
+     socket
+     |> push_event(key, %{emoji: emoji})
+     |> reload()}
+  end
+
+  @impl true
   def handle_info({event, _changes}, socket) when event in [:updated, :created, :deleted] do
     {:noreply, reload(socket)}
   end
