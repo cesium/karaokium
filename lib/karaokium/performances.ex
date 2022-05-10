@@ -6,7 +6,16 @@ defmodule Karaokium.Performances do
   import Ecto.Query, warn: false
   alias Karaokium.Repo
 
+  alias Karaokium.Events.Karaoke
   alias Karaokium.Performances.Performance
+
+  def get_ranking(%Karaoke{} = karaoke) do
+    from(q in Performance, where: q.karaoke_id == ^karaoke.id, preload: [:votes, :team, :song])
+    |> Repo.all()
+    |> Enum.map(&Map.put(&1, :score, Performance.score(&1)))
+    |> Enum.sort_by(& &1.score, :desc)
+    |> Enum.uniq_by(& &1.team_id)
+  end
 
   @doc """
   Returns the list of performances.

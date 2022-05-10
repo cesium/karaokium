@@ -7,6 +7,7 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
   alias Karaokium.Events
   alias Karaokium.Performances
   alias Karaokium.Polling
+  alias KaraokiumWeb.Components.Tables
 
   @impl true
   def mount(%{"id" => id}, _session, socket) do
@@ -78,6 +79,17 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
       img={Routes.static_path(KaraokiumWeb.Endpoint, "/karaokium/images/illustrations/undraw/happy_music.svg")}
       text={"#{@karaoke.name} - Starting soon"}
     />
+    """
+  end
+
+  def status(%{karaoke: karaoke} = assigns) when karaoke.status == :finished do
+    ~H"""
+    <section>
+      <header>
+        <h1><%= @karaoke.name %> - Results</h1>
+      </header>
+      <Tables.ranking performances={Performances.get_ranking(karaoke)} />
+    </section>
     """
   end
 

@@ -12,7 +12,7 @@ defmodule Karaokium.Events.Karaoke do
 
     field :name, :string
 
-    field :status, Ecto.Enum, values: [:waiting, :ready, :started], default: :waiting
+    field :status, Ecto.Enum, values: [:waiting, :ready, :started, :finished], default: :waiting
 
     field :start_date, :naive_datetime
     field :end_date, :naive_datetime
