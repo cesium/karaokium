@@ -160,6 +160,13 @@ defmodule Karaokium.Events do
     |> Repo.insert()
   end
 
+  def reset_pin_karaoke(%Karaoke{} = karaoke) do
+    karaoke
+    |> Karaoke.reset_pin_changeset()
+    |> Repo.update()
+    |> broadcast(:update)
+  end
+
   @doc """
   Updates a karaoke.
 

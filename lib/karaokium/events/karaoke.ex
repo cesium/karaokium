@@ -30,6 +30,13 @@ defmodule Karaokium.Events.Karaoke do
     karaoke
     |> cast(attrs, [:name, :status, :start_date, :end_date, :performing_id, :location_id])
     |> validate_required([:name, :status, :start_date, :end_date, :location_id])
+    |> maybe_generate_code(generate_code: true)
+  end
+
+  def reset_pin_changeset(karaoke) do
+    karaoke
+    |> cast(%{}, [])
+    |> maybe_generate_code(generate_code: true)
   end
 
   @doc false
@@ -40,11 +47,14 @@ defmodule Karaokium.Events.Karaoke do
     |> maybe_generate_code()
   end
 
-  defp maybe_generate_code(%Ecto.Changeset{valid?: true, changes: changes} = changeset)
-       when not is_map_key(changes, :code) do
-    changeset
-    |> change(code: Nanoid.generate(6, @digits))
-  end
+  defp maybe_generate_code(changeset, opts \\ []) do
+    generate_code? = Keyword.get(opts, :generate_code, false)
 
-  defp maybe_generate_code(changeset), do: changeset
+    if generate_code? && changeset.valid? do
+      changeset
+      |> put_change(:code, Nanoid.generate(6, @digits))
+    else
+      changeset
+    end
+  end
 end
