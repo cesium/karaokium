@@ -104,7 +104,9 @@
 
 <hr />
 
-<%= unless @karaoke.status == :finished do %>
+<%= if @karaoke.status == :finished do %>
+  <Tables.ranking performances={Performances.get_ranking(@karaoke)} />
+<% else %>
   <section>
     <header>
       <h1>Performances</h1>
@@ -167,26 +169,6 @@
           </tr>
         <% end %>
       </tbody>
-    </table>
-  </section>
-<% end %>
-
-<%= if @karaoke.status == :finished do %>
-  <section>
-    <header>
-      <h1>Results</h1>
-    </header>
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Team</th>
-          <th>Song</th>
-          <th>Total Votes</th>
-          <th>Score</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
     </table>
   </section>
 <% end %>

@@ -7,6 +7,7 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
   alias Karaokium.Events
   alias Karaokium.Performances
   alias Karaokium.Polling
+  alias KaraokiumWeb.Components.Tables
 
   @impl true
   def mount(_params, _session, socket) do

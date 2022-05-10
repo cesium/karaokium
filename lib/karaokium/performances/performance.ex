@@ -13,6 +13,8 @@ defmodule Karaokium.Performances.Performance do
     belongs_to :team, Groups.Team
     belongs_to :song, Repertoire.Song
 
+    field :score, :decimal, virtual: true
+
     has_many :votes, Polling.Vote
     has_many :reactions, Polling.Reaction
 
