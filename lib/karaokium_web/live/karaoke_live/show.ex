@@ -13,6 +13,7 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
     if connected?(socket) do
       Events.subscribe("karaokes")
       Performances.subscribe("performances")
+      Polling.subscribe("reactions")
     end
 
     {:ok, assign(socket, :id, id)}
@@ -57,7 +58,7 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
   end
 
   @impl true
-  def handle_info({:update, _changes}, socket) do
+  def handle_info({event, _changes}, socket) when event in [:updated, :created, :deleted] do
     {:noreply, reload(socket)}
   end
 

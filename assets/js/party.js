@@ -55,12 +55,6 @@ const hearts = (sources) => {
 
 export function reactions(sources, emoji) {
   switch (emoji) {
-    case "⭐️":
-      party.sparkles(sources);
-      break;
-    case "❤️":
-      hearts(sources);
-      break;
     case "👍":
       party.resolvableShapes["thumbsup"] = `<span>👍</span>`;
 
@@ -69,8 +63,13 @@ export function reactions(sources, emoji) {
         speed: party.variation.range(100, 400),
       });
       break;
+    case "❤️":
+      hearts(sources);
+      break;
+    case "⭐️":
+      party.sparkles(sources);
+      break;
     default:
-      console.log("Called default...");
       party.confetti(sources);
       break;
   }
