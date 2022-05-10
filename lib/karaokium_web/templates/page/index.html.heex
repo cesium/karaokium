@@ -5,7 +5,7 @@
       style="max-width: 80%;"
       width="300"
     />
-    <h1>Hello, <%= @current_user.name %>!</h1>
+    <h1>Hello, <%= Naming.first_name(@current_user.name) %>!</h1>
     <p>Scan a QRCode or intruduce the Karaoke PIN bellow!</p>
   </header>
   <section>
