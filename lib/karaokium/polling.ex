@@ -164,6 +164,7 @@ defmodule Karaokium.Polling do
     %Reaction{}
     |> Reaction.changeset(attrs)
     |> Repo.insert()
+    |> broadcast(:created)
   end
 
   @doc """
@@ -189,6 +190,7 @@ defmodule Karaokium.Polling do
       from q in Reaction,
         where: q.performance_id == ^performance_id and q.user_id == ^user_id and q.emoji == ^emoji
     )
+    |> broadcast(:deleted)
   end
 
   @doc """
@@ -205,6 +207,7 @@ defmodule Karaokium.Polling do
   """
   def delete_reaction(%Reaction{} = reaction) do
     Repo.delete(reaction)
+    |> broadcast(:deleted)
   end
 
   @doc """
@@ -220,7 +223,7 @@ defmodule Karaokium.Polling do
     Reaction.changeset(reaction, attrs)
   end
 
-  def subscribe(topic) when topic in ["votes"] do
+  def subscribe(topic) when topic in ["votes", "reactions"] do
     Phoenix.PubSub.subscribe(Karaokium.PubSub, topic)
   end
 
@@ -230,5 +233,16 @@ defmodule Karaokium.Polling do
        when event in [:created] do
     Phoenix.PubSub.broadcast!(Karaokium.PubSub, "votes", {event, vote})
     {:ok, vote}
+  end
+
+  defp broadcast({:ok, %Reaction{} = reaction}, event)
+       when event in [:created, :deleted] do
+    Phoenix.PubSub.broadcast!(Karaokium.PubSub, "reactions", {event, reaction})
+    {:ok, reaction}
+  end
+
+  defp broadcast({quantity, nil}, event) when event in [:deleted] and is_integer(quantity) do
+    Phoenix.PubSub.broadcast!(Karaokium.PubSub, "reactions", {event, %Reaction{}})
+    {quantity, nil}
   end
 end

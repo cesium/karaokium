@@ -71,7 +71,7 @@ defmodule Karaokium.Performances do
     performance
     |> Performance.changeset(attrs)
     |> Repo.update()
-    |> broadcast(:update)
+    |> broadcast(:updated)
   end
 
   @doc """
@@ -110,7 +110,7 @@ defmodule Karaokium.Performances do
   defp broadcast({:error, _reason} = error, _event), do: error
 
   defp broadcast({:ok, %Performance{} = performance}, event)
-       when event in [:update] do
+       when event in [:updated] do
     Phoenix.PubSub.broadcast!(Karaokium.PubSub, "performances", {event, performance})
     {:ok, performance}
   end

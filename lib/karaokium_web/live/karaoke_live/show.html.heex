@@ -3,9 +3,14 @@
     <%= unless is_nil(@karaoke.performing_id) do %>
       <section style="margin-top: -50px;">
         <aside style="padding: 0;">
-          <img alt="HTML only" src={hd(@karaoke.performing.song.album.images).url} height="285" />
+          <img
+            style="border-radius: 4px 4px 0 0;"
+            alt={@karaoke.performing.song.album.name}
+            src={hd(@karaoke.performing.song.album.images).url}
+            height="285"
+          />
           <div style="padding: 0 0.5rem;">
-            <h3><%= @karaoke.performing.song.name %></h3>
+            <h3 style="margin: 0;"><%= @karaoke.performing.song.name %></h3>
             <p>
               <strong><%= @karaoke.performing.song.album.name %></strong>
             </p>
@@ -17,19 +22,20 @@
                 <tbody>
                   <tr>
                     <td><strong>Team</strong></td>
-                    <td><%= @karaoke.performing.team.name || "No name" %></td>
+                    <td><%= @karaoke.performing.team.name || "?" %></td>
                   </tr>
-                  <tr>
-                    <td><strong>Score</strong></td>
-                    <td><%= score(@karaoke.performing) %></td>
-                  </tr>
+                  <%= if has_voted?(@current_user, @karaoke.performing) do %>
+                    <tr>
+                      <td><strong>Score</strong></td>
+                      <td><%= score(@karaoke.performing) %></td>
+                    </tr>
+                  <% end %>
                 </tbody>
               </table>
             </center>
           </div>
         </aside>
       </section>
-      <section style=""></section>
 
       <section>
         <%= for emoji <- Ecto.Enum.values(Karaokium.Polling.Reaction, :emoji) do %>
@@ -38,9 +44,15 @@
               <%= emoji %> <%= reaction_count(@reactions, emoji) %>
             </button>
           <% else %>
-            <button phx-click="react" phx-value-emoji={emoji} style="font-size: 20px; padding: 10px; margin: 10px;">
-              <%= emoji %> <%= reaction_count(@reactions, emoji) %>
-            </button>
+            <div class="button" onmousedown={"reactions(this, '#{emoji}')"}>
+              <button
+                phx-click="react"
+                phx-value-emoji={emoji}
+                style="background-color: #f08f6d; font-size: 20px; padding: 10px; margin: 10px;"
+              >
+                <%= emoji %> <%= reaction_count(@reactions, emoji) %>
+              </button>
+            </div>
           <% end %>
         <% end %>
       </section>
