@@ -4,6 +4,7 @@
       <section style="margin-top: -50px;">
         <aside style="padding: 0;">
           <img
+            id="cover-album"
             style="border-radius: 4px 4px 0 0;"
             alt={@karaoke.performing.song.album.name}
             src={hd(@karaoke.performing.song.album.images).url}
@@ -46,6 +47,7 @@
           <% else %>
             <div class="button" onmousedown={"reactions(this, '#{emoji}')"}>
               <button
+                phx-throttle="1000"
                 phx-click="react"
                 phx-value-emoji={emoji}
                 style="background-color: #f08f6d; font-size: 20px; padding: 10px; margin: 10px;"
