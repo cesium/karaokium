@@ -62,6 +62,12 @@ defmodule KaraokiumWeb.Router do
         end
       end
 
+      scope "/karaoke" do
+        pipe_through [:require_authenticated_user]
+
+        live "/:id", KaraokeLive.Show, :show
+      end
+
       scope "/admin", Admin, as: :admin do
         pipe_through [:require_authenticated_user, :require_admin]
 
@@ -118,18 +124,6 @@ defmodule KaraokiumWeb.Router do
             live "/teams/:id/show/edit", TeamLive.Show, :edit
           end
         end
-      end
-
-      scope "/karaoke" do
-        live "/:id", KaraokeLive.Show, :show
-      end
-
-      scope "/polling" do
-        live "/votes", VoteLive.Index, :index
-        live "/votes/new", VoteLive.Index, :new
-        live "/votes/:id/edit", VoteLive.Index, :edit
-        live "/votes/:id", VoteLive.Show, :show
-        live "/votes/:id/show/edit", VoteLive.Show, :edit
       end
     end
 
