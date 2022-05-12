@@ -61,13 +61,14 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
 
   @impl true
   def handle_info({:created, %Polling.Reaction{emoji: emoji}}, socket) do
-    key = case emoji do
-      :"👍" -> "likes-reactions"
-      :"❤️" -> "hearts-reactions"
-      :"🎉" -> "confettis-reactions"
-      :"⭐️" -> "stars-reactions"
-      _ -> "confettis-reactions"
-    end
+    key =
+      case emoji do
+        :"👍" -> "likes-reactions"
+        :"❤️" -> "hearts-reactions"
+        :"🎉" -> "confettis-reactions"
+        :"⭐️" -> "stars-reactions"
+        _ -> "confettis-reactions"
+      end
 
     {:noreply,
      socket
