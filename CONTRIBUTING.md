@@ -31,10 +31,11 @@ git clone git@github.com:cesium/karaokium.git
 cd karaokium
 ```
 
-Then, run the setup script to get all dependencies configured. Make sure the database is up and running.
+Then, run the setup script to get all dependencies configured. The default
+value for `ENV` is `dev`.
 
 ```
-bin/setup
+bin/setup [ENV]
 ```
 
 Then you should change the `.env.dev` file as needed. Run this script again
