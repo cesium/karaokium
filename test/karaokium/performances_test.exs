@@ -7,6 +7,9 @@ defmodule Karaokium.PerformancesTest do
     alias Karaokium.Performances.Performance
 
     import Karaokium.PerformancesFixtures
+    import Karaokium.RepertoireFixtures
+    import Karaokium.EventsFixtures
+    import Karaokium.GroupsFixtures
 
     @invalid_attrs %{}
 
@@ -21,9 +24,13 @@ defmodule Karaokium.PerformancesTest do
     end
 
     test "create_performance/1 with valid data creates a performance" do
-      valid_attrs = %{}
+      valid_attrs = %{
+        song_id: song_fixture().id,
+        karaoke_id: karaoke_fixture().id,
+        team_id: team_fixture().id
+      }
 
-      assert {:ok, %Performance{} = performance} = Performances.create_performance(valid_attrs)
+      assert {:ok, %Performance{} = _performance} = Performances.create_performance(valid_attrs)
     end
 
     test "create_performance/1 with invalid data returns error changeset" do
@@ -34,17 +41,8 @@ defmodule Karaokium.PerformancesTest do
       performance = performance_fixture()
       update_attrs = %{}
 
-      assert {:ok, %Performance{} = performance} =
+      assert {:ok, %Performance{} = _performance} =
                Performances.update_performance(performance, update_attrs)
-    end
-
-    test "update_performance/2 with invalid data returns error changeset" do
-      performance = performance_fixture()
-
-      assert {:error, %Ecto.Changeset{}} =
-               Performances.update_performance(performance, @invalid_attrs)
-
-      assert performance == Performances.get_performance!(performance.id)
     end
 
     test "delete_performance/1 deletes the performance" do

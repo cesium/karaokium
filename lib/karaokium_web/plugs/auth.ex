@@ -146,11 +146,11 @@ defmodule KaraokiumWeb.Plugs.Auth do
     end
   end
 
-  def require_admin(conn, _opts) do
+  def require_admin_user(conn, _opts) do
     check_permissions(conn, :admin)
   end
 
-  def require_sysadmin(conn, _opts) do
+  def require_sysadmin_user(conn, _opts) do
     check_permissions(conn, :sysadmin)
   end
 

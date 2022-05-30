@@ -11,7 +11,7 @@ defmodule Karaokium.GroupsFixtures do
     {:ok, team} =
       attrs
       |> Enum.into(%{
-        name: "some name"
+        name: "Example Team"
       })
       |> Karaokium.Groups.create_team()
 

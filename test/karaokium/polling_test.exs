@@ -6,6 +6,8 @@ defmodule Karaokium.PollingTest do
   describe "votes" do
     alias Karaokium.Polling.Vote
 
+    import Karaokium.AccountsFixtures
+    import Karaokium.PerformancesFixtures
     import Karaokium.PollingFixtures
 
     @invalid_attrs %{pontuation: nil}
@@ -21,10 +23,14 @@ defmodule Karaokium.PollingTest do
     end
 
     test "create_vote/1 with valid data creates a vote" do
-      valid_attrs = %{pontuation: 42}
+      valid_attrs = %{
+        pontuation: 4,
+        performance_id: performance_fixture().id,
+        user_id: user_fixture().id
+      }
 
       assert {:ok, %Vote{} = vote} = Polling.create_vote(valid_attrs)
-      assert vote.pontuation == 42
+      assert vote.pontuation == 4
     end
 
     test "create_vote/1 with invalid data returns error changeset" do
@@ -33,10 +39,10 @@ defmodule Karaokium.PollingTest do
 
     test "update_vote/2 with valid data updates the vote" do
       vote = vote_fixture()
-      update_attrs = %{pontuation: 43}
+      update_attrs = %{pontuation: 8}
 
       assert {:ok, %Vote{} = vote} = Polling.update_vote(vote, update_attrs)
-      assert vote.pontuation == 43
+      assert vote.pontuation == 8
     end
 
     test "update_vote/2 with invalid data returns error changeset" do
@@ -60,6 +66,8 @@ defmodule Karaokium.PollingTest do
   describe "reactions" do
     alias Karaokium.Polling.Reaction
 
+    import Karaokium.AccountsFixtures
+    import Karaokium.PerformancesFixtures
     import Karaokium.PollingFixtures
 
     @invalid_attrs %{emoji: nil}
@@ -75,7 +83,11 @@ defmodule Karaokium.PollingTest do
     end
 
     test "create_reaction/1 with valid data creates a reaction" do
-      valid_attrs = %{emoji: :"👍"}
+      valid_attrs = %{
+        emoji: :"👍",
+        performance_id: performance_fixture().id,
+        user_id: user_fixture().id
+      }
 
       assert {:ok, %Reaction{} = reaction} = Polling.create_reaction(valid_attrs)
       assert reaction.emoji == :"👍"

@@ -2,13 +2,9 @@ defmodule Karaokium.Polling do
   @moduledoc """
   The Polling context.
   """
-
   import Ecto.Query, warn: false
-  import Karaokium.Context
-
   alias Karaokium.Repo
 
-  alias Karaokium.Accounts
   alias Karaokium.Polling.Vote
 
   @doc """

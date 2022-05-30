@@ -9,32 +9,34 @@ defmodule KaraokiumWeb.UserRegistrationControllerTest do
       response = html_response(conn, 200)
       assert response =~ "<h1>Register</h1>"
       assert response =~ "Log in</a>"
-      assert response =~ "Register</a>"
+      assert response =~ "Forgot your password?</a>"
     end
 
     test "redirects if already logged in", %{conn: conn} do
       conn = conn |> log_in_user(user_fixture()) |> get(Routes.user_registration_path(conn, :new))
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/karaokium"
     end
   end
 
   describe "POST /users/register" do
     @tag :capture_log
     test "creates account and logs the user in", %{conn: conn} do
-      email = unique_user_email()
+      name = "José Valim"
+      username = "josevalim#{System.unique_integer([:positive])}"
 
       conn =
         post(conn, Routes.user_registration_path(conn, :create), %{
-          "user" => valid_user_attributes(email: email)
+          "user" => valid_user_attributes(name: name, username: username)
         })
 
       assert get_session(conn, :user_token)
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/karaokium"
 
       # Now do a logged in request and assert on the menu
-      conn = get(conn, "/")
+      conn = get(conn, "/karaokium")
       response = html_response(conn, 200)
-      assert response =~ email
+      assert response =~ name
+      assert response =~ username
       assert response =~ "Settings</a>"
       assert response =~ "Log out</a>"
     end

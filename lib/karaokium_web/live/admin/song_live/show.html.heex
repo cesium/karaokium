@@ -13,59 +13,63 @@
   </.modal>
 <% end %>
 
-<ul>
-  <li>
-    <strong>Spotify:</strong>
-    <%= @song.spotify_id %>
-  </li>
+<section>
+  <iframe
+    style="border-radius:12px"
+    src={"https://open.spotify.com/embed/track/#{@song.spotify_id}?utm_source=generator"}
+    width="380"
+    height="380"
+    frameBorder="0"
+    allowfullscreen
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+  >
+  </iframe>
+  <ul>
+    <li>
+      <strong>Spotify:</strong>
+      <%= @song.spotify_id %>
+    </li>
 
-  <li>
-    <strong>Spotify uri:</strong>
-    <%= @song.spotify_uri %>
-  </li>
+    <li>
+      <strong>Name:</strong>
+      <%= @song.name %>
+    </li>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @song.name %>
-  </li>
+    <li>
+      <strong>Duration:</strong>
+      <%= Timex.Format.Duration.Formatters.Humanized.format(Timex.Duration.from_milliseconds(@song.duration_ms)) %>
+    </li>
 
-  <li>
-    <strong>Duration ms:</strong>
-    <%= Timex.Format.Duration.Formatters.Humanized.format(Timex.Duration.from_milliseconds(@song.duration_ms)) %>
-  </li>
+    <li>
+      <strong>Popularity:</strong>
+      <%= @song.popularity %>
+    </li>
 
-  <li>
-    <strong>Popularity:</strong>
-    <%= @song.popularity %>
-  </li>
+    <li>
+      <strong>Preview url:</strong>
+      <%= @song.preview_url %>
+    </li>
 
-  <li>
-    <strong>Preview url:</strong>
-    <%= @song.preview_url %>
-  </li>
+    <li>
+      <strong>Spotify url:</strong>
+      <%= @song.spotify_url %>
+    </li>
 
-  <li>
-    <strong>Spotify url:</strong>
-    <%= @song.spotify_url %>
-  </li>
+    <li>
+      <strong>Track number:</strong>
+      <%= @song.track_number %>
+    </li>
 
-  <li>
-    <strong>Href:</strong>
-    <%= @song.href %>
-  </li>
+    <li>
+      <strong>Explicit:</strong>
+      <%= @song.explicit %>
+    </li>
 
-  <li>
-    <strong>Track number:</strong>
-    <%= @song.track_number %>
-  </li>
-
-  <li>
-    <strong>Explicit:</strong>
-    <%= @song.explicit %>
-  </li>
-</ul>
-
-<span>
-  <%= live_patch("Edit", to: Routes.admin_song_show_path(@socket, :edit, @song), class: "button") %>
-</span>
-| <span><%= live_redirect("Back", to: Routes.admin_song_index_path(@socket, :index)) %></span>
+    <div>
+      <span>
+        <%= live_patch("Edit", to: Routes.admin_song_show_path(@socket, :edit, @song), class: "button") %>
+      </span>
+      | <span><%= live_redirect("Back", to: Routes.admin_song_index_path(@socket, :index)) %></span>
+    </div>
+  </ul>
+</section>

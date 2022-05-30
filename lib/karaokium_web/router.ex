@@ -32,36 +32,36 @@ defmodule KaraokiumWeb.Router do
     get "/", PageController, :index
     get "/_version", PageController, :version
 
-    live_session :logged_in, on_mount: [{KaraokiumWeb.Hooks, :current_user}] do
-      scope "/auth" do
-        scope "/accounts" do
-          pipe_through [:redirect_if_user_is_authenticated]
-          get "/register", UserRegistrationController, :new
-          post "/register", UserRegistrationController, :create
-          get "/log_in", UserSessionController, :new
-          post "/log_in", UserSessionController, :create
-          get "/reset_password", UserResetPasswordController, :new
-          post "/reset_password", UserResetPasswordController, :create
-          get "/reset_password/:token", UserResetPasswordController, :edit
-          put "/reset_password/:token", UserResetPasswordController, :update
-        end
-
-        scope "/accounts" do
-          pipe_through [:require_authenticated_user]
-          get "/settings", UserSettingsController, :edit
-          put "/settings", UserSettingsController, :update
-          get "/settings/confirm_email/:token", UserSettingsController, :confirm_email
-        end
-
-        scope "/accounts" do
-          delete "/log_out", UserSessionController, :delete
-          get "/confirm", UserConfirmationController, :new
-          post "/confirm", UserConfirmationController, :create
-          get "/confirm/:token", UserConfirmationController, :edit
-          post "/confirm/:token", UserConfirmationController, :update
-        end
+    scope "/auth" do
+      scope "/accounts" do
+        pipe_through [:redirect_if_user_is_authenticated]
+        get "/register", UserRegistrationController, :new
+        post "/register", UserRegistrationController, :create
+        get "/log_in", UserSessionController, :new
+        post "/log_in", UserSessionController, :create
+        get "/reset_password", UserResetPasswordController, :new
+        post "/reset_password", UserResetPasswordController, :create
+        get "/reset_password/:token", UserResetPasswordController, :edit
+        put "/reset_password/:token", UserResetPasswordController, :update
       end
 
+      scope "/accounts" do
+        pipe_through [:require_authenticated_user]
+        get "/settings", UserSettingsController, :edit
+        put "/settings", UserSettingsController, :update
+        get "/settings/confirm_email/:token", UserSettingsController, :confirm_email
+      end
+
+      scope "/accounts" do
+        delete "/log_out", UserSessionController, :delete
+        get "/confirm", UserConfirmationController, :new
+        post "/confirm", UserConfirmationController, :create
+        get "/confirm/:token", UserConfirmationController, :edit
+        post "/confirm/:token", UserConfirmationController, :update
+      end
+    end
+
+    live_session :logged_in, on_mount: [{KaraokiumWeb.Hooks, :current_user}] do
       scope "/karaoke" do
         pipe_through [:require_authenticated_user]
 
@@ -69,7 +69,7 @@ defmodule KaraokiumWeb.Router do
       end
 
       scope "/admin", Admin, as: :admin do
-        pipe_through [:require_authenticated_user, :require_admin]
+        pipe_through [:require_authenticated_user, :require_admin_user]
 
         scope "/repertoire" do
           live "/songs", SongLive.Index, :index
@@ -116,19 +116,19 @@ defmodule KaraokiumWeb.Router do
 
         scope "/groups" do
           scope "/teams" do
-            live "/teams", TeamLive.Index, :index
-            live "/teams/new", TeamLive.Index, :new
-            live "/teams/:id/edit", TeamLive.Index, :edit
+            live "/", TeamLive.Index, :index
+            live "/new", TeamLive.Index, :new
+            live "/:id/edit", TeamLive.Index, :edit
 
-            live "/teams/:id", TeamLive.Show, :show
-            live "/teams/:id/show/edit", TeamLive.Show, :edit
+            live "/:id", TeamLive.Show, :show
+            live "/:id/show/edit", TeamLive.Show, :edit
           end
         end
       end
     end
 
     scope "/sysadmin" do
-      pipe_through [:require_authenticated_user, :require_sysadmin]
+      pipe_through [:require_authenticated_user, :require_sysadmin_user]
 
       live_dashboard "/dashboard",
         metrics: KaraokiumWeb.Telemetry,

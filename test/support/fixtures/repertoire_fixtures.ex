@@ -29,7 +29,7 @@ defmodule Karaokium.RepertoireFixtures do
     {:ok, song} =
       attrs
       |> Enum.into(%{
-        duration_ms: 42,
+        duration_ms: 230,
         explicit: true,
         href: "some href",
         name: "some name",
@@ -38,7 +38,7 @@ defmodule Karaokium.RepertoireFixtures do
         spotify_id: "some spotify_id",
         spotify_uri: "some spotify_uri",
         spotify_url: "some spotify_url",
-        track_number: "some track_number"
+        track_number: 1
       })
       |> Karaokium.Repertoire.create_song()
 
@@ -52,12 +52,12 @@ defmodule Karaokium.RepertoireFixtures do
     {:ok, album} =
       attrs
       |> Enum.into(%{
-        album_type: "some album_type",
+        album_type: Enum.random([:album, :single, :compilation]),
         name: "some name",
         release_date: "some release_date",
         spotify_id: "some spotify_id",
         spotify_uri: "some spotify_uri",
-        total_tracks: "some total_tracks"
+        total_tracks: 19
       })
       |> Karaokium.Repertoire.create_album()
 

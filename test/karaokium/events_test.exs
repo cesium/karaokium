@@ -26,7 +26,8 @@ defmodule Karaokium.EventsTest do
         county: "some county",
         district: "some district",
         locality: "some locality",
-        name: "some name"
+        name: "some name",
+        postcode: "4710-053"
       }
 
       assert {:ok, %Location{} = location} = Events.create_location(valid_attrs)
@@ -96,79 +97,17 @@ defmodule Karaokium.EventsTest do
     end
 
     test "create_karaoke/1 with valid data creates a karaoke" do
-      valid_attrs = %{end_date: ~D[2022-03-19], name: "some name", start_date: ~D[2022-03-19]}
-
-      assert {:ok, %Karaoke{} = karaoke} = Events.create_karaoke(valid_attrs)
-      assert karaoke.end_date == ~D[2022-03-19]
-      assert karaoke.name == "some name"
-      assert karaoke.start_date == ~D[2022-03-19]
-    end
-
-    test "create_karaoke/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Events.create_karaoke(@invalid_attrs)
-    end
-
-    test "update_karaoke/2 with valid data updates the karaoke" do
-      karaoke = karaoke_fixture()
-
-      update_attrs = %{
-        end_date: ~D[2022-03-20],
-        name: "some updated name",
-        start_date: ~D[2022-03-20]
-      }
-
-      assert {:ok, %Karaoke{} = karaoke} = Events.update_karaoke(karaoke, update_attrs)
-      assert karaoke.end_date == ~D[2022-03-20]
-      assert karaoke.name == "some updated name"
-      assert karaoke.start_date == ~D[2022-03-20]
-    end
-
-    test "update_karaoke/2 with invalid data returns error changeset" do
-      karaoke = karaoke_fixture()
-      assert {:error, %Ecto.Changeset{}} = Events.update_karaoke(karaoke, @invalid_attrs)
-      assert karaoke == Events.get_karaoke!(karaoke.id)
-    end
-
-    test "delete_karaoke/1 deletes the karaoke" do
-      karaoke = karaoke_fixture()
-      assert {:ok, %Karaoke{}} = Events.delete_karaoke(karaoke)
-      assert_raise Ecto.NoResultsError, fn -> Events.get_karaoke!(karaoke.id) end
-    end
-
-    test "change_karaoke/1 returns a karaoke changeset" do
-      karaoke = karaoke_fixture()
-      assert %Ecto.Changeset{} = Events.change_karaoke(karaoke)
-    end
-  end
-
-  describe "karaokes" do
-    alias Karaokium.Events.Karaoke
-
-    import Karaokium.EventsFixtures
-
-    @invalid_attrs %{end_date: nil, name: nil, start_date: nil}
-
-    test "list_karaokes/0 returns all karaokes" do
-      karaoke = karaoke_fixture()
-      assert Events.list_karaokes() == [karaoke]
-    end
-
-    test "get_karaoke!/1 returns the karaoke with given id" do
-      karaoke = karaoke_fixture()
-      assert Events.get_karaoke!(karaoke.id) == karaoke
-    end
-
-    test "create_karaoke/1 with valid data creates a karaoke" do
       valid_attrs = %{
-        end_date: ~N[2022-04-15 02:49:00],
+        end_date: ~N[2022-03-19 08:00:00],
         name: "some name",
-        start_date: ~N[2022-04-15 02:49:00]
+        start_date: ~N[2022-03-19 04:00:00],
+        location_id: location_fixture().id
       }
 
       assert {:ok, %Karaoke{} = karaoke} = Events.create_karaoke(valid_attrs)
-      assert karaoke.end_date == ~N[2022-04-15 02:49:00]
+      assert karaoke.end_date == ~N[2022-03-19 08:00:00]
       assert karaoke.name == "some name"
-      assert karaoke.start_date == ~N[2022-04-15 02:49:00]
+      assert karaoke.start_date == ~N[2022-03-19 04:00:00]
     end
 
     test "create_karaoke/1 with invalid data returns error changeset" do
@@ -179,15 +118,15 @@ defmodule Karaokium.EventsTest do
       karaoke = karaoke_fixture()
 
       update_attrs = %{
-        end_date: ~N[2022-04-16 02:49:00],
+        end_date: ~N[2022-03-20 10:20:00],
         name: "some updated name",
-        start_date: ~N[2022-04-16 02:49:00]
+        start_date: ~N[2022-03-20 09:00:00]
       }
 
       assert {:ok, %Karaoke{} = karaoke} = Events.update_karaoke(karaoke, update_attrs)
-      assert karaoke.end_date == ~N[2022-04-16 02:49:00]
+      assert karaoke.end_date == ~N[2022-03-20 10:20:00]
       assert karaoke.name == "some updated name"
-      assert karaoke.start_date == ~N[2022-04-16 02:49:00]
+      assert karaoke.start_date == ~N[2022-03-20 09:00:00]
     end
 
     test "update_karaoke/2 with invalid data returns error changeset" do

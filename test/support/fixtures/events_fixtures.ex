@@ -11,11 +11,12 @@ defmodule Karaokium.EventsFixtures do
     {:ok, location} =
       attrs
       |> Enum.into(%{
-        address: "some address",
-        county: "some county",
-        district: "some district",
-        locality: "some locality",
-        name: "some name"
+        name: "Music Contest Bar",
+        address: "University Street",
+        county: "Braga",
+        district: "Braga",
+        locality: "Gualtar",
+        postcode: "4710-057"
       })
       |> Karaokium.Events.create_location()
 
@@ -29,9 +30,10 @@ defmodule Karaokium.EventsFixtures do
     {:ok, karaoke} =
       attrs
       |> Enum.into(%{
+        name: "Karaoke ##{System.unique_integer()}",
         end_date: ~N[2022-04-15 02:49:00],
-        name: "some name",
-        start_date: ~N[2022-04-15 02:49:00]
+        start_date: ~N[2022-04-15 02:49:00],
+        location_id: location_fixture().id
       })
       |> Karaokium.Events.create_karaoke()
 
