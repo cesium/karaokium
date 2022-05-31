@@ -1,4 +1,7 @@
 defmodule Karaokium.Media.Images do
+  @moduledoc """
+  Images stored in external url from 3rd parties.
+  """
   use Ecto.Schema
   import Ecto.Changeset
   alias Karaokium.Media.Images

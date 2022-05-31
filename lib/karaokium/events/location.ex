@@ -1,4 +1,7 @@
 defmodule Karaokium.Events.Location do
+  @moduledoc """
+  A physical location where events can happen.
+  """
   use Karaokium.Schema
 
   schema "locations" do

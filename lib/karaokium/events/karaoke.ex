@@ -1,4 +1,7 @@
 defmodule Karaokium.Events.Karaoke do
+  @moduledoc """
+  A Karaoke is the main event where people sing and the audience votes.
+  """
   use Karaokium.Schema
 
   alias Karaokium.Events.Location

@@ -1,4 +1,7 @@
 defmodule Karaokium.Polling.Reaction do
+  @moduledoc """
+  A user reaction to a performance.
+  """
   use Karaokium.Schema
 
   alias Karaokium.Accounts

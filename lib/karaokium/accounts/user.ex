@@ -1,4 +1,7 @@
 defmodule Karaokium.Accounts.User do
+  @moduledoc """
+  A user of the application capable of authenticating.
+  """
   use Karaokium.Schema
 
   @permissions [:admin, :sysadmin]

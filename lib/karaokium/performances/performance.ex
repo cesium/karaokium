@@ -1,4 +1,7 @@
 defmodule Karaokium.Performances.Performance do
+  @moduledoc """
+  A Karaoke performance where the participants sing a music.
+  """
   use Karaokium.Schema
 
   alias Karaokium.Events

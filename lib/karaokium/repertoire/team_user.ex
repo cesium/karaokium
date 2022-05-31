@@ -1,9 +1,7 @@
 defmodule Karaokium.Repertoire.TeamUser do
-  use Ecto.Schema
-  import Ecto.Changeset
+  @moduledoc false
+  use Karaokium.Schema
 
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
   schema "teams_users" do
     field :team_id, :string
     field :user_id, :string

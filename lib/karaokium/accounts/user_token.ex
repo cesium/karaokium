@@ -1,4 +1,7 @@
 defmodule Karaokium.Accounts.UserToken do
+  @moduledoc """
+  User Tokens to manage web sessions with full control.
+  """
   use Karaokium.Schema
   import Ecto.Query
 

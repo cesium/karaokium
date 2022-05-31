@@ -1,4 +1,7 @@
 defmodule Karaokium.Repertoire.Album do
+  @moduledoc """
+  A Music Album.
+  """
   use Karaokium.Schema
 
   alias Karaokium.Media

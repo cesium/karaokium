@@ -1,4 +1,7 @@
 defmodule Karaokium.Polling.Vote do
+  @moduledoc """
+  A vote in a team performance.
+  """
   use Karaokium.Schema
 
   alias Karaokium.Accounts
