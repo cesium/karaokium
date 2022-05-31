@@ -1,9 +1,7 @@
 defmodule Karaokium.Repertoire.TeamKaraoke do
-  use Ecto.Schema
-  import Ecto.Changeset
+  @moduledoc false
+  use Karaokium.Schema
 
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
   schema "teams_karaokes" do
     field :karaoke_id, :string
     field :team_id, :string

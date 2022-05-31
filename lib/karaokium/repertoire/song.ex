@@ -1,4 +1,7 @@
 defmodule Karaokium.Repertoire.Song do
+  @moduledoc """
+  A song resource that users will sing.
+  """
   use Karaokium.Schema
 
   alias Karaokium.Repertoire.Album

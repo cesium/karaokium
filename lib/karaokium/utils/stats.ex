@@ -1,4 +1,7 @@
 defmodule Karaokium.Utils.Stats do
+  @moduledoc """
+  Utility functions to calculate statistics.
+  """
   def mean([]), do: nil
   def mean(list), do: Enum.sum(list) / length(list)
 

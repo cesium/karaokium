@@ -1,4 +1,7 @@
 defmodule Karaokium.Media.Gravatar do
+  @moduledoc """
+  A module to get the Gravatar of a user.
+  """
   alias Karaokium.Accounts.User
 
   def picture(%User{email: email}) do

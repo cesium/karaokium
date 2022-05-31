@@ -1,4 +1,7 @@
 defmodule Karaokium.Groups.Team do
+  @moduledoc """
+  A team is a group of people that sing together in the same performance.
+  """
   use Karaokium.Schema
 
   alias Karaokium.Accounts

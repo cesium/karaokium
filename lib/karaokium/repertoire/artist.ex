@@ -1,4 +1,7 @@
 defmodule Karaokium.Repertoire.Artist do
+  @moduledoc """
+  A Music Artist.
+  """
   use Karaokium.Schema
 
   alias Karaokium.Repertoire.Album

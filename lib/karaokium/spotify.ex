@@ -1,4 +1,7 @@
 defmodule Karaokium.Spotify do
+  @moduledoc """
+  A Spotify module to search and retrieve music information.
+  """
   @app Mix.Project.config()[:app]
 
   require Logger
