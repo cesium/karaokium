@@ -17,7 +17,8 @@
       <img alt="HTML only" src={hd(result["album"]["images"])["url"]} height="300" />
       <h3><%= result["name"] %></h3>
       <p>
-        <strong><%= result["album"]["name"] %></strong> (<em><%= result["album"]["release_date"] %></em>)
+        <strong><%= result["album"]["name"] %></strong>
+        (<em><%= result["album"]["release_date"] %></em>)
       </p>
       <p>
         <em><%= result["artists"] |> Enum.map(&Map.get(&1, "name")) |> Enum.join(", ") %></em>

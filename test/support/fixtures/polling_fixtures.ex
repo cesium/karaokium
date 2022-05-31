@@ -4,6 +4,9 @@ defmodule Karaokium.PollingFixtures do
   entities via the `Karaokium.Polling` context.
   """
 
+  import Karaokium.AccountsFixtures
+  import Karaokium.PerformancesFixtures
+
   @doc """
   Generate a vote.
   """
@@ -11,7 +14,9 @@ defmodule Karaokium.PollingFixtures do
     {:ok, vote} =
       attrs
       |> Enum.into(%{
-        pontuation: 42
+        pontuation: 10,
+        performance_id: performance_fixture().id,
+        user_id: user_fixture().id
       })
       |> Karaokium.Polling.create_vote()
 
@@ -25,7 +30,9 @@ defmodule Karaokium.PollingFixtures do
     {:ok, reaction} =
       attrs
       |> Enum.into(%{
-        emoji: :"👍"
+        emoji: :"👍",
+        performance_id: performance_fixture().id,
+        user_id: user_fixture().id
       })
       |> Karaokium.Polling.create_reaction()
 

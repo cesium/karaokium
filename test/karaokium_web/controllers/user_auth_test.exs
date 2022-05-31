@@ -2,7 +2,7 @@ defmodule KaraokiumWeb.Plugs.AuthTest do
   use KaraokiumWeb.ConnCase
 
   alias Karaokium.Accounts
-  alias KaraokiumWeb.Plugs.Auth
+  alias KaraokiumWeb.Plugs
   import Karaokium.AccountsFixtures
 
   @remember_me_cookie "_karaokium_web_user_remember_me"
@@ -21,7 +21,7 @@ defmodule KaraokiumWeb.Plugs.AuthTest do
       conn = Plugs.Auth.log_in_user(conn, user)
       assert token = get_session(conn, :user_token)
       assert get_session(conn, :live_socket_id) == "users_sessions:#{Base.url_encode64(token)}"
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/karaokium"
       assert Accounts.get_user_by_session_token(token)
     end
 
@@ -59,7 +59,7 @@ defmodule KaraokiumWeb.Plugs.AuthTest do
       refute get_session(conn, :user_token)
       refute conn.cookies[@remember_me_cookie]
       assert %{max_age: 0} = conn.resp_cookies[@remember_me_cookie]
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/karaokium"
       refute Accounts.get_user_by_session_token(user_token)
     end
 
@@ -78,7 +78,7 @@ defmodule KaraokiumWeb.Plugs.AuthTest do
       conn = conn |> fetch_cookies() |> Plugs.Auth.log_out_user()
       refute get_session(conn, :user_token)
       assert %{max_age: 0} = conn.resp_cookies[@remember_me_cookie]
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/karaokium"
     end
   end
 
@@ -119,7 +119,7 @@ defmodule KaraokiumWeb.Plugs.AuthTest do
         conn |> assign(:current_user, user) |> Plugs.Auth.redirect_if_user_is_authenticated([])
 
       assert conn.halted
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/karaokium"
     end
 
     test "does not redirect if user is not authenticated", %{conn: conn} do

@@ -9,7 +9,11 @@ config :argon2_elixir, t_cost: 1, m_cost: 8
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :karaokium, Karaokium.Repo,
-  database: Path.expand("../karaokium_test.db", Path.dirname(__ENV__.file)),
+  database:
+    Path.expand(
+      "../priv/repo/databases/karaokium_#{config_env()}.db",
+      Path.dirname(__ENV__.file)
+    ),
   pool_size: 5,
   pool: Ecto.Adapters.SQL.Sandbox
 

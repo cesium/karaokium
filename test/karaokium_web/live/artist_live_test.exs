@@ -26,22 +26,22 @@ defmodule KaraokiumWeb.ArtistLiveTest do
   end
 
   describe "Index" do
-    setup [:create_artist]
+    setup [:register_and_log_in_admin_user, :create_artist]
 
     test "lists all artists", %{conn: conn, artist: artist} do
-      {:ok, _index_live, html} = live(conn, Routes.artist_index_path(conn, :index))
+      {:ok, _index_live, html} = live(conn, Routes.admin_artist_index_path(conn, :index))
 
       assert html =~ "Listing Artists"
       assert html =~ artist.href
     end
 
     test "saves new artist", %{conn: conn} do
-      {:ok, index_live, _html} = live(conn, Routes.artist_index_path(conn, :index))
+      {:ok, index_live, _html} = live(conn, Routes.admin_artist_index_path(conn, :index))
 
       assert index_live |> element("a", "New Artist") |> render_click() =~
                "New Artist"
 
-      assert_patch(index_live, Routes.artist_index_path(conn, :new))
+      assert_patch(index_live, Routes.admin_artist_index_path(conn, :new))
 
       assert index_live
              |> form("#artist-form", artist: @invalid_attrs)
@@ -51,19 +51,19 @@ defmodule KaraokiumWeb.ArtistLiveTest do
         index_live
         |> form("#artist-form", artist: @create_attrs)
         |> render_submit()
-        |> follow_redirect(conn, Routes.artist_index_path(conn, :index))
+        |> follow_redirect(conn, Routes.admin_artist_index_path(conn, :index))
 
       assert html =~ "Artist created successfully"
       assert html =~ "some href"
     end
 
     test "updates artist in listing", %{conn: conn, artist: artist} do
-      {:ok, index_live, _html} = live(conn, Routes.artist_index_path(conn, :index))
+      {:ok, index_live, _html} = live(conn, Routes.admin_artist_index_path(conn, :index))
 
       assert index_live |> element("#artist-#{artist.id} a", "Edit") |> render_click() =~
                "Edit Artist"
 
-      assert_patch(index_live, Routes.artist_index_path(conn, :edit, artist))
+      assert_patch(index_live, Routes.admin_artist_index_path(conn, :edit, artist))
 
       assert index_live
              |> form("#artist-form", artist: @invalid_attrs)
@@ -73,14 +73,14 @@ defmodule KaraokiumWeb.ArtistLiveTest do
         index_live
         |> form("#artist-form", artist: @update_attrs)
         |> render_submit()
-        |> follow_redirect(conn, Routes.artist_index_path(conn, :index))
+        |> follow_redirect(conn, Routes.admin_artist_index_path(conn, :index))
 
       assert html =~ "Artist updated successfully"
       assert html =~ "some updated href"
     end
 
     test "deletes artist in listing", %{conn: conn, artist: artist} do
-      {:ok, index_live, _html} = live(conn, Routes.artist_index_path(conn, :index))
+      {:ok, index_live, _html} = live(conn, Routes.admin_artist_index_path(conn, :index))
 
       assert index_live |> element("#artist-#{artist.id} a", "Delete") |> render_click()
       refute has_element?(index_live, "#artist-#{artist.id}")
@@ -88,22 +88,22 @@ defmodule KaraokiumWeb.ArtistLiveTest do
   end
 
   describe "Show" do
-    setup [:create_artist]
+    setup [:register_and_log_in_admin_user, :create_artist]
 
     test "displays artist", %{conn: conn, artist: artist} do
-      {:ok, _show_live, html} = live(conn, Routes.artist_show_path(conn, :show, artist))
+      {:ok, _show_live, html} = live(conn, Routes.admin_artist_show_path(conn, :show, artist))
 
       assert html =~ "Show Artist"
       assert html =~ artist.href
     end
 
     test "updates artist within modal", %{conn: conn, artist: artist} do
-      {:ok, show_live, _html} = live(conn, Routes.artist_show_path(conn, :show, artist))
+      {:ok, show_live, _html} = live(conn, Routes.admin_artist_show_path(conn, :show, artist))
 
       assert show_live |> element("a", "Edit") |> render_click() =~
                "Edit Artist"
 
-      assert_patch(show_live, Routes.artist_show_path(conn, :edit, artist))
+      assert_patch(show_live, Routes.admin_artist_show_path(conn, :edit, artist))
 
       assert show_live
              |> form("#artist-form", artist: @invalid_attrs)
@@ -113,7 +113,7 @@ defmodule KaraokiumWeb.ArtistLiveTest do
         show_live
         |> form("#artist-form", artist: @update_attrs)
         |> render_submit()
-        |> follow_redirect(conn, Routes.artist_show_path(conn, :show, artist))
+        |> follow_redirect(conn, Routes.admin_artist_show_path(conn, :show, artist))
 
       assert html =~ "Artist updated successfully"
       assert html =~ "some updated href"

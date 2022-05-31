@@ -87,6 +87,12 @@ defmodule Karaokium.Accounts do
     |> Repo.insert()
   end
 
+  def create_user(attrs) do
+    %User{}
+    |> User.admin_changeset(attrs)
+    |> Repo.insert()
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking user changes.
 

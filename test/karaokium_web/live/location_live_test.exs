@@ -9,14 +9,16 @@ defmodule KaraokiumWeb.LocationLiveTest do
     county: "some county",
     district: "some district",
     locality: "some locality",
-    name: "some name"
+    name: "some name",
+    postcode: "4850-531"
   }
   @update_attrs %{
     address: "some updated address",
     county: "some updated county",
     district: "some updated district",
     locality: "some updated locality",
-    name: "some updated name"
+    name: "some updated name",
+    postcode: "1000-001"
   }
   @invalid_attrs %{address: nil, county: nil, district: nil, locality: nil, name: nil}
 
@@ -26,22 +28,22 @@ defmodule KaraokiumWeb.LocationLiveTest do
   end
 
   describe "Index" do
-    setup [:create_location]
+    setup [:register_and_log_in_admin_user, :create_location]
 
     test "lists all locations", %{conn: conn, location: location} do
-      {:ok, _index_live, html} = live(conn, Routes.location_index_path(conn, :index))
+      {:ok, _index_live, html} = live(conn, Routes.admin_location_index_path(conn, :index))
 
       assert html =~ "Listing Locations"
       assert html =~ location.address
     end
 
     test "saves new location", %{conn: conn} do
-      {:ok, index_live, _html} = live(conn, Routes.location_index_path(conn, :index))
+      {:ok, index_live, _html} = live(conn, Routes.admin_location_index_path(conn, :index))
 
       assert index_live |> element("a", "New Location") |> render_click() =~
                "New Location"
 
-      assert_patch(index_live, Routes.location_index_path(conn, :new))
+      assert_patch(index_live, Routes.admin_location_index_path(conn, :new))
 
       assert index_live
              |> form("#location-form", location: @invalid_attrs)
@@ -51,19 +53,19 @@ defmodule KaraokiumWeb.LocationLiveTest do
         index_live
         |> form("#location-form", location: @create_attrs)
         |> render_submit()
-        |> follow_redirect(conn, Routes.location_index_path(conn, :index))
+        |> follow_redirect(conn, Routes.admin_location_index_path(conn, :index))
 
       assert html =~ "Location created successfully"
       assert html =~ "some address"
     end
 
     test "updates location in listing", %{conn: conn, location: location} do
-      {:ok, index_live, _html} = live(conn, Routes.location_index_path(conn, :index))
+      {:ok, index_live, _html} = live(conn, Routes.admin_location_index_path(conn, :index))
 
       assert index_live |> element("#location-#{location.id} a", "Edit") |> render_click() =~
                "Edit Location"
 
-      assert_patch(index_live, Routes.location_index_path(conn, :edit, location))
+      assert_patch(index_live, Routes.admin_location_index_path(conn, :edit, location))
 
       assert index_live
              |> form("#location-form", location: @invalid_attrs)
@@ -73,14 +75,14 @@ defmodule KaraokiumWeb.LocationLiveTest do
         index_live
         |> form("#location-form", location: @update_attrs)
         |> render_submit()
-        |> follow_redirect(conn, Routes.location_index_path(conn, :index))
+        |> follow_redirect(conn, Routes.admin_location_index_path(conn, :index))
 
       assert html =~ "Location updated successfully"
       assert html =~ "some updated address"
     end
 
     test "deletes location in listing", %{conn: conn, location: location} do
-      {:ok, index_live, _html} = live(conn, Routes.location_index_path(conn, :index))
+      {:ok, index_live, _html} = live(conn, Routes.admin_location_index_path(conn, :index))
 
       assert index_live |> element("#location-#{location.id} a", "Delete") |> render_click()
       refute has_element?(index_live, "#location-#{location.id}")
@@ -88,22 +90,22 @@ defmodule KaraokiumWeb.LocationLiveTest do
   end
 
   describe "Show" do
-    setup [:create_location]
+    setup [:register_and_log_in_admin_user, :create_location]
 
     test "displays location", %{conn: conn, location: location} do
-      {:ok, _show_live, html} = live(conn, Routes.location_show_path(conn, :show, location))
+      {:ok, _show_live, html} = live(conn, Routes.admin_location_show_path(conn, :show, location))
 
       assert html =~ "Show Location"
       assert html =~ location.address
     end
 
     test "updates location within modal", %{conn: conn, location: location} do
-      {:ok, show_live, _html} = live(conn, Routes.location_show_path(conn, :show, location))
+      {:ok, show_live, _html} = live(conn, Routes.admin_location_show_path(conn, :show, location))
 
       assert show_live |> element("a", "Edit") |> render_click() =~
                "Edit Location"
 
-      assert_patch(show_live, Routes.location_show_path(conn, :edit, location))
+      assert_patch(show_live, Routes.admin_location_show_path(conn, :edit, location))
 
       assert show_live
              |> form("#location-form", location: @invalid_attrs)
@@ -113,7 +115,7 @@ defmodule KaraokiumWeb.LocationLiveTest do
         show_live
         |> form("#location-form", location: @update_attrs)
         |> render_submit()
-        |> follow_redirect(conn, Routes.location_show_path(conn, :show, location))
+        |> follow_redirect(conn, Routes.admin_location_show_path(conn, :show, location))
 
       assert html =~ "Location updated successfully"
       assert html =~ "some updated address"

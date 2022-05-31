@@ -4,11 +4,14 @@ defmodule Karaokium.AccountsFixtures do
   entities via the `Karaokium.Accounts` context.
   """
 
+  def unique_username, do: "user#{System.unique_integer([:positive])}"
   def unique_user_email, do: "user#{System.unique_integer()}@example.com"
-  def valid_user_password, do: "hello world!"
+  def valid_user_password, do: "CeSIUM-karaokium-2022"
 
   def valid_user_attributes(attrs \\ %{}) do
     Enum.into(attrs, %{
+      name: "José Valim",
+      username: unique_username(),
       email: unique_user_email(),
       password: valid_user_password()
     })
@@ -18,7 +21,7 @@ defmodule Karaokium.AccountsFixtures do
     {:ok, user} =
       attrs
       |> valid_user_attributes()
-      |> Karaokium.Accounts.register_user()
+      |> Karaokium.Accounts.create_user()
 
     user
   end
