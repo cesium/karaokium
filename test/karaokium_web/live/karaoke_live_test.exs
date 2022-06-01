@@ -5,19 +5,19 @@ defmodule KaraokiumWeb.KaraokeLiveTest do
   import Karaokium.EventsFixtures
 
   @create_attrs %{
-    end_date: "2022-04-14T02:49",
+    end_date: ~N[2022-04-14 02:49:00],
     name: "some name",
-    start_date: "2022-04-14T00:00"
+    start_date: ~N[2022-04-14 00:00:00]
   }
   @update_attrs %{
-    end_date: "2022-04-15T03:49",
+    end_date: ~N[2022-04-15 03:49:00],
     name: "some updated name",
-    start_date: "2022-04-15T02:49"
+    start_date: ~N[2022-04-15 02:49:00]
   }
   @invalid_attrs %{
-    end_date: "2022-04-14T02:49",
+    end_date: ~N[2022-04-14 02:49:00],
     name: nil,
-    start_date: "2022-04-15T02:49"
+    start_date: ~N[2022-04-15 02:49:00]
   }
 
   defp create_karaoke(_) do
