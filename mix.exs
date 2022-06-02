@@ -130,7 +130,17 @@ defmodule Karaokium.MixProject do
   end
 
   defp git_revision_hash do
-    {rev, 0} = System.cmd("git", ["rev-parse", "HEAD"])
-    String.replace(rev, "\n", "")
+    case System.cmd("git", ["rev-parse", "HEAD"]) do
+      {ref, 0} ->
+        ref
+
+      {_, _code} ->
+        ["ref:", ref_path] =
+          File.read!(".git/HEAD")
+          |> String.split()
+
+        File.read!(".git/#{ref_path}")
+    end
+    |> String.replace("\n", "")
   end
 end
