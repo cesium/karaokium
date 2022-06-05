@@ -18,9 +18,9 @@ defmodule Karaokium.MixProject do
       compilers: [:gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       releases: releases(),
-      aliases: aliases(),
       deps: deps(),
       docs: docs(),
+      aliases: aliases(),
       preferred_cli_env: [check: :test]
     ]
   end
@@ -41,20 +41,11 @@ defmodule Karaokium.MixProject do
 
   defp releases() do
     [
-      karaokium: [
-        include_executables_for: [:unix],
-        steps: [:assemble, :tar]
-      ]
-    ]
-  end
-
-  # Specifies your project documentation.
-  defp docs do
-    [
-      main: "readme",
-      logo: "priv/static/images/logos/logo-ORANGE.svg",
-      extras: [{:"README.md", [title: "Overview"]}],
-      source_ref: "v#{@version}"
+      {@app,
+       [
+         include_executables_for: [:unix],
+         steps: [:assemble, :tar]
+       ]}
     ]
   end
 
@@ -111,6 +102,16 @@ defmodule Karaokium.MixProject do
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.28", only: :dev, runtime: false},
       {:sobelow, "~> 0.11", only: :dev, runtime: false}
+    ]
+  end
+
+  # Specifies your project documentation.
+  defp docs do
+    [
+      main: "readme",
+      logo: "priv/static/images/logos/logo-ORANGE.svg",
+      extras: [{:"README.md", [title: "Overview"]}],
+      source_ref: "v#{@version}"
     ]
   end
 
