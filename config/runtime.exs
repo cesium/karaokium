@@ -15,12 +15,12 @@ if config_env() in [:dev, :test] do
     |> Path.expand(Path.dirname(__ENV__.file))
 
   config :karaokium, Karaokium.Repo, database: env!("DATABASE_PATH", :string, database_path)
-end
 
-if config_env() == :dev do
-  config :karaokium, Karaokium.Spotify,
-    client_id: env!("SPOTIFY_CLIENT_ID"),
-    client_secret: env!("SPOTIFY_CLIENT_SECRET")
+  if config_env() == :dev do
+    config :karaokium, Karaokium.Spotify,
+      client_id: env!("SPOTIFY_CLIENT_ID"),
+      client_secret: env!("SPOTIFY_CLIENT_SECRET")
+  end
 end
 
 # ## Using releases
