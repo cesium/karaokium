@@ -6,15 +6,30 @@ import Config
 # and secrets from environment variables or elsewhere. Do not define
 # any compile-time configuration in here, as it won't be applied.
 
-if config_env() == :dev do
+if config_env() in [:dev, :test] do
   import Dotenvy
   source([".env", ".env.#{config_env()}", ".env.#{config_env()}.local"])
 
+  database_path =
+    "../priv/repo/databases/karaokium_#{config_env()}.db"
+    |> Path.expand(Path.dirname(__ENV__.file))
+
+  config :karaokium, Karaokium.Repo, database: env!("DATABASE_PATH", :string, database_path)
+end
+
+if config_env() == :dev do
   config :karaokium, Karaokium.Spotify,
     client_id: env!("SPOTIFY_CLIENT_ID"),
     client_secret: env!("SPOTIFY_CLIENT_SECRET")
 end
 
+# ## Using releases
+#
+# If you use `mix release`, you need to explicitly enable the server
+# by passing the PHX_SERVER=true when you start it:
+#
+#     PHX_SERVER=true bin/yearbook start
+#
 # Start the phoenix server if environment is set and running in a release
 if System.get_env("PHX_SERVER") do
   config :karaokium, KaraokiumWeb.Endpoint, server: true
