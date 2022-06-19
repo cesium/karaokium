@@ -30,9 +30,16 @@ defmodule Karaokium.DataCase do
   end
 
   setup tags do
+    Karaokium.DataCase.setup_sandbox(tags)
+    :ok
+  end
+
+  @doc """
+  Sets up the sandbox based on the test tags.
+  """
+  def setup_sandbox(tags) do
     pid = SQL.Sandbox.start_owner!(Karaokium.Repo, shared: not tags[:async])
     on_exit(fn -> SQL.Sandbox.stop_owner(pid) end)
-    :ok
   end
 
   @doc """
