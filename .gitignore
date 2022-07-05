@@ -1,4 +1,4 @@
-# Ignore secreat files
+# Ignore secret files
 .env.*
 !.env.*.sample
 
