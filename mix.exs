@@ -71,6 +71,9 @@ defmodule Karaokium.MixProject do
       # mailer
       {:swoosh, "~> 1.5"},
 
+      #tailwind
+      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
+
       # i18n
       {:gettext, "~> 0.19"},
 
@@ -137,7 +140,7 @@ defmodule Karaokium.MixProject do
         "test --warnings-as-errors",
         "credo --strict --all"
       ],
-      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
     ]
   end
 

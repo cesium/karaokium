@@ -22,6 +22,7 @@ config :karaokium, KaraokiumWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "n2hkKtktj1hBZR8IjgQXtHkG0i3KB12WjO3+ONPoS19zt0P/uOiB+jvfBwtUSJTR",
   watchers: [
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]},
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
     esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
   ]
