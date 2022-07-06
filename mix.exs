@@ -71,7 +71,7 @@ defmodule Karaokium.MixProject do
       # mailer
       {:swoosh, "~> 1.5"},
 
-      #tailwind
+      # tailwind
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
 
       # i18n
