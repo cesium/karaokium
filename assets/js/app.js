@@ -1,7 +1,3 @@
-// We import the CSS which is extracted to its own file by esbuild.
-import "../css/phoenix.css";
-import "../css/theme.css";
-
 // If you want to use Phoenix channels, run `mix help phx.gen.channel`
 // to get started and then uncomment the line below.
 // import "./user_socket.js"

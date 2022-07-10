@@ -1,5 +1,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@import "./phoenix.css";
+@import "./theme.css";
 
 nav {
   margin-bottom: 0;
