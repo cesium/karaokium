@@ -112,68 +112,87 @@
     <Tables.ranking performances={Performances.get_ranking(@karaoke)} />
   </section>
 <% else %>
-  <section>
+  <section class="block">
     <header>
       <h1>Performances</h1>
     </header>
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Team</th>
-          <th>Song</th>
-          <th>Score</th>
-          <th># Votes</th>
-
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="performances">
-        <%= for {performance, index} <- Enum.with_index(@karaoke.performances) do %>
-          <tr id={"performance-#{performance.id}"}>
-            <td><strong><%= index %></strong></td>
-            <td><strong><%= performance.team.name %></strong></td>
-            <td><i><%= performance.song.name %></i></td>
-            <td>
-              <%= score(performance) %>
-            </td>
-            <td>
-              <%= Enum.count(performance.votes) %>
-            </td>
-            <td>
-              <%= if performance.voting? do %>
-                <button
-                  phx-click="close_voting"
-                  phx-value-id={performance.id}
-                  style="min-width: 120px; padding: 5px 10px; background-color: red; border-color: red;"
-                >
-                  Close Voting
-                </button>
-              <% else %>
-                <button
-                  phx-click="open_voting"
-                  phx-value-id={performance.id}
-                  style="min-width: 120px; padding: 5px 10px; background-color: green; border-color: green;"
-                >
-                  Open Voting
-                </button>
-              <% end %>
-
-              <%= if performance.id == @karaoke.performing_id do %>
-                <button style="min-width: 120px; padding: 5px 10px;" disabled>Started</button>
-              <% else %>
-                <button
-                  phx-click="start"
-                  phx-value-id={performance.id}
-                  style="min-width: 120px; padding: 5px 10px; background-color: #118bee; border-color: #118bee;"
-                >
-                  Start
-                </button>
-              <% end %>
-            </td>
+    <div class ="text-center">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Team</th>
+            <th>Song</th>
+            <th>Score</th>
+            <th># Votes</th>
+  
+            <th></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody id="performances">
+          <%= for {performance, index} <- Enum.with_index(@karaoke.performances) do %>
+            <tr id={"performance-#{performance.id}"}>
+              <td><strong><%= index %></strong></td>
+              <td><strong><%= performance.team.name %></strong></td>
+              <td><i><%= performance.song.name %></i></td>
+              <td>
+                <%= score(performance) %>
+              </td>
+              <td>
+                <%= Enum.count(performance.votes) %>
+              </td>
+              <td>
+                <%= if performance.voting? do %>
+                  <button
+                    phx-click="close_voting"
+                    phx-value-id={performance.id}
+                    style="min-width: 120px; padding: 5px 10px; background-color: red; border-color: red;"
+                  >
+                    Close Voting
+                  </button>
+                <% else %>
+                  <button
+                    phx-click="open_voting"
+                    phx-value-id={performance.id}
+                    style="min-width: 120px; padding: 5px 10px; background-color: green; border-color: green;"
+                  >
+                    Open Voting
+                  </button>
+                <% end %>
+  
+                <%= if performance.id == @karaoke.performing_id do %>
+                  <button style="min-width: 120px; padding: 5px 10px;" disabled>Started</button>
+                <% else %>
+                  <button
+                    phx-click="start"
+                    phx-value-id={performance.id}
+                    style="min-width: 120px; padding: 5px 10px; background-color: #118bee; border-color: #118bee;"
+                  >
+                    Start
+                  </button>
+                  <span>
+                    <%= live_patch("Edit",
+                      to: Routes.admin_performance_edit_path(@socket, :edit, @karaoke.id, performance.id)
+                    ) %>
+                  </span>
+                  |
+                  <span>
+                    <%= link("Delete",
+                      to: "#",
+                      phx_click: "delete",
+                      phx_value_id: performance.id,
+                      data: [confirm: "Are you sure?"]
+                    ) %>
+                  </span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </section>
+  <span>
+    <%= live_patch("New Performance", to: Routes.admin_performance_new_path(@socket, :new, @karaoke.id)) %>
+  </span>
 <% end %>

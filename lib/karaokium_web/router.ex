@@ -101,8 +101,8 @@ defmodule KaraokiumWeb.Router do
             live "/:id/show/edit", KaraokeLive.Show, :edit
 
             live "/:karaoke_id/performances", PerformanceLive.Index, :index
-            live "/:karaoke_id/performances/new", PerformanceLive.Index, :new
-            live "/:karaoke_id/performances/:id/edit", PerformanceLive.Index, :edit
+            live "/:karaoke_id/performances/new", PerformanceLive.New, :new
+            live "/:karaoke_id/performances/:id/edit", PerformanceLive.Edit, :edit
             live "/:karaoke_id/performances/:id", PerformanceLive.Show, :show
             live "/:karaoke_id/performances/:id/show/edit", PerformanceLive.Show, :edit
           end
