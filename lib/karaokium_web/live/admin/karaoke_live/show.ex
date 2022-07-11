@@ -68,6 +68,14 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
   end
 
   @impl true
+  def handle_event("delete", %{"id" => id}, socket) do
+    Performances.get_performance!(id)
+    |> Performances.delete_performance()
+
+    {:noreply, reload(socket)}
+  end
+
+  @impl true
   def handle_info({:update, _changes}, socket) do
     {:noreply, reload(socket)}
   end
