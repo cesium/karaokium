@@ -11,12 +11,14 @@
   </.modal>
 <% end %>
 
-<center>
+<div class="text-center" style="width: 100%;">
   <h1>
     <%= @karaoke.name %>
   </h1>
-  <%= raw(qrcode(Routes.page_url(@socket, :index, %{"karaoke" => %{"code" => @karaoke.code}}))) %>
-</center>
+  <div style="width: 100%;">
+    <%= raw(qrcode(Routes.page_url(@socket, :index, %{"karaoke" => %{"code" => @karaoke.code}}))) %>
+  </div>
+</div>
 
 <section>
   <table>
@@ -57,7 +59,7 @@
   </table>
 </section>
 
-<center>
+<div class="text-center">
   <span>
     <%= live_patch("Edit",
       to: Routes.admin_karaoke_show_path(@socket, :edit, @karaoke),
@@ -65,42 +67,40 @@
     ) %>
   </span>
   | <span><%= live_redirect("Back", to: Routes.admin_karaoke_index_path(@socket, :index)) %></span>
-</center>
+</div>
 
-<center>
-  <div style="margin: 50px 20%;">
-    <%= if @karaoke.status == :waiting do %>
+<div style="margin: 50px 20%;">
+  <%= if @karaoke.status == :waiting do %>
+    <button phx-click="status" phx-value-status="ready" class="action-btn">
+      Ready
+    </button>
+  <% end %>
+  <%= if @karaoke.status == :ready do %>
+    <button phx-click="status" phx-value-status="started" class="action-btn">
+      Start
+    </button>
+  <% end %>
+  <%= if @karaoke.status == :started do %>
+    <div>
       <button phx-click="status" phx-value-status="ready" class="action-btn">
-        Ready
+        Pause
       </button>
-    <% end %>
-    <%= if @karaoke.status == :ready do %>
-      <button phx-click="status" phx-value-status="started" class="action-btn">
-        Start
+      <button
+        phx-click="status"
+        phx-value-status="finished"
+        class="action-btn"
+        style="background-color: red; border-color: red;"
+      >
+        Finish
       </button>
-    <% end %>
-    <%= if @karaoke.status == :started do %>
-      <div>
-        <button phx-click="status" phx-value-status="ready" class="action-btn">
-          Pause
-        </button>
-        <button
-          phx-click="status"
-          phx-value-status="finished"
-          class="action-btn"
-          style="background-color: red; border-color: red;"
-        >
-          Finish
-        </button>
-      </div>
-    <% end %>
-    <%= if @karaoke.status == :finished do %>
-      <button phx-click="status" phx-value-status="started" class="action-btn">
-        Go back
-      </button>
-    <% end %>
-  </div>
-</center>
+    </div>
+  <% end %>
+  <%= if @karaoke.status == :finished do %>
+    <button phx-click="status" phx-value-status="started" class="action-btn">
+      Go back
+    </button>
+  <% end %>
+</div>
 
 <hr />
 
@@ -116,83 +116,36 @@
     <header>
       <h1>Performances</h1>
     </header>
-    <div class ="text-center">
+    <div class="text-center" style="width:100%; overflow-x:2.0;">
       <table>
         <thead>
           <tr>
             <th>#</th>
             <th>Team</th>
             <th>Song</th>
-            <th>Score</th>
-            <th># Votes</th>
-  
-            <th></th>
           </tr>
         </thead>
         <tbody id="performances">
           <%= for {performance, index} <- Enum.with_index(@karaoke.performances) do %>
             <tr id={"performance-#{performance.id}"}>
-              <td><strong><%= index %></strong></td>
+              <td>
+                <span>
+                  <%= live_patch(index,
+                    to: Routes.admin_performance_show_path(@socket, :show, @karaoke.id, performance)
+                  ) %>
+                </span>
+              </td>
               <td><strong><%= performance.team.name %></strong></td>
               <td><i><%= performance.song.name %></i></td>
-              <td>
-                <%= score(performance) %>
-              </td>
-              <td>
-                <%= Enum.count(performance.votes) %>
-              </td>
-              <td>
-                <%= if performance.voting? do %>
-                  <button
-                    phx-click="close_voting"
-                    phx-value-id={performance.id}
-                    style="min-width: 120px; padding: 5px 10px; background-color: red; border-color: red;"
-                  >
-                    Close Voting
-                  </button>
-                <% else %>
-                  <button
-                    phx-click="open_voting"
-                    phx-value-id={performance.id}
-                    style="min-width: 120px; padding: 5px 10px; background-color: green; border-color: green;"
-                  >
-                    Open Voting
-                  </button>
-                <% end %>
-  
-                <%= if performance.id == @karaoke.performing_id do %>
-                  <button style="min-width: 120px; padding: 5px 10px;" disabled>Started</button>
-                <% else %>
-                  <button
-                    phx-click="start"
-                    phx-value-id={performance.id}
-                    style="min-width: 120px; padding: 5px 10px; background-color: #118bee; border-color: #118bee;"
-                  >
-                    Start
-                  </button>
-                  <span>
-                    <%= live_patch("Edit",
-                      to: Routes.admin_performance_edit_path(@socket, :edit, @karaoke.id, performance.id)
-                    ) %>
-                  </span>
-                  |
-                  <span>
-                    <%= link("Delete",
-                      to: "#",
-                      phx_click: "delete",
-                      phx_value_id: performance.id,
-                      data: [confirm: "Are you sure?"]
-                    ) %>
-                  </span>
-                <% end %>
-              </td>
             </tr>
           <% end %>
         </tbody>
       </table>
     </div>
   </section>
-  <span>
-    <%= live_patch("New Performance", to: Routes.admin_performance_new_path(@socket, :new, @karaoke.id)) %>
-  </span>
+  <div>
+    <span>
+      <%= live_patch("New Performance", to: Routes.admin_performance_new_path(@socket, :new, @karaoke.id)) %>
+    </span>
+  </div>
 <% end %>

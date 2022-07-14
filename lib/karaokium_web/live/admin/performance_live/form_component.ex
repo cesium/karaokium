@@ -49,7 +49,9 @@ defmodule KaraokiumWeb.Admin.PerformanceLive.FormComponent do
   end
 
   defp save_performance(socket, :new, performance_params) do
-    case Performances.create_performance(Map.put(performance_params, "karaoke_id", socket.assigns.karaoke_id)) do
+    case Performances.create_performance(
+           Map.put(performance_params, "karaoke_id", socket.assigns.karaoke_id)
+         ) do
       {:ok, _performance} ->
         {:noreply,
          socket

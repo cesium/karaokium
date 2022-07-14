@@ -1,5 +1,3 @@
-<h1>Show Performance</h1>
-
 <%= if @live_action in [:edit] do %>
   <.modal return_to={Routes.admin_performance_show_path(@socket, :show, @performance, @karaoke_id)}>
     <.live_component
@@ -13,15 +11,92 @@
   </.modal>
 <% end %>
 
+<div class="text-center">
+  <h1>Show Performance</h1>
+  <div>
+    <p>
+      <strong>Team:</strong>
+      <%= @performance.team.name %>
+    </p>
+    <p>
+      <strong>Song:</strong>
+      <%= @performance.song.name %>
+    </p>
+  </div>
+</div>
+
 <ul></ul>
 
-<span>
-  <%= live_patch("Edit",
-    to: Routes.admin_performance_show_path(@socket, :edit, @performance, @karaoke_id),
-    class: "button"
-  ) %>
-</span>
-|
-<span>
-  <%= live_redirect("Back", to: Routes.admin_performance_index_path(@socket, :index, @karaoke_id)) %>
-</span>
+<div class="text-center">
+  <table>
+    <thead>
+      <tr>
+        <th>Score</th>
+        <th>Votes</th>
+      </tr>
+    </thead>
+    <td>
+      <%= Performances.Performance.score(@performance) %>
+    </td>
+    <td>
+      <%= Enum.count(@performance.votes) %>
+    </td>
+  </table>
+</div>
+
+<div class="text-center">
+  <%= if @performance.id == @performancelive do %>
+    <button style="min-width: 120px; padding: 5px 10px;" disabled>Started</button>
+    <%= if @performance.voting? do %>
+      <button
+        phx-click="close_voting"
+        phx-value-id={@performance.id}
+        style="min-width: 120px; padding: 5px 10px; background-color: red; border-color: red;"
+      >
+        Close Voting
+      </button>
+    <% else %>
+      <button
+        phx-click="open_voting"
+        phx-value-id={@performance.id}
+        style="min-width: 120px; padding: 5px 10px; background-color: green; border-color: green;"
+      >
+        Open Voting
+      </button>
+    <% end %>
+  <% else %>
+    <button
+      phx-click="start"
+      phx-value-id={@performance.id}
+      phx-value-karaoke={@karaoke_id}
+      style="min-width: 120px; padding: 5px 10px; background-color: #118bee; border-color: #118bee;"
+    >
+      Start
+    </button>
+  <% end %>
+</div>
+
+<div class="text-center">
+  <%= if @performance.id == @performancelive do %>
+  <% else %>
+    <span>
+      <%= live_patch("Edit",
+        to: Routes.admin_performance_edit_path(@socket, :edit, @karaoke_id, @performance.id),
+        class: "button"
+      ) %>
+    </span>
+    |
+    <span>
+      <%= link("Delete",
+        to: Routes.admin_karaoke_show_path(@socket, :show, @karaoke_id),
+        phx_click: "delete",
+        phx_value_id: @performance.id,
+        data: [confirm: "Are you sure?"]
+      ) %>
+    </span>
+    |
+  <% end %>
+  <span>
+    <%= live_redirect("Back", to: Routes.admin_karaoke_show_path(@socket, :show, @karaoke_id)) %>
+  </span>
+</div>
