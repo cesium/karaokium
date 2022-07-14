@@ -46,6 +46,9 @@ defmodule Karaokium.Performances do
   """
   def get_performance!(id), do: Repo.get!(Performance, id)
 
+  def get_performance!(id, preloads \\ []),
+    do: Repo.get!(Performance, id) |> Repo.preload(preloads)
+
   @doc """
   Creates a performance.
 

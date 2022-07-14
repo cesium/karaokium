@@ -5,7 +5,6 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
   import Karaokium.Performances.Performance, only: [score: 1]
 
   alias Karaokium.Events
-  alias Karaokium.Performances
   alias Karaokium.Polling
   alias KaraokiumWeb.Components.Tables
 
@@ -44,38 +43,6 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
   end
 
   @impl true
-  def handle_event("open_voting", %{"id" => id}, socket) do
-    Performances.get_performance!(id)
-    |> Performances.update_performance(%{voting?: true})
-
-    {:noreply, reload(socket)}
-  end
-
-  @impl true
-  def handle_event("close_voting", %{"id" => id}, socket) do
-    Performances.get_performance!(id)
-    |> Performances.update_performance(%{voting?: false})
-
-    {:noreply, reload(socket)}
-  end
-
-  @impl true
-  def handle_event("start", %{"id" => id}, socket) do
-    socket.assigns.karaoke
-    |> Events.update_karaoke(%{performing_id: id})
-
-    {:noreply, reload(socket)}
-  end
-
-  @impl true
-  def handle_event("delete", %{"id" => id}, socket) do
-    Performances.get_performance!(id)
-    |> Performances.delete_performance()
-
-    {:noreply, reload(socket)}
-  end
-
-  @impl true
   def handle_info({:update, _changes}, socket) do
     {:noreply, reload(socket)}
   end
@@ -96,6 +63,6 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
   defp qrcode(url) do
     url
     |> QRCodeEx.encode()
-    |> QRCodeEx.svg(color: "#ed7950", background_color: :transparent)
+    |> QRCodeEx.svg(color: "#ed7950", background_color: :transparent, width: 340, heigth: 340)
   end
 end
