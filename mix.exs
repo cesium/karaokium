@@ -131,6 +131,7 @@ defmodule Karaokium.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "ecto.seed"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      lint: ["credo --strict --all"],
       check: [
         "clean",
         "deps.unlock --check-unused",
@@ -138,7 +139,7 @@ defmodule Karaokium.MixProject do
         "format --check-formatted",
         "deps.unlock --check-unused",
         "test --warnings-as-errors",
-        "credo --strict --all"
+        "lint"
       ],
       "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
     ]
