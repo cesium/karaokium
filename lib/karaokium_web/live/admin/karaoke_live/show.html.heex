@@ -11,13 +11,11 @@
   </.modal>
 <% end %>
 
-<div class="text-center" style="width: 100%;">
+<div class="text-center w-full">
   <h1>
     <%= @karaoke.name %>
   </h1>
-  <div style="width: 100%;">
-    <%= raw(qrcode(Routes.page_url(@socket, :index, %{"karaoke" => %{"code" => @karaoke.code}}))) %>
-  </div>
+  <%= raw(qrcode(Routes.page_url(@socket, :index, %{"karaoke" => %{"code" => @karaoke.code}}))) %>
 </div>
 
 <section>
@@ -105,24 +103,27 @@
 <hr />
 
 <%= if @karaoke.status == :finished do %>
-  <section>
+  <section class="block">
     <header>
       <h1>Results</h1>
     </header>
-    <Tables.ranking performances={Performances.get_ranking(@karaoke)} />
+    <div class="text-center">
+      <Tables.ranking performances={Performances.get_ranking(@karaoke)} />
+    </div>
   </section>
 <% else %>
   <section class="block">
     <header>
       <h1>Performances</h1>
     </header>
-    <div class="text-center" style="width:100%; overflow-x:2.0;">
+    <div class="text-center" style="font-size:13px;">
       <table>
         <thead>
           <tr>
             <th>#</th>
             <th>Team</th>
             <th>Song</th>
+            <th>Options</th>
           </tr>
         </thead>
         <tbody id="performances">
@@ -137,6 +138,35 @@
               </td>
               <td><strong><%= performance.team.name %></strong></td>
               <td><i><%= performance.song.name %></i></td>
+              <td>
+                <%= if performance.id == @karaoke.performing_id do %>
+                  <%= if performance.voting? do %>
+                    <button
+                      phx-click="close_voting"
+                      phx-value-id={performance.id}
+                      style="min-width: 50px; padding: 5px 10px; background-color: red; border-color: red; font-size:12px;"
+                    >
+                      Close Voting
+                    </button>
+                  <% else %>
+                    <button
+                      phx-click="open_voting"
+                      phx-value-id={performance.id}
+                      style="min-width: 50px; padding: 5px 10px; background-color: green; border-color: green; font-size:12px;"
+                    >
+                      Open Voting
+                    </button>
+                  <% end %>
+                <% else %>
+                  <button
+                    phx-click="start"
+                    phx-value-id={performance.id}
+                    style="min-width: 50px; padding: 5px 10px; background-color: #118bee; border-color: #118bee; font-size:12px;"
+                  >
+                    Start
+                  </button>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         </tbody>

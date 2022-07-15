@@ -46,38 +46,6 @@
 
 <div class="text-center">
   <%= if @performance.id == @performancelive do %>
-    <button style="min-width: 120px; padding: 5px 10px;" disabled>Started</button>
-    <%= if @performance.voting? do %>
-      <button
-        phx-click="close_voting"
-        phx-value-id={@performance.id}
-        style="min-width: 120px; padding: 5px 10px; background-color: red; border-color: red;"
-      >
-        Close Voting
-      </button>
-    <% else %>
-      <button
-        phx-click="open_voting"
-        phx-value-id={@performance.id}
-        style="min-width: 120px; padding: 5px 10px; background-color: green; border-color: green;"
-      >
-        Open Voting
-      </button>
-    <% end %>
-  <% else %>
-    <button
-      phx-click="start"
-      phx-value-id={@performance.id}
-      phx-value-karaoke={@karaoke_id}
-      style="min-width: 120px; padding: 5px 10px; background-color: #118bee; border-color: #118bee;"
-    >
-      Start
-    </button>
-  <% end %>
-</div>
-
-<div class="text-center">
-  <%= if @performance.id == @performancelive do %>
   <% else %>
     <span>
       <%= live_patch("Edit",
@@ -90,7 +58,6 @@
       <%= link("Delete",
         to: Routes.admin_karaoke_show_path(@socket, :show, @karaoke_id),
         phx_click: "delete",
-        phx_value_id: @performance.id,
         data: [confirm: "Are you sure?"]
       ) %>
     </span>

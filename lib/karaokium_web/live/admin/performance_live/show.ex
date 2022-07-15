@@ -22,35 +22,12 @@ defmodule KaraokiumWeb.Admin.PerformanceLive.Show do
   end
 
   @impl true
-  def handle_event("delete", %{"id" => id}, socket) do
-    Performances.get_performance!(id)
+  def handle_event("delete", _, socket) do
+    socket.assigns.id
+    |> Performances.get_performance!()
     |> Performances.delete_performance()
 
     {:noreply, socket}
-  end
-
-  @impl true
-  def handle_event("open_voting", _, socket) do
-    socket.assigns.performance
-    |> Performances.update_performance(%{voting?: true})
-
-    {:noreply, reload(socket)}
-  end
-
-  @impl true
-  def handle_event("close_voting", _, socket) do
-    socket.assigns.performance
-    |> Performances.update_performance(%{voting?: false})
-
-    {:noreply, reload(socket)}
-  end
-
-  @impl true
-  def handle_event("start", %{"id" => id, "karaoke" => karaoke_id}, socket) do
-    Events.get_karaoke!(karaoke_id)
-    |> Events.update_karaoke(%{performing_id: id})
-
-    {:noreply, reload(socket, :update)}
   end
 
   defp page_title(:show), do: "Show Performance"
@@ -62,19 +39,7 @@ defmodule KaraokiumWeb.Admin.PerformanceLive.Show do
     socket
     |> assign(
       :performance,
-      Performances.get_performance2!(id, [:team, :song, :votes])
+      Performances.get_performance!(id, [:team, :song, :votes])
     )
-  end
-
-  defp reload(socket, :update) do
-    id = socket.assigns.id
-    karaoke_id = socket.assigns.karaoke_id
-
-    socket
-    |> assign(
-      :performance,
-      Performances.get_performance2!(id, [:team, :song, :votes])
-    )
-    |> assign(:performancelive, Events.get_karaoke!(karaoke_id).performing_id)
   end
 end

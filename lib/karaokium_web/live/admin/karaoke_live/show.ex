@@ -42,6 +42,31 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
   end
 
   @impl true
+  def handle_event("open_voting", %{"id" => id}, socket) do
+    Performances.get_performance!(id)
+    |> Performances.update_performance(%{voting?: true})
+
+    {:noreply, reload(socket)}
+  end
+
+  @impl true
+  def handle_event("close_voting", %{"id" => id}, socket) do
+    Performances.get_performance!(id)
+    |> Performances.update_performance(%{voting?: false})
+
+    {:noreply, reload(socket)}
+  end
+
+  @impl true
+  def handle_event("start", %{"id" => id}, socket) do
+    socket.assigns.karaoke.id
+    |> Events.get_karaoke!()
+    |> Events.update_karaoke(%{performing_id: id})
+
+    {:noreply, reload(socket)}
+  end
+
+  @impl true
   def handle_info({:update, _changes}, socket) do
     {:noreply, reload(socket)}
   end

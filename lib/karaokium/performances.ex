@@ -44,9 +44,8 @@ defmodule Karaokium.Performances do
       ** (Ecto.NoResultsError)
 
   """
-  def get_performance!(id), do: Repo.get!(Performance, id)
 
-  def get_performance2!(id, preloads \\ []),
+  def get_performance!(id, preloads \\ []),
     do: Repo.get!(Performance, id) |> Repo.preload(preloads)
 
   @doc """
