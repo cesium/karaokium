@@ -30,7 +30,7 @@ defmodule Karaokium.Performances.Performance do
   def changeset(performance, attrs) do
     performance
     |> cast(attrs, [:karaoke_id, :team_id, :song_id, :voting?])
-    |> validate_required([:karaoke_id, :team_id, :song_id, :voting?])
+    |> validate_required([:karaoke_id, :team_id, :song_id])
   end
 
   @doc """

@@ -1,0 +1,9 @@
+<.live_component
+  module={KaraokiumWeb.Admin.PerformanceLive.FormComponent}
+  id={@performance.id}
+  karaoke_id={@karaoke_id}
+  performance={@performance}
+  title="Edit performance"
+  action={:edit}
+  return_to={Routes.admin_performance_show_path(@socket, :show, @karaoke_id, @performance)}
+/>

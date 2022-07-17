@@ -2,8 +2,6 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
   @moduledoc false
   use KaraokiumWeb, :live_view
 
-  import Karaokium.Performances.Performance, only: [score: 1]
-
   alias Karaokium.Events
   alias Karaokium.Performances
   alias Karaokium.Polling
@@ -61,7 +59,8 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
 
   @impl true
   def handle_event("start", %{"id" => id}, socket) do
-    socket.assigns.karaoke
+    socket.assigns.karaoke.id
+    |> Events.get_karaoke!()
     |> Events.update_karaoke(%{performing_id: id})
 
     {:noreply, reload(socket)}
@@ -88,6 +87,6 @@ defmodule KaraokiumWeb.Admin.KaraokeLive.Show do
   defp qrcode(url) do
     url
     |> QRCodeEx.encode()
-    |> QRCodeEx.svg(color: "#ed7950", background_color: :transparent)
+    |> QRCodeEx.svg(color: "#ed7950", background_color: :transparent, width: 340, heigth: 340)
   end
 end

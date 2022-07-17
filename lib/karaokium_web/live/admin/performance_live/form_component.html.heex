@@ -1,8 +1,17 @@
 <section>
-  <.form let={_f} for={@changeset} id="performance-form" phx-target={@myself} phx-change="validate" phx-submit="save">
+  <.form let={f} for={@changeset} id="performance-form" phx-target={@myself} phx-change="validate" phx-submit="save">
     <header>
       <h2><%= @title %></h2>
     </header>
+
+    <%= label(f, :song_id) %>
+    <%= select(f, :song_id, Enum.map(@songs, &{&1.name, &1.id}), prompt: gettext("Choose a song")) %>
+    <%= error_tag(f, :song_id) %>
+
+    <%= label(f, :team_id) %>
+    <%= select(f, :team_id, Enum.map(@teams, &{&1.name, &1.id}), prompt: gettext("Choose a team")) %>
+    <%= error_tag(f, :team_id) %>
+
     <div>
       <%= submit("Save", phx_disable_with: "Saving...", class: "action-btn") %>
     </div>
