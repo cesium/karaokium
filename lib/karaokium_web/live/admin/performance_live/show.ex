@@ -17,7 +17,7 @@ defmodule KaraokiumWeb.Admin.PerformanceLive.Show do
      |> assign(:page_title, page_title(socket.assigns.live_action))
      |> assign(:karaoke_id, karaoke_id)
      |> assign(:id, id)
-     |> assign(:performancelive, Events.get_karaoke!(karaoke_id).performing_id)
+     |> assign(:karaoke_performance_id, Events.get_karaoke!(karaoke_id).performing_id)
      |> reload()}
   end
 
