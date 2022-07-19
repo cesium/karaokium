@@ -9,41 +9,34 @@
       />
     <% end %>
     <div>
-      <div id="goToDiv">
-        <button style="min-width: 50px; padding: 5px 10px;" onclick="clickedbutton();">
-          Go To
-        </button>
-      </div>
-      <div id="menu" class="hidden block">
-        <ul>
-          <%= for entry <- menu(@conn) do %>
-            <li>
-              <button style="min-width: 50px; padding: 5px 10px;" onclick="clickedbutton();">
-                Go To
-              </button>
-              <%= unless Enum.empty?(entry.submenu) do %>
+      <ul>
+        <%= for entry <- menu(@conn) do %>
+          <button style="padding: 5px 10px;" onclick="clickedbutton();">
+            Go To
+          </button>
+          <%= unless Enum.empty?(entry.submenu) do %>
+            <li class="block">
+              <div id="menu" class="hidden">
                 <ul class="block">
                   <%= for subentry <- entry.submenu do %>
-                    <li>
+                    <li class="text-center">
                       <a href={subentry.url}><%= subentry.title %></a>
                     </li>
                   <% end %>
                 </ul>
-              <% end %>
+              </div>
             </li>
           <% end %>
-        </ul>
-      </div>
+        <% end %>
+      </ul>
       <script>
         var isClicked = false
         function clickedbutton() {
             isClicked = !isClicked
             if(isClicked){
-              document.getElementById("goToDiv").className = "hidden"
-              document.getElementById("menu").className = ""
+              document.getElementById("menu").className = "text-left"
             }
             else{
-              document.getElementById("goToDiv").className = ""
               document.getElementById("menu").className = "hidden"
             }
         }
