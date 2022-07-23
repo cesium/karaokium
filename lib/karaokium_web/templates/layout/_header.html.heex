@@ -1,54 +1,65 @@
 <header>
   <nav>
-    <div>
-      <button class="text-center" style="padding: 5px 10px;" onclick="clickedbutton();">
-        Go To
-      </button>
-      <script>
-        var isClicked = false
-        function pixeis(){
-          var result = false
-          if(window.innerWidth < 700)
-            result = true
-          return result
-        }
-        function scene1()
-        {
-          document.getElementById("menu2").className = "text-center"
-          document.getElementById("content").className = "hidden"
-          document.getElementById("menu").className = "hidden"
-        }
-        function scene2()
-        {
-          document.getElementById("menu").className = "text-center"
-          document.getElementById("menu2").className = "hidden"
-          document.getElementById("content").className = "container"
-        }
-        function clickedbutton() {
-            isClicked = !isClicked
-            if(isClicked){
+    <%= if @current_user do %>
+      <div>
+        <button class="text-center" style="padding: 1px 5px;" onclick="clickedbutton();">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+        <script>
+          var isClicked = false
+          function pixeis(){
+            var result = false
+            if(window.innerWidth < 700)
+              result = true
+            return result
+          }
+          function scene1()
+          {
+            document.getElementById("menu2").className = "text-center"
+            document.getElementById("content").className = "hidden"
+            document.getElementById("menu").className = "hidden"
+          }
+          function scene2()
+          {
+            document.getElementById("menu").className = "text-center"
+            document.getElementById("menu2").className = "hidden"
+            document.getElementById("content").className = "container"
+          }
+          function clickedbutton() {
+              isClicked = !isClicked
+              if(isClicked){
+                if(pixeis())
+                  scene1();
+                else
+                  scene2();
+              }
+              else{
+                document.getElementById("menu").className = "hidden"
+                document.getElementById("menu2").className = "hidden"
+                document.getElementById("content").className = "container"
+              }
+          }
+          function resized()
+          {
+            if(isClicked)
               if(pixeis())
-                scene1();
+                scene1()
               else
-                scene2();
-            }
-            else{
-              document.getElementById("menu").className = "hidden"
-              document.getElementById("menu2").className = "hidden"
-              document.getElementById("content").className = "container"
-            }
-        }
-        function resized()
-        {
-          if(isClicked)
-            if(pixeis())
-              scene1()
-            else
-              scene2()
-        }
-        window.onresize = resized;
-      </script>
-    </div>
+                scene2()
+          }
+          window.onresize = resized;
+        </script>
+      </div>
+    <% end %>
     <div class="text-center">
       <%= live_patch to: Routes.page_path(@conn, :index) do %>
         <img
