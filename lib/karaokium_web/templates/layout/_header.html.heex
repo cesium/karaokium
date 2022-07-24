@@ -88,11 +88,13 @@
 <div id="menu2" class="hidden">
   <%= for entry <- menu(@conn) do %>
     <%= unless Enum.empty?(entry.submenu) do %>
+      <ul class="px-0">
       <%= for subentry <- entry.submenu do %>
-        <ul>
+        <li class="list-none">
           <a href={subentry.url}><%= subentry.title %></a>
-        </ul>
+        </li>
       <% end %>
+      </ul>
     <% end %>
   <% end %>
 </div>
