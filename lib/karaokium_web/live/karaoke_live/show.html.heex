@@ -71,7 +71,7 @@
         text={"#{@karaoke.name} - Starting soon"}
       />
       <span>
-        <%= live_patch("Create Performance", to: Routes.admin_performance_new_path(@socket, :new, @karaoke.id, "live")) %>
+        <%= live_patch("Create Performance", to: Routes.admin_performance_new_path(@socket, :new, @karaoke.id)) %>
       </span>
     <% else %>
       <.status karaoke={@karaoke} />

@@ -10,12 +10,12 @@ defmodule KaraokiumWeb.Admin.PerformanceLive.New do
   end
 
   @impl true
-  def handle_params(%{"karaoke_id" => karaoke_id, "return_to" => return_to}, _, socket) do
+  def handle_params(%{"karaoke_id" => karaoke_id}, _, socket) do
     {:noreply,
      socket
      |> assign(:performance, %Performance{})
      |> assign(:page_title, "New Performance")
      |> assign(:karaoke_id, karaoke_id)
-     |> assign(:return_to, return_to)}
+     |> assign(:roles, socket.assigns.current_user.permissions)}
   end
 end

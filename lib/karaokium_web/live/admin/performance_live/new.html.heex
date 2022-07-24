@@ -1,4 +1,4 @@
-<%= if @return_to == "live" do %>
+<%= if @roles == [] do %>
   <.live_component
     module={KaraokiumWeb.Admin.PerformanceLive.FormComponent}
     id={:new}
