@@ -16,6 +16,6 @@ defmodule KaraokiumWeb.Admin.PerformanceLive.New do
      |> assign(:performance, %Performance{})
      |> assign(:page_title, "New Performance")
      |> assign(:karaoke_id, karaoke_id)
-     |> assign(:roles, socket.assigns.current_user.permissions)}
+     |> assign(:permissions, socket.assigns.current_user.permissions)}
   end
 end
