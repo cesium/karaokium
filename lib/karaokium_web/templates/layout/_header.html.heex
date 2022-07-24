@@ -89,11 +89,11 @@
   <%= for entry <- menu(@conn) do %>
     <%= unless Enum.empty?(entry.submenu) do %>
       <ul class="px-0">
-      <%= for subentry <- entry.submenu do %>
-        <li class="list-none">
-          <a href={subentry.url}><%= subentry.title %></a>
-        </li>
-      <% end %>
+        <%= for subentry <- entry.submenu do %>
+          <li class="list-none">
+            <a href={subentry.url}><%= subentry.title %></a>
+          </li>
+        <% end %>
       </ul>
     <% end %>
   <% end %>
