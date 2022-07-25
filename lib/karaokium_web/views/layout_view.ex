@@ -7,13 +7,13 @@ defmodule KaraokiumWeb.LayoutView do
 
   def menu(conn) when is_logged_in(conn) do
     base_menu(conn) ++
-      Enum.reduce(Enum.sort(conn.assigns.current_user.permissions), [], fn role, _ ->
+      Enum.reduce(Enum.sort(conn.assigns.current_user.permissions), [], fn role, acc ->
         case role do
           :admin ->
-            admin_menu(conn)
+            acc ++ admin_menu(conn)
 
           :sysadmin ->
-            sysadmin_menu(conn)
+            acc ++ sysadmin_menu(conn)
         end
       end)
   end
@@ -29,16 +29,22 @@ defmodule KaraokiumWeb.LayoutView do
   defp admin_menu(conn) do
     [
       %{
-        title: "Options",
+        title: "Events",
         url: "#",
         submenu: [
           %{title: "Karaokes", url: Routes.admin_karaoke_index_path(conn, :index)},
-          %{title: "Locations", url: Routes.admin_location_index_path(conn, :index)},
+          %{title: "Locations", url: Routes.admin_location_index_path(conn, :index)}
+        ]
+      },
+      %{title: "Teams", url: Routes.admin_team_index_path(conn, :index), submenu: []},
+      %{
+        title: "Repertoire",
+        url: "#",
+        submenu: [
           %{title: "Search Songs", url: Routes.admin_song_search_path(conn, :new)},
           %{title: "Songs", url: Routes.admin_song_index_path(conn, :index)},
           %{title: "Artists", url: Routes.admin_artist_index_path(conn, :index)},
-          %{title: "Albums", url: Routes.admin_album_index_path(conn, :index)},
-          %{title: "Teams", url: Routes.admin_team_index_path(conn, :index)}
+          %{title: "Albums", url: Routes.admin_album_index_path(conn, :index)}
         ]
       }
     ]
@@ -46,20 +52,7 @@ defmodule KaraokiumWeb.LayoutView do
 
   defp sysadmin_menu(conn) do
     [
-      %{
-        title: "Options",
-        url: "#",
-        submenu: [
-          %{title: "Karaokes", url: Routes.admin_karaoke_index_path(conn, :index)},
-          %{title: "Locations", url: Routes.admin_location_index_path(conn, :index)},
-          %{title: "Search Songs", url: Routes.admin_song_search_path(conn, :new)},
-          %{title: "Songs", url: Routes.admin_song_index_path(conn, :index)},
-          %{title: "Artists", url: Routes.admin_artist_index_path(conn, :index)},
-          %{title: "Albums", url: Routes.admin_album_index_path(conn, :index)},
-          %{title: "Teams", url: Routes.admin_team_index_path(conn, :index)},
-          %{title: "LiveDashboard", url: Routes.live_dashboard_path(conn, :home), submenu: []}
-        ]
-      }
+      %{title: "LiveDashboard", url: Routes.live_dashboard_path(conn, :home), submenu: []}
     ]
   end
 

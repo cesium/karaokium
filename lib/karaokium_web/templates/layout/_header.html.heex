@@ -24,14 +24,12 @@
           }
           function scene1()
           {
-            document.getElementById("menu2").className = "text-center"
+            document.getElementById("menu").className = "text-center"
             document.getElementById("content").className = "hidden"
-            document.getElementById("menu").className = "hidden"
           }
           function scene2()
           {
             document.getElementById("menu").className = "text-center"
-            document.getElementById("menu2").className = "hidden"
             document.getElementById("content").className = "container"
           }
           function clickedbutton() {
@@ -75,26 +73,19 @@
 </header>
 
 <div id="menu" class="hidden">
-  <%= for entry <- menu(@conn) do %>
-    <%= unless Enum.empty?(entry.submenu) do %>
-      |
-      <%= for subentry <- entry.submenu do %>
-        <a href={subentry.url}><%= subentry.title %></a> |
-      <% end %>
-    <% end %>
-  <% end %>
-</div>
-
-<div id="menu2" class="hidden">
-  <%= for entry <- menu(@conn) do %>
-    <%= unless Enum.empty?(entry.submenu) do %>
-      <ul class="px-0">
-        <%= for subentry <- entry.submenu do %>
-          <li class="list-none">
-            <a href={subentry.url}><%= subentry.title %></a>
-          </li>
+  <ul class="px-0">
+    <%= for entry <- menu(@conn) do %>
+      <li class="list-none">
+        <%= unless Enum.empty?(entry.submenu) do %>
+          <ul class="px-0">
+            <%= for subentry <- entry.submenu do %>
+              <li class="list-none"><a href={subentry.url}><%= subentry.title %></a></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <a href={entry.url}><%= entry.title %></a>
         <% end %>
-      </ul>
+      </li>
     <% end %>
-  <% end %>
+  </ul>
 </div>
