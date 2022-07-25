@@ -45,8 +45,7 @@
 </div>
 
 <div class="text-center">
-  <%= if @performance.id == @performancelive do %>
-  <% else %>
+  <%= unless @performance.id == @karaoke_performance_id do %>
     <span>
       <%= live_patch("Edit",
         to: Routes.admin_performance_edit_path(@socket, :edit, @karaoke_id, @performance.id),

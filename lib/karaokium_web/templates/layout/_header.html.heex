@@ -1,27 +1,91 @@
 <header>
   <nav>
-    <%= live_patch to: Routes.page_path(@conn, :index) do %>
-      <img
-        alt="Phoenix Framework Logo"
-        src={Routes.static_path(@conn, "/karaokium/images/logos/cesium-DARK.svg")}
-        height="50"
-        style="margin: 0;"
-      />
+    <%= if @current_user do %>
+      <div>
+        <button class="text-center" style="padding: 1px 5px;" onclick="clickedbutton();">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+        <script>
+          var isClicked = false
+          function pixeis(){
+            var result = false
+            if(window.innerWidth < 700)
+              result = true
+            return result
+          }
+          function scene1()
+          {
+            document.getElementById("menu").className = "text-center"
+            document.getElementById("content").className = "hidden"
+          }
+          function scene2()
+          {
+            document.getElementById("menu").className = "text-center"
+            document.getElementById("content").className = "container"
+          }
+          function clickedbutton() {
+              isClicked = !isClicked
+              if(isClicked){
+                if(pixeis())
+                  scene1();
+                else
+                  scene2();
+              }
+              else{
+                document.getElementById("menu").className = "hidden"
+                document.getElementById("menu2").className = "hidden"
+                document.getElementById("content").className = "container"
+              }
+          }
+          function resized()
+          {
+            if(isClicked)
+              if(pixeis())
+                scene1()
+              else
+                scene2()
+          }
+          window.onresize = resized;
+        </script>
+      </div>
     <% end %>
-    <ul>
-      <%= for entry <- menu(@conn) do %>
-        <li>
-          <a href={entry.url}><%= entry.title %></a>
-          <%= unless Enum.empty?(entry.submenu) do %>
-            <ul>
-              <%= for subentry <- entry.submenu do %>
-                <li><a href={subentry.url}><%= subentry.title %></a></li>
-              <% end %>
-            </ul>
-          <% end %>
-        </li>
+    <div class="text-center">
+      <%= live_patch to: Routes.page_path(@conn, :index) do %>
+        <img
+          alt="Phoenix Framework Logo"
+          src={Routes.static_path(@conn, "/karaokium/images/logos/cesium-DARK.svg")}
+          height="45"
+          style="margin: 0;"
+        />
       <% end %>
-    </ul>
+    </div>
     <%= render("_user_menu.html", assigns) %>
   </nav>
 </header>
+
+<div id="menu" class="hidden">
+  <ul class="px-0">
+    <%= for entry <- menu(@conn) do %>
+      <li class="list-none">
+        <%= unless Enum.empty?(entry.submenu) do %>
+          <ul class="px-0">
+            <%= for subentry <- entry.submenu do %>
+              <li class="list-none"><a href={subentry.url}><%= subentry.title %></a></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <a href={entry.url}><%= entry.title %></a>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>

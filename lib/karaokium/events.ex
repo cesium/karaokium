@@ -164,7 +164,7 @@ defmodule Karaokium.Events do
     karaoke
     |> Karaoke.reset_pin_changeset()
     |> Repo.update()
-    |> broadcast(:update)
+    |> broadcast(:updated)
   end
 
   @doc """
