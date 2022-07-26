@@ -1,21 +1,8 @@
-<%= if @permissions == [] do %>
-  <.live_component
-    module={KaraokiumWeb.Admin.PerformanceLive.FormComponent}
-    id={:new}
-    karaoke_id={@karaoke_id}
-    performance={@performance}
-    title="New performance"
-    action={:new}
-    return_to={Routes.karaoke_show_path(@socket, :show, @karaoke_id)}
-  />
-<% else %>
-  <.live_component
-    module={KaraokiumWeb.Admin.PerformanceLive.FormComponent}
-    id={:new}
-    karaoke_id={@karaoke_id}
-    performance={@performance}
-    title="New performance"
-    action={:new}
-    return_to={Routes.admin_karaoke_show_path(@socket, :show, @karaoke_id)}
-  />
-<% end %>
+<.live_component
+  module={KaraokiumWeb.Admin.PerformanceLive.FormComponent}
+  id={:new}
+  karaoke_id={@karaoke_id}
+  performance={@performance}
+  title="New performance"
+  action={:new}
+/>
