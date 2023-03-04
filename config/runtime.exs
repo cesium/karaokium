@@ -36,7 +36,7 @@ if System.get_env("PHX_SERVER") do
 end
 
 # The block below contains prod specific runtime configuration.
-if config_env() == :prod do
+if config_env() in [:stg, :prod] do
   spotify_client_id =
     System.get_env("SPOTIFY_CLIENT_ID") ||
       raise """
@@ -55,12 +55,7 @@ if config_env() == :prod do
     client_id: spotify_client_id,
     client_secret: spotify_client_secret
 
-  database_path =
-    System.get_env("DATABASE_PATH") ||
-      raise """
-      environment variable DATABASE_PATH is missing.
-      For example: /etc/karaokium/karaokium.db
-      """
+  database_path = "/app/priv/repo/databases/karaokium_#{config_env()}.db"
 
   config :karaokium, Karaokium.Repo,
     database: database_path,
@@ -92,7 +87,9 @@ if config_env() == :prod do
       port: port
     ],
     secret_key_base: secret_key_base
+end
 
+if config_env() == :prod do
   # ## Configuring the mailer
   #
   # In production you need to configure the mailer to use a different adapter.

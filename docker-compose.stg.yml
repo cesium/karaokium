@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  web:
+    container_name: karaokium_stg
+    env_file: .env.stg
+    environment:
+      MIX_ENV: ${MIX_ENV:-stg}
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    volumes:
+      - ./:/app
+      - /app/_build
+      - /app/deps
+      - /app/priv/uploads
+      - .${DATABASE_PATH}:/app/priv/repo/databases/
+    ports:
+      - "4523:4000"
