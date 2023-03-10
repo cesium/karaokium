@@ -55,7 +55,7 @@ if config_env() in [:stg, :prod] do
     client_id: spotify_client_id,
     client_secret: spotify_client_secret
 
-  database_path = "/app/priv/repo/databases/karaokium_#{config_env()}.db"
+  database_path = "/app/priv/repo/databases/karaokium_prod.db"
 
   config :karaokium, Karaokium.Repo,
     database: database_path,

@@ -14,4 +14,4 @@ services:
       - /app/_build
       - /app/deps
       - /app/priv/uploads
-      - ./priv/repo/databases/:/app/priv/repo/databases/
+      - ${DATABASE_PATH}:/app/priv/repo/databases/

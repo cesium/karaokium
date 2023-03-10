@@ -14,6 +14,6 @@ services:
       - /app/_build
       - /app/deps
       - /app/priv/uploads
-      - .${DATABASE_PATH}:/app/priv/repo/databases/
+      - ${DATABASE_PATH}:/app/priv/repo/databases/
     ports:
       - "4521:4000"

@@ -8,12 +8,12 @@ services:
       MIX_ENV: ${MIX_ENV:-stg}
     build:
       context: .
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.stg
     volumes:
       - ./:/app
       - /app/_build
       - /app/deps
       - /app/priv/uploads
-      - .${DATABASE_PATH}:/app/priv/repo/databases/
+      - ${DATABASE_PATH}:/app/priv/repo/databases/
     ports:
       - "4523:4000"
