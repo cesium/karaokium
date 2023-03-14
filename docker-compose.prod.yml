@@ -8,7 +8,7 @@ services:
       MIX_ENV: ${MIX_ENV:-prod}
     build:
       context: .
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile
     volumes:
       - ./:/app
       - /app/_build

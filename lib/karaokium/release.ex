@@ -2,12 +2,6 @@ defmodule Karaokium.Release do
   @moduledoc """
   Used for executing DB release tasks when run in production without Mix
   installed.
-
-  ```console
-  $ bin/karaokium eval "karaokium.Release.migrate"
-  ```
-
-  See https://hexdocs.pm/phoenix/releases.html#ecto-migrations-and-custom-commands
   """
   @app :karaokium
 
