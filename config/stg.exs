@@ -52,5 +52,4 @@ config :logger, level: :info
 
 database_path = "/app/priv/repo/databases/karaokium_stg.db"
 
-config :karaokium, Karaokium.Repo,
-  database: database_path
+config :karaokium, Karaokium.Repo, database: database_path
