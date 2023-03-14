@@ -50,8 +50,7 @@ config :logger, level: :info
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
 
-database_path = "/app/priv/repo/databases/karaokium_prod.db"
+database_path = "/app/priv/repo/databases/karaokium_stg.db"
 
 config :karaokium, Karaokium.Repo,
-  database: database_path,
-  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "5")
+  database: database_path
