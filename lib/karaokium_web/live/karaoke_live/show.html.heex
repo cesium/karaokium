@@ -3,22 +3,12 @@
     <%= unless is_nil(@karaoke.performing_id) do %>
       <section style="margin-top: -50px;">
         <aside style="padding: 0;">
-          <img
-            id="cover-album"
-            style="border-radius: 4px 4px 0 0;"
-            alt={@karaoke.performing.song.album.name}
-            src={hd(@karaoke.performing.song.album.images).url}
-            height="285"
-          />
+          <img id="cover-album" style="border-radius: 4px 4px 0 0;" height="285" />
           <div style="padding: 0 0.5rem;">
-            <h3 style="margin: 0;"><%= @karaoke.performing.song.name %></h3>
-            <p>
-              <strong><%= @karaoke.performing.song.album.name %></strong>
-            </p>
             <p>
               <em><%= Enum.map(@karaoke.performing.song.artists, & &1.name) |> Enum.join(", ") %></em>
             </p>
-            <center>
+            <div class="text-center">
               <table style="padding: 0; margin-bottom: 10px;">
                 <tbody>
                   <tr>
@@ -33,7 +23,7 @@
                   <% end %>
                 </tbody>
               </table>
-            </center>
+            </div>
           </div>
         </aside>
       </section>
@@ -45,7 +35,7 @@
               <%= emoji %> <%= reaction_count(@reactions, emoji) %>
             </button>
           <% else %>
-            <div class="button" onmousedown={"reactions(this, '#{emoji}')"}>
+            <div class="button">
               <button
                 phx-throttle="1000"
                 phx-click="react"
@@ -64,15 +54,27 @@
           <header>
             <h2>Vote now!</h2>
           </header>
-          <%= for pontuation <- 1..10 do %>
-            <button phx-click="vote" phx-value-pontuation={pontuation} style="font-size: 30px; margin: 10px;">
-              <%= pontuation %>
-            </button>
-          <% end %>
+          <div class="text-center">
+            <%= for pontuation <- 1..10 do %>
+              <button phx-click="vote" phx-value-pontuation={pontuation} style="font-size: 30px; margin: 10px;">
+                <%= pontuation %>
+              </button>
+            <% end %>
+          </div>
         <% end %>
       </section>
     <% end %>
   <% else %>
-    <.status karaoke={@karaoke} />
+    <%= if @karaoke.status == :ready do %>
+      <.status
+        img={Routes.static_path(KaraokiumWeb.Endpoint, "/karaokium/images/illustrations/undraw/happy_music.svg")}
+        text={"#{@karaoke.name} - Starting soon"}
+      />
+      <span>
+        <%= live_patch("Create Performance", to: Routes.admin_performance_new_path(@socket, :new, @karaoke.id)) %>
+      </span>
+    <% else %>
+      <.status karaoke={@karaoke} />
+    <% end %>
   <% end %>
 </div>

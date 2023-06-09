@@ -90,15 +90,6 @@ defmodule KaraokiumWeb.KaraokeLive.Show do
     """
   end
 
-  def status(%{karaoke: karaoke} = assigns) when karaoke.status == :ready do
-    ~H"""
-    <.status
-      img={Routes.static_path(KaraokiumWeb.Endpoint, "/karaokium/images/illustrations/undraw/happy_music.svg")}
-      text={"#{@karaoke.name} - Starting soon"}
-    />
-    """
-  end
-
   def status(%{karaoke: karaoke} = assigns) when karaoke.status == :finished do
     ~H"""
     <section>
