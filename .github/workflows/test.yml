@@ -15,8 +15,8 @@ jobs:
       MIX_ENV: test
     strategy:
       matrix:
-        otp: [25.x]
-        elixir: [1.13.x]
+        otp: [26.x]
+        elixir: [1.14.x]
 
     steps:
       - name: ☁️ Checkout repository
