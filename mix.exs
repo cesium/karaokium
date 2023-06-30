@@ -13,7 +13,7 @@ defmodule Karaokium.MixProject do
       version: @version,
       description: @description,
       git_ref: git_revision_hash(),
-      elixir: "~> 1.14",
+      elixir: "~> 1.15",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
