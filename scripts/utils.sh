@@ -9,6 +9,10 @@ import() {
   . "${SCRIPTS_DIR}/${1}"
 }
 
+# shellcheck source=./colors.sh
+import colors.sh
+# shellcheck source=./logging.sh
+import logging.sh
 # shellcheck source=./helpers.sh
 import helpers.sh
 
@@ -17,12 +21,27 @@ function not_installed() {
 }
 
 function load_env_file() {
-  local file="${1:-.env}"
+  local debug=0
+  local file=".env"
+
+  while (($#)); do
+    case "$1" in
+      -d | -dbg | --dbg | --debug) debug=1 ;;
+      *) file="$1" ;;
+    esac
+    shift
+  done
+
   if [ -f "$file" ]; then
-    log_info "Environment" "Loading ${BLUE}${file}${RESET}..." $(cat "${file}")
+    log_info "Environment" "Loading ${BLUE}${file}${RESET}..."
     set -o allexport
+    # shellcheck source=/dev/null
     source "$file"
     set +o allexport
+    if ((debug)); then
+      mapfile -t lines <"${file}"
+      log_debug "${lines[@]}"
+    fi
   else
     log_warn "${file} file not found, skipping..."
   fi
@@ -52,4 +71,12 @@ function ensure_confirmation() {
   fi
 }
 
-[ "$0" = "${BASH_SOURCE[0]}" ] && display_version 0.5.5 || true
+function get_os_name() {
+  uname | tr '[:upper:]' '[:lower:]'
+}
+
+function timestamp() {
+  date --utc +%FT%TZ
+}
+
+([ "$0" = "${BASH_SOURCE[0]}" ] && display_version 0.10.0) || true

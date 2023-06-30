@@ -58,7 +58,7 @@ defmodule Karaokium.Repo.Seeds.Accounts do
   end
 
   defp get_fake_users(number \\ 20) do
-    api_url = 'https://randomuser.me/api/?pagination=1&results=#{number}&seed=cesium'
+    api_url = "https://randomuser.me/api/?pagination=1&results=#{number}&seed=cesium"
 
     {:ok, {_title, _headers, data}} = :httpc.request(:get, {api_url, []}, [], [])
 
